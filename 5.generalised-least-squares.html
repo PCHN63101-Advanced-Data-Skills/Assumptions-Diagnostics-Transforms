@@ -383,17 +383,26 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="generalised-least-squares">
 <h1>Generalised Least Squares<a class="headerlink" href="#generalised-least-squares" title="Link to this heading">#</a></h1>
-<p>…</p>
+<p>We have now seen methods that we can use to accomodate non-normality of the residuals, as well as capturing more complex relationships in the data, improving our ability to interpret the regression model, dealing with outliers and dealing with multicollinearity. However, the one issues we have yet to address is how to accommodate</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">nlme</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">)</span>
 <span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 
 <span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 
-<span class="n">mod.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">weight</span><span class="o">=</span><span class="nf">varFixed</span><span class="p">(</span><span class="o">~</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">mod.2</span><span class="p">)</span>
+<span class="n">mod.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varFixed</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod.2</span><span class="p">)</span>
+
+<span class="n">mtcars</span><span class="o">$</span><span class="n">cyl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">cyl</span><span class="p">)</span>
+
+<span class="n">mod.3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">cyl</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mod.3</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod.3</span><span class="p">)</span>
+<span class="nf">Anova</span><span class="p">(</span><span class="n">mod.3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -401,8 +410,16 @@
 <a class="reference internal image-reference" href="_images/539fb028490c46444c8e77dec528122b3b89699ab045d6132fd354bd6782391f.png"><img alt="_images/539fb028490c46444c8e77dec528122b3b89699ab045d6132fd354bd6782391f.png" src="_images/539fb028490c46444c8e77dec528122b3b89699ab045d6132fd354bd6782391f.png" style="width: 420px; height: 420px;" /></a>
 <a class="reference internal image-reference" href="_images/05d2222afb6a352c71717bc6e8c5f1020e89d92419cd8f0071a70e38d0116fee.png"><img alt="_images/05d2222afb6a352c71717bc6e8c5f1020e89d92419cd8f0071a70e38d0116fee.png" src="_images/05d2222afb6a352c71717bc6e8c5f1020e89d92419cd8f0071a70e38d0116fee.png" style="width: 420px; height: 420px;" /></a>
 <a class="reference internal image-reference" href="_images/df5f4c43e6b1765da2ca9982a1bcaab6772dfe26dd18bc625832a14e00c8ad84.png"><img alt="_images/df5f4c43e6b1765da2ca9982a1bcaab6772dfe26dd18bc625832a14e00c8ad84.png" src="_images/df5f4c43e6b1765da2ca9982a1bcaab6772dfe26dd18bc625832a14e00c8ad84.png" style="width: 420px; height: 420px;" /></a>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="nn">Error</span> in <span class="ni">varFixed(form = ~1 | wt): unused argument </span><span class="nt">(form = ~1 | wt)</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">gls</span><span class="p">(</span><span class="n">mpg</span> <span class="o">~</span> <span class="n">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">varFixed</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="o">~</span><span class="mi">1</span> <span class="o">|</span> 
+ <span class="o">.</span>     <span class="n">wt</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">glsStruct</span><span class="p">(</span><span class="n">corStruct</span> <span class="o">=</span> <span class="n">correlation</span><span class="p">,</span> <span class="n">varStruct</span> <span class="o">=</span> <span class="n">varFunc</span><span class="p">(</span><span class="n">weights</span><span class="p">))</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">varFunc</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/bcffb2ef86bbaa2117297e7b7f342d03a347a0c391f42c53894c53473421a897.png"><img alt="_images/bcffb2ef86bbaa2117297e7b7f342d03a347a0c391f42c53894c53473421a897.png" src="_images/bcffb2ef86bbaa2117297e7b7f342d03a347a0c391f42c53894c53473421a897.png" style="width: 420px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/5c136bae85969b91df118c0a6d3b45016cffa528e6fc637422757b379f7f3a34.png"><img alt="_images/5c136bae85969b91df118c0a6d3b45016cffa528e6fc637422757b379f7f3a34.png" src="_images/5c136bae85969b91df118c0a6d3b45016cffa528e6fc637422757b379f7f3a34.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <section id="using-variance-weights-with-lm-and-lmp">
