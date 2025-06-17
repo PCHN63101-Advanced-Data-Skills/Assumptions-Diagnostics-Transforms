@@ -369,7 +369,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-regression-assumptions">The Simple Regression Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nature-of-assumptions-visual-checks-and-tests">The Nature of Assumptions, Visual Checks and Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-visual-assessments">Using Visual Assessments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-tests-of-assumptions-are-flawed">Why Tests of Assumptions are Flawed</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-assumptions">The Regression Assumptions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-outcome-is-a-continuous-random-variable">(1) The Outcome is a Continuous Random Variable</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-distribution-of-the-errors-is-normal">(2) The Distribution of the Errors is Normal</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
@@ -377,6 +382,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The variance is constant</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-checks-of-the-regression-assumptions">Visual Checks of the Regression Assumptions</a></li>
 </ul>
             </nav>
         </div>
@@ -390,9 +396,85 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="checking-the-model-assumptions">
 <h1>Checking the Model Assumptions<a class="headerlink" href="#checking-the-model-assumptions" title="Link to this heading">#</a></h1>
-<p>… In addition, even though we are framing these assumptions in relation to muliple regression, these assumptions are also directly relevant to <span class="math notranslate nohighlight">\(t\)</span>-tests, ANOVA and ANCOVA models. Part of the utility of the linear models framewowrk is that we can use the same diagnostics to test the same assumptions across any model, meaning we only need to learn <em>one</em> set of assumptions and can apply them to any model we choose.</p>
-<section id="the-simple-regression-assumptions">
-<h2>The Simple Regression Assumptions<a class="headerlink" href="#the-simple-regression-assumptions" title="Link to this heading">#</a></h2>
+<p>Last week, we outlined the modelling framework behind both simple and multiple regression. In doing so, we made a number of assumptions that allowed for this framework to be tractable and useable. However, we never acually checked whether any of these assumptions actually held when using our example data. In this section, we will discuss each of the assumptions we made, as well as ways of checking those assumptions. In the rest of this lesson, we will discuss tactics that can be employed when those assumptions appear to be violated.</p>
+<div class="tip admonition">
+<p class="admonition-title">The Generality of Assumptions</p>
+<p>One of the bigger benefits of using a linear models framework is that, irrespective of the mean function, the assumptions remain the same. As such, even though we will be framing these assumptions in relation to muliple regression, all the methods we will discuss are also directly relevant to <span class="math notranslate nohighlight">\(t\)</span>-tests, ANOVA and ANCOVA models. This means we can use the same diagnostics to check the same assumptions across any model. Practically, this means we only need to learn <em>one</em> set of assumptions and then can apply them to any model we choose. This is much more efficient than the typical approach of listing assumptions separately for regression, ANOVA and ANCOVA models.</p>
+</div>
+<section id="the-nature-of-assumptions-visual-checks-and-tests">
+<h2>The Nature of Assumptions, Visual Checks and Tests<a class="headerlink" href="#the-nature-of-assumptions-visual-checks-and-tests" title="Link to this heading">#</a></h2>
+<p>Before discussion the assumptions themseleves, it is important that we establish a suitable perspective on assumptions and assumption testing. Typically, in the behavioural sciences, assumptions are not often adequately checked. In part, this reflects a lack of appreciation for the importance of assumptions when reaching conclusions and, in part, reflects a lack of confidence around what to do if the assumptions are violated. When assumptions are tested, typically this is done using <em>inferential tests</em>. In this course, we are going to advise against relying on tests for assessing assumptions. Instead, our focus will be on visual inspection of the assumptions. The most important point throughout this section is that assumptions should not be considered as black-and-white assessments of <em>met</em> or <em>violated</em>. In reality, no data will ever be perfectly normally distributed. No data will have identical variances across its range. No relationship will be an absolutely perfect straight line. In all cases, the assumptions are an idealisation of reality for the purpose of mathematical simplicity. Our job is simply to determine whether the data are <em>close enough</em> for our conclusions to be accurate. If they are not close enough, then we need to either try and make adjustments to the data or model, or we have to accept the consequences of these violations. We can still use models that appear to not meet all the assumptions, but this weakens the model’s accuracy and more care must be taken when reaching conclusions. Real world data is messy and so it is important to maintain both an appropriate perspective on the role of assumptions, as well as having enough tools available to deal with data that does not adequately adhere to those assumptions.</p>
+<section id="using-visual-assessments">
+<h3>Using Visual Assessments<a class="headerlink" href="#using-visual-assessments" title="Link to this heading">#</a></h3>
+</section>
+<section id="why-tests-of-assumptions-are-flawed">
+<h3>Why Tests of Assumptions are Flawed<a class="headerlink" href="#why-tests-of-assumptions-are-flawed" title="Link to this heading">#</a></h3>
+<p>Often, one of the main reasons researchers are uncomfortable with using visual assessments of the assumptions is because they think that interpeting these plots is too subjective. Of course, there is a subjective element to deciding whether the assumptions appear to have been met, however, the belief that there is some objective alternative to determine this is flawed. Because inferential tests of these assumptions exist, there is a belief that these methods therefore provide a way of determining whether the assumptions are violated that is free from researcher bias. However, these tests are flawed. In the previous section, we discussed the problems with <span class="math notranslate nohighlight">\(p\)</span>-values and these issues carryover into the world of using inferential means to assess the model assumptions. Furthermore, tests of the assumptions require assumptions themseleves in order to calculate <span class="math notranslate nohighlight">\(p\)</span>-values, meaning we are no better off than where we started. These tests can also be misleading, because they are sensitive to the same issues of power as we discussed previously. If a <span class="math notranslate nohighlight">\(p\)</span>-value is simply a point on a power curve, then we just need enough data in order to generate a significant finding.</p>
+<p>We can demonstrate this issue using simulated data in <code class="docutils literal notranslate"><span class="pre">R</span></code>. Here, we will use the Shapiro-Wilk test of normality to illustrate the problem. Firstly, we will generate a small sample of data from a <span class="math notranslate nohighlight">\(t\)</span>-distribution. Importantly, this is <em>not</em> a normal distribution and so if the test is objective and correct it should tell us that there is a significant depature from normality. Let us see what happens.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">15</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+
+<span class="c1"># Run Shapiro-Wilk test</span>
+<span class="n">shap.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">shapiro.test</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
+
+<span class="c1"># Visualisation</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Small Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Shapiro-Wilk normality test
+
+data:  y
+W = 0.95294, p-value = 0.5719
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png"><img alt="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png" src="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>So the test has produced a <em>non-significant</em> <span class="math notranslate nohighlight">\(p\)</span>-value, which tells us that the test is perfectly happy to accept that the data has come from a normal distribution. The important point is that we know this is wrong and the test is therefore <em>incorrect</em>. An important question is then whether we would have noticed this lack of normality from the visualisation? Maybe? Maybe not? But this is exactly the point. The inferential test has not provided us with a correct objective alternative to our “subjective” interpretation of the plots. So what is the point of it? At least from the plot we can see that the lack of data actually makes it quite difficult to determine the distribution, which is a point that is completely hidden when we just look at the numbers produced by the Shapiro-Wilk test.</p>
+<p>Let us see another example. This time we generate a large sample with a trivial depature from normality. The way we do this is by mixing together two normal distributions such that the overall distribution is only slightly non-normal. The aim is to do this in such a subtle way that it would have no practical implications. Let us see what the test says.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2000</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span>
+<span class="w">       </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+
+<span class="c1"># Run Shapiro-Wilk tests</span>
+<span class="n">shap.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">shapiro.test</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
+
+<span class="c1"># Visualisation</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Large Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Shapiro-Wilk normality test
+
+data:  y
+W = 0.99836, p-value = 0.04526
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png"><img alt="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png" src="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>So here, the test says that there is a <em>significant</em> violation of normality. The test is not wrong, however, looking at the histogram it is very clear that whatever violation there has been is very trivial and that, practically, the distribution looks as close to normal as we are ever likely to see with real data. Based on this histogram, any attempt to correct for non-normality would likely be taken as wildly inappropriate and unnecessary. However, if we just believed the test then we would be off on a wild goose chase of trying to accomodate this violation. Again, visualising this assumption gives us the richest information for deciding how close to normal the distribution is.</p>
+</section>
+</section>
+<section id="the-regression-assumptions">
+<h2>The Regression Assumptions<a class="headerlink" href="#the-regression-assumptions" title="Link to this heading">#</a></h2>
 <p>Before moving on, it will be useful to take a step back and examine all the <em>assumptions</em> that are inherent in the model we have specified. This is quite an important exericse, because the assumptions of regression often seem somewhat esoteric when taught outside the framework of statistical models. However, we should be able to derive all of them by simply examining the model equations given above. This is the same approach we will take when we also examine models such as ANOVA and ANCOVA, which will allow us to see that the assumptions <em>are always the same</em> when working with these forms of linear models. This means you only need to learn one set of assumptions and they can be applied equivalently across lots of different models. We look at this in more detail next week, so for now we will just have a brief discussion of each.</p>
 <p>To make this discussion easier, we will restate the most common form of the simple regression model:</p>
 <div class="math notranslate nohighlight">
@@ -461,6 +543,9 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right)
 <h3>(5) The variance is constant<a class="headerlink" href="#the-variance-is-constant" title="Link to this heading">#</a></h3>
 </section>
 </section>
+<section id="visual-checks-of-the-regression-assumptions">
+<h2>Visual Checks of the Regression Assumptions<a class="headerlink" href="#visual-checks-of-the-regression-assumptions" title="Link to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -528,7 +613,12 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-regression-assumptions">The Simple Regression Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nature-of-assumptions-visual-checks-and-tests">The Nature of Assumptions, Visual Checks and Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-visual-assessments">Using Visual Assessments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-tests-of-assumptions-are-flawed">Why Tests of Assumptions are Flawed</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-assumptions">The Regression Assumptions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-outcome-is-a-continuous-random-variable">(1) The Outcome is a Continuous Random Variable</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-distribution-of-the-errors-is-normal">(2) The Distribution of the Errors is Normal</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
@@ -536,6 +626,7 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The variance is constant</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-checks-of-the-regression-assumptions">Visual Checks of the Regression Assumptions</a></li>
 </ul>
   </nav></div>
 
