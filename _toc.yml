@@ -8,5 +8,5 @@ chapters:
 - file: 2.checking-assumptions
 - file: 3.outcome-transforms
 - file: 4.predictor-transforms
-- file: 5.generalised-least-squares
+- file: 5.adjusting-model
 - file: summary
