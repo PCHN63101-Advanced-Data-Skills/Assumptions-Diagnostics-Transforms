@@ -422,14 +422,20 @@
 <span class="c1"># Step 4: Set up residual vs fitted plots</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># Two plots side by side</span>
 
+<span class="c1"># Manual Pearson residuals from lm</span>
+<span class="n">pearson_lm</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">lm_model</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">lm_model</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span>
+
+<span class="c1"># Automatic Pearson residuals from gls</span>
+<span class="n">pearson_gls</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">gls_model</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pearson&quot;</span><span class="p">)</span>
+
 <span class="c1"># OLS residuals vs fitted</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">lm_model</span><span class="p">),</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">lm_model</span><span class="p">),</span>
-<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Fitted values&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Raw residuals&quot;</span><span class="p">,</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">lm_model</span><span class="p">),</span><span class="w"> </span><span class="n">pearson_lm</span><span class="p">,</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Fitted values&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Pearson residuals&quot;</span><span class="p">,</span>
 <span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;OLS: Residuals vs Fitted&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">)</span>
 
 <span class="c1"># GLS residuals vs fitted (Pearson residuals)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">gls_model</span><span class="p">),</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">gls_model</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pearson&quot;</span><span class="p">),</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">gls_model</span><span class="p">),</span><span class="w"> </span><span class="n">pearson_gls</span><span class="p">,</span>
 <span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Fitted values&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Pearson residuals&quot;</span><span class="p">,</span>
 <span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GLS: Residuals vs Fitted&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
@@ -437,7 +443,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/fd2f227d65d66d296807e3f4ec1cd14e6a53d8b55389355385e8cbb542ec8e67.png"><img alt="_images/fd2f227d65d66d296807e3f4ec1cd14e6a53d8b55389355385e8cbb542ec8e67.png" src="_images/fd2f227d65d66d296807e3f4ec1cd14e6a53d8b55389355385e8cbb542ec8e67.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/e9191f010673bad531426d947c2c903c191f48d697f30aecbfd519255a1b980a.png"><img alt="_images/e9191f010673bad531426d947c2c903c191f48d697f30aecbfd519255a1b980a.png" src="_images/e9191f010673bad531426d947c2c903c191f48d697f30aecbfd519255a1b980a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
