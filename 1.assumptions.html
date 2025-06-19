@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>The Linear Model Assumptions &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1.assumptions';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Checking the Assumptions" href="2.checking-assumptions.html" />
+    <link rel="prev" title="Introduction" href="0.intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Linear Model Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.checking-assumptions.html">Checking the Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.outcome-transforms.html">Transforming the Outcome Variable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F1.assumptions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/1.assumptions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Linear Model Assumptions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nature-of-assumptions-visual-checks-and-tests">The Nature of Assumptions, Visual Checks and Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-visual-assessments">Using Visual Assessments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-tests-of-assumptions-are-flawed">Why Tests of Assumptions are Flawed</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-non-normal-distribution-in-a-small-sample">Example 1: Non-normal Distribution in a Small Sample</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-trivial-depatures-from-normality-in-a-large-sample">Example 2: Trivial Depatures from Normality in a Large Sample</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-assumptions">The Regression Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-outcome-is-a-continuous-random-variable">(1) The Outcome is a Continuous Random Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-distribution-of-the-errors-is-normal">(2) The Distribution of the Errors is Normal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-relationship-is-a-straight-line">(4) The Relationship is a Straight Line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The variance is constant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-checks-of-the-regression-assumptions">Visual Checks of the Regression Assumptions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-linear-model-assumptions">
+<h1>The Linear Model Assumptions<a class="headerlink" href="#the-linear-model-assumptions" title="Link to this heading">#</a></h1>
+<p>Last week, we outlined the modelling framework behind both simple and multiple regression. In doing so, we made a number of assumptions that allowed for this framework to be tractable and useable. However, we never acually checked whether any of these assumptions actually held when using our example data. In this section, we will discuss each of the assumptions we made, as well as ways of checking those assumptions. In the rest of this lesson, we will discuss tactics that can be employed when those assumptions appear to be violated.</p>
+<div class="tip admonition">
+<p class="admonition-title">The Generality of Assumptions</p>
+<p>One of the bigger benefits of using a linear models framework is that, irrespective of the model form, the assumptions remain the same. As such, even though we will be framing these assumptions in relation to muliple regression, all the methods we will discuss are also directly relevant to <span class="math notranslate nohighlight">\(t\)</span>-tests, ANOVA and ANCOVA models. This means we can use the same diagnostics to check the same assumptions across any model. Practically, this means we only need to learn <em>one</em> set of assumptions and then can apply them to any model we choose. This is much more efficient than the typical approach of listing assumptions separately for regression, ANOVA and ANCOVA models. Furthermore, the solutions used to accommodate violations of these assumptions can be applied across regression, ANOVA and ANCOVA models, meaning that this lesson should be seen as a flexible set of tools that can be used for <em>all</em> basic linear models, not just regression models.</p>
+</div>
+<section id="the-nature-of-assumptions-visual-checks-and-tests">
+<h2>The Nature of Assumptions, Visual Checks and Tests<a class="headerlink" href="#the-nature-of-assumptions-visual-checks-and-tests" title="Link to this heading">#</a></h2>
+<p>Before discussion the assumptions themseleves, it is important that we establish a suitable perspective on assumptions and assumption testing. Typically, in the behavioural sciences, assumptions are not often adequately checked. In part, this reflects a lack of appreciation for the importance of assumptions and, in part, reflects a lack of confidence around what to do if the assumptions are violated. When assumptions <em>are</em> tested, this is typically via <em>inferential tests</em>. In this course, we are going to advise against relying on tests for assessing assumptions. Instead, our focus will be on visual inspection of the assumptions. One of the most important reasons for this is that assumptions should not be considered as black-and-white assessments of <em>met</em> or <em>violated</em>. In reality, no data will ever be perfectly normally distributed. No data will have identical variances across its range. No relationship will be a perfect straight line. Assumptions are an idealisation of reality for the purpose of mathematical simplicity. Our job is to determine whether the data are <em>close enough</em> for our conclusions to be accurate. If they are not close enough, then we need to either try and make adjustments to the data or model, or we have to accept the consequences of these violations. We can still use models that appear to not meet all the assumptions, but this weakens the model’s accuracy and more care must be taken when reaching conclusions. Real world data is messy and so it is important to maintain both an appropriate perspective on the role of assumptions, as well as having enough tools available to deal with data that does not adequately adhere to those assumptions.</p>
+<section id="using-visual-assessments">
+<h3>Using Visual Assessments<a class="headerlink" href="#using-visual-assessments" title="Link to this heading">#</a></h3>
+</section>
+<section id="why-tests-of-assumptions-are-flawed">
+<h3>Why Tests of Assumptions are Flawed<a class="headerlink" href="#why-tests-of-assumptions-are-flawed" title="Link to this heading">#</a></h3>
+<p>One of the reasons why researchers are sometimes uncomfortable with visual assessments is because they think that the interpetion is too subjective. Of course, there is a subjective element to deciding whether the assumptions appear adequately met, however, the belief that there is some objective alternative to determine this is flawed. Because inferential tests of these assumptions exist, there is a belief that these methods therefore provide a way of determining whether the assumptions are violated that is free from researcher bias. However, these tests are flawed. In the previous section, we discussed the problems with <span class="math notranslate nohighlight">\(p\)</span>-values and these issues carry-over into the world of inferential tests of model assumptions. If we do not believe that data will ever be <em>perfectly</em> normally distribution, or have <em>exactly the same</em> variance across the range of a variable, then the null hypothesis is known <em>a priori</em> to not be true. So why are we testing it? In this situation, the <span class="math notranslate nohighlight">\(p\)</span>-value is just a point on a power curve and all we need is enough data in order to conclude a significant violation of the assumption. The better perspective is to ask the question “are these data close enough to these ideal conditions for us to trust the <span class="math notranslate nohighlight">\(p\)</span>-value calculation?” Yet this is not the question that inferential tests ask. Furthermore, tests of assumptions require assumptions themseleves in order to calculate <span class="math notranslate nohighlight">\(p\)</span>-values. Although rarely checked, the use of inferential tests for this purpose is then somewhat circular. Do we need inferential tests to check the assumptions of the inferential tests of assumptions?</p>
+<section id="example-1-non-normal-distribution-in-a-small-sample">
+<h4>Example 1: Non-normal Distribution in a Small Sample<a class="headerlink" href="#example-1-non-normal-distribution-in-a-small-sample" title="Link to this heading">#</a></h4>
+<p>We can demonstrate some of these issue using simulated data. Here, we will use the Shapiro-Wilk test of normality to illustrate some problems. Firstly, we will generate a small sample of data from a <span class="math notranslate nohighlight">\(t\)</span>-distribution. Importantly, this is <em>not</em> a normal distribution and so if the test is objective and correct it should tell us that there is a significant depature from normality. Let us see what happens.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">15</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+
+<span class="c1"># Run Shapiro-Wilk test</span>
+<span class="n">shap.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">shapiro.test</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
+
+<span class="c1"># Visualisation</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Small Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Shapiro-Wilk normality test
+
+data:  y
+W = 0.95294, p-value = 0.5719
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png"><img alt="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png" src="_images/79367e48e88203282e2c9a4f2719e9ca975127fd664d40a45eb6f4213528dbe1.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>The test has produced a <em>non-significant</em> <span class="math notranslate nohighlight">\(p\)</span>-value, which tells us that the test has failed to reject the null hypothesis that our data comes from a normal distribution. This would usually be interpreted as <em>no significant depature from normality</em> The important point is that we know this is wrong. Would we have noticed this lack of normality from the visualisation? Looking the plot, we can see that the small sample actually makes it quite difficult to determine the distribution. Based on this, we should at least be wary of accepting any particular shape, but this is not a subtlety that can be conveyed with the test. Importantly, the inferential test has not provided us with a correct objective alternative to our “subjective” interpretation of the plots. So what is the point of it?</p>
+</section>
+<section id="example-2-trivial-depatures-from-normality-in-a-large-sample">
+<h4>Example 2: Trivial Depatures from Normality in a Large Sample<a class="headerlink" href="#example-2-trivial-depatures-from-normality-in-a-large-sample" title="Link to this heading">#</a></h4>
+<p>Let us see another example. This time we generate a large sample with a trivial depature from normality. The way we do this is by mixing together two normal distributions such that the overall distribution is only slightly non-normal. The aim is to do this in such a subtle way that it would have no practical implications. Given that we do not think data will ever <em>perfectly</em> ahere to a normal distribution, this is a situation where the data are close enough to the ideal for us to be confident that <span class="math notranslate nohighlight">\(p\)</span>-values can be used accurately. But let us see what the test says.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2000</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span>
+<span class="w">       </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+
+<span class="c1"># Run Shapiro-Wilk tests</span>
+<span class="n">shap.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">shapiro.test</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
+
+<span class="c1"># Visualisation</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Large Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Shapiro-Wilk normality test
+
+data:  y
+W = 0.99836, p-value = 0.04526
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png"><img alt="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png" src="_images/958443cba0b5e587bfe6598c3af6ef89913184267407ecf13dd26fed8c2d1cc8.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>Here, the test says that there is a <em>significant</em> violation of normality. The test is not wrong, however, looking at the histogram it is very clear that whatever violation there has been is very trivial and that, practically, the distribution looks as close to normal as we are ever likely to see with real data. Based on this histogram, any attempt to correct for non-normality would likely be taken as wildly inappropriate and unnecessary. However, if we just believed the test then we would be off on a wild goose chase of trying to accomodate this violation. Again, visualising this assumption gives us the richest information for deciding how close to normal the distribution is and how comfortable we are relying on results that depend upon this assumption.</p>
+</section>
+</section>
+</section>
+<section id="the-regression-assumptions">
+<h2>The Regression Assumptions<a class="headerlink" href="#the-regression-assumptions" title="Link to this heading">#</a></h2>
+<p>Before moving on, it will be useful to take a step back and examine all the <em>assumptions</em> that are inherent in the model we have specified. This is quite an important exericse, because the assumptions of regression often seem somewhat esoteric when taught outside the framework of statistical models. However, we should be able to derive all of them by simply examining the model equations given above. This is the same approach we will take when we also examine models such as ANOVA and ANCOVA, which will allow us to see that the assumptions <em>are always the same</em> when working with these forms of linear models. This means you only need to learn one set of assumptions and they can be applied equivalently across lots of different models. We look at this in more detail next week, so for now we will just have a brief discussion of each.</p>
+<p>To make this discussion easier, we will restate the most common form of the simple regression model:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+    y_{i}   &amp;= \beta_{0} + \beta_{1}x_{i} + \epsilon_{i} \\
+    \epsilon_{i} &amp;\sim \mathcal{N}\left(0,\sigma^{2}\right),
+\end{align*}
+\end{split}\]</div>
+<section id="the-outcome-is-a-continuous-random-variable">
+<h3>(1) The Outcome is a Continuous Random Variable<a class="headerlink" href="#the-outcome-is-a-continuous-random-variable" title="Link to this heading">#</a></h3>
+<p>The first core assumption that we made is that the outcome variable is a continuous random variable. As such, the <em>data-generating process</em> can be captured by a continuous probability distribution. This means our outcome variables must, in theory, have an infinite number of possibilities within a given range. Refer back to the lesson last week for more details on this, as well as some of the subtlties around psychologists using discrete measures and treating them as continuous.</p>
+</section>
+<section id="the-distribution-of-the-errors-is-normal">
+<h3>(2) The Distribution of the Errors is Normal<a class="headerlink" href="#the-distribution-of-the-errors-is-normal" title="Link to this heading">#</a></h3>
+<p>Following from the first assumption, we have chosen the normal distribution as the population distribution. This can be stated in two ways. The first is as a <em>marginal</em> distribution of <span class="math notranslate nohighlight">\(y\)</span>, given a specific value of <span class="math notranslate nohighlight">\(x\)</span>. This is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right)
+\]</div>
+<p>This assumption is important to understand, not least because many people <em>get it wrong</em>. As should be clear from the equation above, the simple regression model does <em>not</em> assume that the entire outcome variable <span class="math notranslate nohighlight">\(y\)</span> is normally distributed. Instead, the assumption is that the distribution of <span class="math notranslate nohighlight">\(y\)</span> <em>at each value of <span class="math notranslate nohighlight">\(x\)</span></em> is normally distributed. Considering only the distribution of a <em>subset</em> of <span class="math notranslate nohighlight">\(y\)</span> values is known as the <em>marginal</em> distribution of <span class="math notranslate nohighlight">\(y\)</span> given certain values of <span class="math notranslate nohighlight">\(x\)</span>. However, as we will see next week, this is difficult to work with practically. As such, it is much easier to work with the second form that this assumption takes, which is that the <em>errors</em> are <em>identically distributed</em> with mean 0, expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \sim \mathcal{N}\left(0,\sigma^{2}\right).
+\]</div>
+<p>Every error is therefore drawn from <em>the same distribution</em>. In other words, the errors represents a <em>sample</em> from a single distribution. Because of this, we can collapse all the errors together and just examine a <em>single distribution</em>. Again, refer back to the content from last week if you need a reminder on why this assumption can be stated in two different ways.</p>
+</section>
+<section id="the-data-errors-are-uncorrelated">
+<h3>(3) The Data/Errors are Uncorrelated<a class="headerlink" href="#the-data-errors-are-uncorrelated" title="Link to this heading">#</a></h3>
+<p>… Typically, this is not actually an assumption we test, rather we infer it based on the context of the data collection. For instance, in the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, there is no reason to think that the measurement of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> from one car would impact the measurement from any other car. We therefore assume that all cars are independent and there will be no correlation. However, if we made the same measurement multiple times <em>on the same car</em>, then we would probably assume some degree of correlation (this would be an example of <em>repeated measurements</em>). Similarly, if we made these measurements over certain time-intervals, then the data would represent a <em>time-series</em>, which then would have a very specific correlation structure where values closer in time are more similar than those measured further away. The same is true of working with human subjects. When each measurement represents a different subject, we will typically assume independence. However, multiple measures of the same subject imply some degree of correlation</p>
+<div class="tip admonition">
+<p class="admonition-title">i.i.d. Errors</p>
+<p>One of the more important assumptions about bothe the data and errors in a simple regression model is that they are <em>uncorrelated</em>. Formally, we can write</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Corr}\left(y_{i},y_{i^{\prime}}\right) = \text{Corr}\left(\epsilon_{i},\epsilon_{i^{\prime}}\right) = 0.
+\]</div>
+<p>Here, the <em>prime</em> symbol (<span class="math notranslate nohighlight">\(\prime\)</span>) just means “a different value of <span class="math notranslate nohighlight">\(i\)</span>”. So <span class="math notranslate nohighlight">\(\text{Corr}\left(y_{i},y_{i^{\prime}}\right)\)</span> just means “the correlation between two different values of <span class="math notranslate nohighlight">\(i\)</span>”. So, in words, this is saying that the correlation between two different values of <span class="math notranslate nohighlight">\(y\)</span> is the same as the correlation between the same values of <span class="math notranslate nohighlight">\(\epsilon\)</span>, which is equal to 0. This effectively tells us that the values of the outcome/errors <em>are not correlated</em>.</p>
+<p>The reason this is important is because correlation adds quite a lot of complexity to modelling the data. As such, the basic linear models framework assumes there is none in order to make things simpler. Unfortunately, this precludes several different types of data. Generally speaking, we do not test for correlation, rather we assume it is present or not present based on the experimental design. For instance, if each datapoint represents a measurement from a <em>different</em> subject (a <em>between-subjects</em> design), then it is reasonable to assume that the data will not be correlated. However, if each datapoint represents a measurement from <em>the same</em> subject (a <em>within-subjects</em> design), then it is reasonable to assume that data from the same subject <em>will</em> be correlated. As such, if we are assuming no correlation then the linear model is not suitable for <em>repeated measurements</em> or <em>longitudinal</em> data. We will see how to cope with these forms data later in the course when we get to <em>mixed-effects</em> models. But, for the time being, we will only be working with data assumed to be <em>independent</em>.</p>
+<p>So, the linear model assumes that both the raw data and the errors are <em>independant</em>. However, another useful element of the errors is that they are <em>identically distributed</em>. Which is to say that each error is conceptualised as drawn from the same distribution with the same mean and the same variance. This is not true of the outcome variable, because the mean depends upon the values of the predictors. We will see the utility of this next week when we cover diagnostic measures for the linear model. However, for the moment, it is worth noting that the errors are therefore assumed to be <em>independent</em> and <em>identically distributed</em>, which is a condition often shortened to i.i.d. and expressed using the notation</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{i.i.d.}{\sim} \mathcal{N}\left(0,\sigma^{2}\right).
+\]</div>
+<p>So the i.i.d. assumption for the errors captures the idea that all the errors are random draws from the <em>same</em> distribution, and that there is no correlation between them.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
+<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
+\]</div>
+<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">The Complexity of Repeated Measurements</p>
+<p>As indicated above, the typical linear regression model is <em>not</em> suitable for repeated measurements. However, these forms of experimental design are so common in Experimental Psychology that they are usually introduced very early on, without much appreciation for the complexity they add to the model. Because of this, everything we cover in this unit will only be applicable to <em>independent measures</em> deisgns (also known as <em>between-subjects</em> experiments). We will cover how to deal with repeated measurements in the context of <em>mixed-effects models</em> later on the course. However, we have a lot of ground to cover before we get there.</p>
+</div>
+</section>
+<section id="the-relationship-is-a-straight-line">
+<h3>(4) The Relationship is a Straight Line<a class="headerlink" href="#the-relationship-is-a-straight-line" title="Link to this heading">#</a></h3>
+<p>Implicit in the mean function we have specified is the assumption that the relationship in the population that generated our data is a <em>straight line</em>. This is not something we can every truly know without access to the whole population. However, we need to examine whether a straight line appears <em>reasonable</em>, given the data we have available. This involves examining the fit of the line visually. As we will see next week, this can either be done using just the raw data or, more usefully, can be assessed using some special plots using the residuals.</p>
+</section>
+<section id="the-variance-is-constant">
+<h3>(5) The variance is constant<a class="headerlink" href="#the-variance-is-constant" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="visual-checks-of-the-regression-assumptions">
+<h2>Visual Checks of the Regression Assumptions<a class="headerlink" href="#visual-checks-of-the-regression-assumptions" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0.intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.checking-assumptions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Checking the Assumptions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nature-of-assumptions-visual-checks-and-tests">The Nature of Assumptions, Visual Checks and Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-visual-assessments">Using Visual Assessments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-tests-of-assumptions-are-flawed">Why Tests of Assumptions are Flawed</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-non-normal-distribution-in-a-small-sample">Example 1: Non-normal Distribution in a Small Sample</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-trivial-depatures-from-normality-in-a-large-sample">Example 2: Trivial Depatures from Normality in a Large Sample</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-assumptions">The Regression Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-outcome-is-a-continuous-random-variable">(1) The Outcome is a Continuous Random Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-distribution-of-the-errors-is-normal">(2) The Distribution of the Errors is Normal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-relationship-is-a-straight-line">(4) The Relationship is a Straight Line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The variance is constant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-checks-of-the-regression-assumptions">Visual Checks of the Regression Assumptions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
