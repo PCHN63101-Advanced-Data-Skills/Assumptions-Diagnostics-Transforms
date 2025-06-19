@@ -4,7 +4,7 @@
 format: jb-book
 root: 0.intro
 chapters:
-- file: 1.inference
+- file: 1.assumptions
 - file: 2.checking-assumptions
 - file: 3.outcome-transforms
 - file: 4.predictor-transforms
