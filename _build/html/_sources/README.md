@@ -1,2 +1,2 @@
-# Inference, Diagnostics and Transformations
-A lesson on statistical inference within the linear mode, evaluating the model assumptions and variable transformations.
+# Assumptions, Diagnostics and Transformations
+A lesson on evaluating the linear model assumptions and performing transformations.
