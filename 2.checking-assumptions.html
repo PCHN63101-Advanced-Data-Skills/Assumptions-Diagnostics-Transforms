@@ -186,7 +186,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Checking the Assumptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.outcome-transforms.html">Transforming the Outcome Variable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Generalised Least Squares (GLS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -360,7 +360,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -376,6 +378,35 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heteroscedasticity">Heteroscedasticity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -387,6 +418,90 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="checking-the-assumptions">
 <h1>Checking the Assumptions<a class="headerlink" href="#checking-the-assumptions" title="Link to this heading">#</a></h1>
+<section id="data-features-that-may-invalidate-the-model">
+<h2>Data Features that May Invalidate the Model<a class="headerlink" href="#data-features-that-may-invalidate-the-model" title="Link to this heading">#</a></h2>
+<section id="outliers">
+<h3>Outliers<a class="headerlink" href="#outliers" title="Link to this heading">#</a></h3>
+<p>Can distort estimates, inflate variance, and affect inference.</p>
+</section>
+<section id="high-leverage-points">
+<h3>High Leverage Points<a class="headerlink" href="#high-leverage-points" title="Link to this heading">#</a></h3>
+<p>Data points with unusual predictor values that can overly influence the fit.</p>
+</section>
+<section id="heteroscedasticity">
+<h3>Heteroscedasticity<a class="headerlink" href="#heteroscedasticity" title="Link to this heading">#</a></h3>
+<p>May show up as a fan-shaped residual plot.</p>
+</section>
+<section id="multicollinearity">
+<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
+<p><em>Perfect</em> multicollinearity would cause the model estimation to <em>fail</em>. So, in <code class="docutils literal notranslate"><span class="pre">R</span></code>, when we have two variables that are perfectly correlated, one will be effectively removed and all its associated estimates set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, as we can see below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">mod</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + wt.copy, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5432 -2.3647 -0.1252  1.4096  6.8727 
+
+Coefficients: (1 not defined because of singularities)
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+wt.copy           NA         NA      NA       NA    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.046 on 30 degrees of freedom
+Multiple R-squared:  0.7528,	Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that a warning had been generated saying that one coefficient is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">defined</span> <span class="pre">because</span> <span class="pre">of</span> <span class="pre">singularities</span></code>. This is an obvious problem that has been dealt with gracefully. The more insidious issue is when we have multicollinearity that is <em>high</em>, rather than <em>perfect</em>.</p>
+</section>
+</section>
+<section id="model-outputs-for-checking-assumptions">
+<h2>Model Outputs for Checking Assumptions<a class="headerlink" href="#model-outputs-for-checking-assumptions" title="Link to this heading">#</a></h2>
+<section id="residuals">
+<h3>Residuals<a class="headerlink" href="#residuals" title="Link to this heading">#</a></h3>
+</section>
+<section id="standardised-residuals">
+<h3>Standardised Residuals<a class="headerlink" href="#standardised-residuals" title="Link to this heading">#</a></h3>
+</section>
+<section id="predicted-values">
+<h3>Predicted Values<a class="headerlink" href="#predicted-values" title="Link to this heading">#</a></h3>
+</section>
+<section id="leverage-values">
+<h3>Leverage Values<a class="headerlink" href="#leverage-values" title="Link to this heading">#</a></h3>
+</section>
+<section id="the-variance-inflation-factor-vif">
+<h3>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="standard-diagnostic-plots">
+<h2>Standard Diagnostic Plots<a class="headerlink" href="#standard-diagnostic-plots" title="Link to this heading">#</a></h2>
+<section id="residual-vs-fitted-plot">
+<h3>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h3>
+</section>
+<section id="q-q-normal-plot">
+<h3>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h3>
+</section>
+<section id="scale-vs-location-plot">
+<h3>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h3>
+</section>
+<section id="residuals-vs-leverage-plot">
+<h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
+<p>Cook’s distance…</p>
 <div class="tip admonition">
 <p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
 <p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
@@ -396,6 +511,8 @@ document.write(`
 \]</div>
 <p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
 </div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -452,6 +569,42 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heteroscedasticity">Heteroscedasticity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
