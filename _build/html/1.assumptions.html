@@ -186,7 +186,7 @@
 <li class="toctree-l1"><a class="reference internal" href="2.checking-assumptions.html">Checking the Assumptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.outcome-transforms.html">Transforming the Outcome Variable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Generalised Least Squares (GLS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -394,6 +394,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-relationship-is-a-straight-line">(4) The Relationship is a Straight Line</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The Variance is Constant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-assumptions">Summary of Assumptions</a></li>
 </ul>
 </li>
 </ul>
@@ -564,6 +565,10 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right).
 </section>
 <section id="the-variance-is-constant">
 <h3>(5) The Variance is Constant<a class="headerlink" href="#the-variance-is-constant" title="Link to this heading">#</a></h3>
+</section>
+<section id="summary-of-assumptions">
+<h3>Summary of Assumptions<a class="headerlink" href="#summary-of-assumptions" title="Link to this heading">#</a></h3>
+<p>It is important to note that alongside <em>assumptions</em> we also have potential <em>problems</em> with our data. For instance, outliers or issues of multicollinearity. We will discuss these a little later in the lesson, but it is useful to draw a distinction between the assumptions made by our model and any problems associated with our data. There is nothing in the model equation that refers to outliers or issues with the predictors and so it is useful to divorce the assumptions made by the model so that the calculations are accurate from real-world problems with the data that can bias these calculations. As we will come to see, the assumption visualisations will often provide a window into both aspects.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="prime-foot" role="note">
@@ -654,6 +659,7 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right).
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-errors-are-uncorrelated">(3) The Data/Errors are Uncorrelated</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-relationship-is-a-straight-line">(4) The Relationship is a Straight Line</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-is-constant">(5) The Variance is Constant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-assumptions">Summary of Assumptions</a></li>
 </ul>
 </li>
 </ul>
