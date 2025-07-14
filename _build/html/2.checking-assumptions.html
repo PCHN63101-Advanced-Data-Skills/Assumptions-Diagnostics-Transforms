@@ -469,22 +469,22 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
 <span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">wt</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
-<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">wt.copy</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.8743679
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.9734991
 </pre></div>
 </div>
 </div>
 </div>
-<p>So, we can see that <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have a correlation of <span class="math notranslate nohighlight">\(r = 0.87\)</span>, which would be considered very high. Now let us see what happens when these are both in the same model</p>
+<p>So, we can see that <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have a correlation of <span class="math notranslate nohighlight">\(r = 0.97\)</span>, which would be considered very high. Now let us see what happens when these are both in the same model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -498,9 +498,9 @@ Residuals:
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  37.5609     1.9384  19.377  &lt; 2e-16 ***
-wt           -6.0310     1.1628  -5.187 1.51e-05 ***
-wt.copy       0.6236     0.9235   0.675    0.505    
+(Intercept)   37.561      1.938  19.377   &lt;2e-16 ***
+wt            -6.966      2.467  -2.824   0.0085 ** 
+wt.copy        1.559      2.309   0.675   0.5049    
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
@@ -511,7 +511,7 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 </div>
 </div>
-<p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.56 to 1.16. This is effectively a <em>doubling</em> of uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic effectively <em>half</em> its original value, going from -9.559 to -5.187. This is often referred to as the standard errors <em>blowing-up</em>, due to the increased uncertainty that the correlation introduces. We will discuss ways of diagnosing this below and then will discuss some “solutions” later in the lesson.</p>
+<p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.559 to 2.467. This is effectively a <em>four-fold</em> increase in uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic close to <em>one third</em> of its original value, going from -9.559 to -2.824. This is often referred to as the standard errors <em>blowing-up</em>, due to the increased uncertainty that the correlation introduces. We will discuss ways of diagnosing this below and then will discuss some “solutions” later in the lesson.</p>
 </section>
 </section>
 <section id="model-outputs-for-checking-assumptions">
@@ -530,6 +530,26 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h3>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       wt   wt.copy        hp 
+21.917371 19.766097  1.826262 
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general, we can take:</p>
+<ul class="simple">
+<li><p>VIF = 1 - No multicollinearity</p></li>
+<li><p>1 &lt; VIF &lt; 5 - Moderate multicollinearity. Some caution may be needed, but not necessarily a problem for the model</p></li>
+<li><p>VIF &gt; 5 - Very high multicollinearity. Almost certainly an issues and some mitigation will be needed.</p></li>
+</ul>
 </section>
 </section>
 <section id="standard-diagnostic-plots">
