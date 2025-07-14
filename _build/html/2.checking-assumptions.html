@@ -546,9 +546,9 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 <p>In general, we can take:</p>
 <ul class="simple">
-<li><p>VIF = 1 - No multicollinearity</p></li>
-<li><p>1 &lt; VIF &lt; 5 - Moderate multicollinearity. Some caution may be needed, but not necessarily a problem for the model</p></li>
-<li><p>VIF &gt; 5 - Very high multicollinearity. Almost certainly an issues and some mitigation will be needed.</p></li>
+<li><p>VIF = 1 — No multicollinearity</p></li>
+<li><p>1 &lt; VIF &lt; 5 — Moderate multicollinearity. Some caution may be needed, but not necessarily a problem for the model. We might expect some increase in the standard error compared to no multicollinearity, especially at the higher end, but not to the extent where we could consider it to have “blown-up”.</p></li>
+<li><p>VIF &gt; 5 — Very high multicollinearity. Standard errors will be much larger than usual and inference will become very unstable. Almost certainly an issues and some mitigation will be needed<a class="footnote-reference brackets" href="#vif-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
 </ul>
 </section>
 </section>
@@ -575,6 +575,13 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 \]</div>
 <p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
 </div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="vif-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Note that some authors suggest VIF=10 to be the marker for concerning multicollinearity. Here, we would recommend the more cautious approach of using VIF=5.</p>
+</aside>
+</aside>
 </section>
 </section>
 </section>
