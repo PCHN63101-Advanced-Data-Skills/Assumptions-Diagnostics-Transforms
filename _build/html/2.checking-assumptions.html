@@ -16,30 +16,33 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -66,6 +69,7 @@
     <link rel="prev" title="The Linear Model Assumptions" href="1.assumptions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -81,19 +85,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -101,7 +94,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -109,8 +101,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -126,7 +118,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -156,21 +149,17 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -186,7 +175,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Checking the Assumptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.outcome-transforms.html">Transforming the Outcome Variable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Generalised Least Squares (GLS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Changing the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -196,9 +185,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -342,24 +336,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -387,13 +373,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-data">Missing Data</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
 </ul>
 </li>
@@ -420,13 +408,23 @@ document.write(`
 <p>Now that we have established the nature of testing assumptions visually, as well as introducing the core assumptions made by a linear model, we can start investigating <em>how</em> to check the assumptions. Before getting there, we first need to discuss some data features that are not assumptions per-se, but which can point to invalid assumptions, or can unduly influence the model fit. We will then look at information we can extract from the model to help us assess whether these data features are present, as well as helping us assess the model assumptions. Finally, we will examine a standard selection of plots that can be used for diagnostic purposes.</p>
 <section id="data-features-that-may-invalidate-the-model">
 <h2>Data Features that May Invalidate the Model<a class="headerlink" href="#data-features-that-may-invalidate-the-model" title="Link to this heading">#</a></h2>
+<p>To begin with, we will discuss certain features of data that we need to be aware of. In some cases, these can point to potential assumption violations, but in others these can simply be aspects that disort or overly-influence the results of our models.</p>
 <section id="outliers">
 <h3>Outliers<a class="headerlink" href="#outliers" title="Link to this heading">#</a></h3>
-<p>Can distort estimates, inflate variance, and affect inference.</p>
+<p>Outliers are datapoints that sit further away from some reference point than we would expect. These are sometimes termed <em>extreme</em> datapoints. Such data are problematic because they can distort estimates, inflate variance and affect inference. For instance, data that sits far away from other datapoints will have the effect of <em>pulling</em> a mean towards it, biasing the ability of the mean to accurately reflect the data as a whole.</p>
+<p>In the context of our model, an outlier is a point that <em>does not fit</em>, in the sense that it is far away from our prediction. Thus, the point has a <em>large residual</em>. There could, of course, be many reasons for this. It could indicate a problem with out model, implying that the point <em>would fit</em> if we chose a different mean function. It could also indicate a problem with our data, implying there was some mistake when the data was collected. However, it is important to remember that an outlier does not make the data <em>wrong</em> and that an outlier is only defined as such <em>relative</em> to our model prediction. The same data may not be an outlier in another model. Furthermore, changing the model fit via removal of outlying points may end up making other points outliers. Indeed, <em>removal</em> of outliers is the most extreme of solutions and should be considered a <em>last resort</em><a class="footnote-reference brackets" href="#nasa-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>We will discuss the definition and identification of outliers further below. However, it is worth considering what should be done if a suspected outlier is detected:</p>
+<ol class="arabic simple">
+<li><p>Check the data itself to make sure there has been no data-entry mistakes. For instance, placing a decimal-point in the wrong position, giving rise to an erroneously small or large value.</p></li>
+<li><p>If the data entry seems correct, consider the physical context. Although the value may be extreme relative to the rest of the data, is it unreasonably so? For instance, a very large score on a depression questionnaire must be assumed genuine, unless you have evidence that this particular subject was completing the questionnaire incorrectly. We will see ways later to assess whether there are unusual <em>combinations</em> of predictor values, which <em>could</em> point to such a situation.</p></li>
+<li><p>If you have good evidence to indicate that the data is wrong, then removal would be appropriate. However, this is rarely the case and outliers should not just be removed for the sake of it.</p></li>
+<li><p>If the datapoints are extreme, but removal is not justified, a method such as <em>robust regression</em> can be used, as discussed at the end of this lesson. What should be avoided is the classic Psychology trick of making an outlier less extreme by changing its value to lie just above the second most extreme point in the data. This is data tampering and should be avoided at all costs.</p></li>
+</ol>
+<p>The main point of all this is that outliers are <em>relative</em> to the model, are not automatically <em>wrong</em> and must be considered <em>in context</em>. Removal should be a last resort and data tampering should be avoided. If we have a point that does not fit the model, we should consider why the model may be wrong first, rather than the data. For many research areas, the most useful points are those that lie in the extremes. If we are interested in depression then surely the <em>most</em> depressed subjects are of interest, even if they are rarer than the mild or moderate cases. In many instances, we simply need to accept that outliers are there and <em>could</em> be influencing the model, but that we may have no real justification for amputation. Hacking at our data to make it fit our model is <em>not</em> the right way round.</p>
 </section>
 <section id="high-leverage-points">
 <h3>High Leverage Points<a class="headerlink" href="#high-leverage-points" title="Link to this heading">#</a></h3>
-<p>Data points with unusual predictor values that can overly influence the fit.</p>
+<p>Data points with unusual predictor values that can overly influence the fit. … Note that a point with high leverage does not have to be an outlier. Similarly, an outlier does not automatically become a point with high leverage. Of course, the most concerning datapoints are those that are <em>both</em> outliers and have high leverage. This combination can be quantified using a measure known as <em>Cook’s Distance</em>, which we will discuss further below.</p>
 </section>
 <section id="multicollinearity">
 <h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
@@ -513,6 +511,10 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 <p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.559 to 2.467. This is effectively a <em>four-fold</em> increase in uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic close to <em>one third</em> of its original value, going from -9.559 to -2.824. This is often referred to as the standard errors <em>blowing-up</em>, due to the increased uncertainty that the correlation introduces. We will discuss ways of diagnosing this below and then will discuss some “solutions” later in the lesson.</p>
 </section>
+<section id="missing-data">
+<h3>Missing Data<a class="headerlink" href="#missing-data" title="Link to this heading">#</a></h3>
+<p>We also need to consider the <em>reason</em> for the data being missing. For instance, if we are studing a condition like anxiety, it could be that the <em>most</em> anxious subjects are the ones who will not return for the follow-up visit. In this case, there is a systematic reason for the data being missing. Not only does this make imputation of missing data inappropriate, it also means that any analysis of complete data will be biased towards those with less severe anxiety. Again, the context is the most important element here for interpretation.</p>
+</section>
 </section>
 <section id="model-outputs-for-checking-assumptions">
 <h2>Model Outputs for Checking Assumptions<a class="headerlink" href="#model-outputs-for-checking-assumptions" title="Link to this heading">#</a></h2>
@@ -522,11 +524,14 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 <section id="standardised-residuals">
 <h3>Standardised Residuals<a class="headerlink" href="#standardised-residuals" title="Link to this heading">#</a></h3>
 </section>
-<section id="predicted-values">
-<h3>Predicted Values<a class="headerlink" href="#predicted-values" title="Link to this heading">#</a></h3>
-</section>
 <section id="leverage-values">
 <h3>Leverage Values<a class="headerlink" href="#leverage-values" title="Link to this heading">#</a></h3>
+</section>
+<section id="studentised-residuals">
+<h3>Studentised Residuals<a class="headerlink" href="#studentised-residuals" title="Link to this heading">#</a></h3>
+</section>
+<section id="predicted-values">
+<h3>Predicted Values<a class="headerlink" href="#predicted-values" title="Link to this heading">#</a></h3>
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h3>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h3>
@@ -548,7 +553,7 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 <ul class="simple">
 <li><p>VIF = 1 — No multicollinearity</p></li>
 <li><p>1 &lt; VIF &lt; 5 — Moderate multicollinearity. Some caution may be needed, but not necessarily a problem for the model. We might expect some increase in the standard error compared to no multicollinearity, especially at the higher end, but not to the extent where we could consider it to have “blown-up”.</p></li>
-<li><p>VIF &gt; 5 — Very high multicollinearity. Standard errors will be much larger than usual and inference will become very unstable. Almost certainly an issues and some mitigation will be needed<a class="footnote-reference brackets" href="#vif-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>VIF &gt; 5 — Very high multicollinearity. Standard errors will be much larger than usual and inference will become very unstable. Almost certainly an issues and some mitigation will be needed<a class="footnote-reference brackets" href="#vif-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
 </ul>
 </section>
 </section>
@@ -577,8 +582,12 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="vif-foot" role="note">
+<aside class="footnote brackets" id="nasa-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.utstat.toronto.edu/~brunner/books/LinearModelsWithR.pdf">Faraway (2005)</a> provides a real-world example of why this is <em>not</em> good practise via the story of how the discovery of the hole in the Ozone layer was delayed by several years because NASA’s automatic data analysis algorithms were discarding very low readings as they were assumed to be mistakes.</p>
+</aside>
+<aside class="footnote brackets" id="vif-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>Note that some authors suggest VIF=10 to be the marker for concerning multicollinearity. Here, we would recommend the more cautious approach of using VIF=5.</p>
 </aside>
 </aside>
@@ -641,7 +650,8 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -654,13 +664,15 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-data">Missing Data</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values">Predicted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
 </ul>
 </li>
@@ -719,8 +731,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
