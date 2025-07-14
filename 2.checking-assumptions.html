@@ -386,7 +386,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heteroscedasticity">Heteroscedasticity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
 </ul>
 </li>
@@ -418,6 +417,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="checking-the-assumptions">
 <h1>Checking the Assumptions<a class="headerlink" href="#checking-the-assumptions" title="Link to this heading">#</a></h1>
+<p>Now that we have established the nature of testing assumptions visually, as well as introducing the core assumptions made by a linear model, we can start investigating <em>how</em> to check the assumptions. Before getting there, we first need to discuss some data features that are not assumptions per-se, but which can point to invalid assumptions, or can unduly influence the model fit. We will then look at information we can extract from the model to help us assess whether these data features are present, as well as helping us assess the model assumptions. Finally, we will examine a standard selection of plots that can be used for diagnostic purposes.</p>
 <section id="data-features-that-may-invalidate-the-model">
 <h2>Data Features that May Invalidate the Model<a class="headerlink" href="#data-features-that-may-invalidate-the-model" title="Link to this heading">#</a></h2>
 <section id="outliers">
@@ -428,13 +428,9 @@ document.write(`
 <h3>High Leverage Points<a class="headerlink" href="#high-leverage-points" title="Link to this heading">#</a></h3>
 <p>Data points with unusual predictor values that can overly influence the fit.</p>
 </section>
-<section id="heteroscedasticity">
-<h3>Heteroscedasticity<a class="headerlink" href="#heteroscedasticity" title="Link to this heading">#</a></h3>
-<p>May show up as a fan-shaped residual plot.</p>
-</section>
 <section id="multicollinearity">
 <h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
-<p><em>Perfect</em> multicollinearity would cause the model estimation to <em>fail</em>. So, in <code class="docutils literal notranslate"><span class="pre">R</span></code>, when we have two variables that are perfectly correlated, one will be effectively removed and all its associated estimates set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, as we can see below.</p>
+<p><em>Perfect</em> multicollinearity would cause the model estimation to <em>fail</em>. So, in <code class="docutils literal notranslate"><span class="pre">R</span></code>, when we have two variables that are perfectly correlated, one will have all its associated estimates set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, as we can see below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -467,7 +463,55 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 </div>
 </div>
 </div>
-<p>We can see that a warning had been generated saying that one coefficient is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">defined</span> <span class="pre">because</span> <span class="pre">of</span> <span class="pre">singularities</span></code>. This is an obvious problem that has been dealt with gracefully. The more insidious issue is when we have multicollinearity that is <em>high</em>, rather than <em>perfect</em>.</p>
+<p>We can see that a warning had been generated saying that one coefficient is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">defined</span> <span class="pre">because</span> <span class="pre">of</span> <span class="pre">singularities</span></code>. This is an obvious problem that has been dealt with gracefully. The more insidious issue is when we have multicollinearity that is <em>high</em>, rather than <em>perfect</em>. We can generate a predictor with a high correlation (but not perfect correlation) by simply adding some random noise to the copy of the <code class="docutils literal notranslate"><span class="pre">wt</span></code> variable, like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">wt</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">wt.copy</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.8743679
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, we can see that <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have a correlation of <span class="math notranslate nohighlight">\(r = 0.87\)</span>, which would be considered very high. Now let us see what happens when these are both in the same model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + wt.copy, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.2881 -2.4767 -0.0536  1.6162  6.6278 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.5609     1.9384  19.377  &lt; 2e-16 ***
+wt           -6.0310     1.1628  -5.187 1.51e-05 ***
+wt.copy       0.6236     0.9235   0.675    0.505    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.074 on 29 degrees of freedom
+Multiple R-squared:  0.7567,	Adjusted R-squared:  0.7399 
+F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.56 to 1.16. This is effectively a <em>doubling</em> of uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic effectively <em>half</em> its original value, going from -9.559 to -5.187. This is often referred to as the standard errors <em>blowing-up</em>, due to the increased uncertainty that the correlation introduces. We will discuss ways of diagnosing this below and then will discuss some “solutions” later in the lesson.</p>
 </section>
 </section>
 <section id="model-outputs-for-checking-assumptions">
@@ -582,7 +626,6 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage-points">High Leverage Points</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heteroscedasticity">Heteroscedasticity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
 </ul>
 </li>
