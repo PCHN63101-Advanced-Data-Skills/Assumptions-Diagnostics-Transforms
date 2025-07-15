@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Transforming the Outcome Variable &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
+    <title>Diagnostic Plots &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
   
   
   
@@ -60,11 +60,13 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3.outcome-transforms';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.diagnostic-plots';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Transforming the Predictor Variables" href="4.predictor-transforms.html" />
-    <link rel="prev" title="Checking the Assumptions" href="2.checking-assumptions.html" />
+    <link rel="next" title="Transformations" href="4.transformations.html" />
+    <link rel="prev" title="Data Features and Diagnostic Measures" href="2.features-diagnostics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -170,9 +172,9 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.checking-assumptions.html">Checking the Assumptions</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transforming the Outcome Variable</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.features-diagnostics.html">Data Features and Diagnostic Measures</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.transformations.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Changing the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
@@ -251,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F3.outcome-transforms.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F3.diagnostic-plots.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +283,7 @@
       
       
       
-      <li><a href="_sources/3.outcome-transforms.ipynb" target="_blank"
+      <li><a href="_sources/3.diagnostic-plots.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -357,7 +359,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Transforming the Outcome Variable</h1>
+    <h1>Diagnostic Plots</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -367,10 +369,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-approaches-for-non-normality">Other Approaches for Non-normality</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers-in-outcome-space">Outliers in Outcome Space</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
 </li>
 </ul>
@@ -384,77 +387,31 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="transforming-the-outcome-variable">
-<h1>Transforming the Outcome Variable<a class="headerlink" href="#transforming-the-outcome-variable" title="Link to this heading">#</a></h1>
-<p>…</p>
-<section id="box-cox-transformations">
-<h2>Box-Cox Transformations<a class="headerlink" href="#box-cox-transformations" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="diagnostic-plots">
+<h1>Diagnostic Plots<a class="headerlink" href="#diagnostic-plots" title="Link to this heading">#</a></h1>
+<section id="standard-diagnostic-plots">
+<h2>Standard Diagnostic Plots<a class="headerlink" href="#standard-diagnostic-plots" title="Link to this heading">#</a></h2>
+<section id="residual-vs-fitted-plot">
+<h3>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h3>
 </section>
-<section id="other-approaches-for-non-normality">
-<h2>Other Approaches for Non-normality<a class="headerlink" href="#other-approaches-for-non-normality" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">lmPerm</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">mod.lm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod.lm</span><span class="p">)</span>
-
-<span class="n">mod.perm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lmp</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="s">&quot;EXACT&quot;</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod.perm</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ wt + hp, data = mtcars)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-wt          -3.87783    0.63273  -6.129 1.12e-06 ***
-hp          -0.03177    0.00903  -3.519  0.00145 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Settings:  unique SS : numeric variables centered&quot;
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lmp(formula = mpg ~ wt + hp, data = mtcars, perm = &quot;EXACT&quot;)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
-
-Coefficients:
-   Estimate Std. Error t value Pr(&gt;|t|)    
-wt -3.87783    0.63273  -6.129 1.12e-06 ***
-hp -0.03177    0.00903  -3.519  0.00145 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-Squared: 0.8268,	Adjusted R-squared: 0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12 
-</pre></div>
-</div>
-</div>
-</div>
+<section id="q-q-normal-plot">
+<h3>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h3>
 </section>
-<section id="outliers-in-outcome-space">
-<h2>Outliers in Outcome Space<a class="headerlink" href="#outliers-in-outcome-space" title="Link to this heading">#</a></h2>
-<section id="leverage">
-<h3>Leverage<a class="headerlink" href="#leverage" title="Link to this heading">#</a></h3>
+<section id="scale-vs-location-plot">
+<h3>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h3>
+</section>
+<section id="residuals-vs-leverage-plot">
+<h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
+<p>Cook’s distance…</p>
+<div class="tip admonition">
+<p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
+<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
+\]</div>
+<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
+</div>
 </section>
 </section>
 </section>
@@ -490,20 +447,20 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="2.checking-assumptions.html"
+       href="2.features-diagnostics.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Checking the Assumptions</p>
+        <p class="prev-next-title">Data Features and Diagnostic Measures</p>
       </div>
     </a>
     <a class="right-next"
-       href="4.predictor-transforms.html"
+       href="4.transformations.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Transforming the Predictor Variables</p>
+        <p class="prev-next-title">Transformations</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -524,10 +481,11 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-approaches-for-non-normality">Other Approaches for Non-normality</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers-in-outcome-space">Outliers in Outcome Space</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
 </li>
 </ul>
