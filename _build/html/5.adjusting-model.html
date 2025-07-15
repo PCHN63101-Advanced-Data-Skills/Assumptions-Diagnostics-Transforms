@@ -66,7 +66,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Summary" href="summary.html" />
-    <link rel="prev" title="Transforming the Predictor Variables" href="4.predictor-transforms.html" />
+    <link rel="prev" title="Transformations" href="4.transformations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,9 +172,9 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.checking-assumptions.html">Checking the Assumptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.outcome-transforms.html">Transforming the Outcome Variable</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.predictor-transforms.html">Transforming the Predictor Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.features-diagnostics.html">Data Features and Diagnostic Measures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.transformations.html">Transformations</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Changing the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
@@ -377,6 +377,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-variance-weights-with-lm-and-lmp">Using Variance Weights with <code class="docutils literal notranslate"><span class="pre">lm()</span></code> and <code class="docutils literal notranslate"><span class="pre">lmp()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-use-with-multiple-issues">What to Use With Multiple Issues?</a></li>
 </ul>
             </nav>
         </div>
@@ -394,6 +395,22 @@
 <section id="robust-regression">
 <h2>Robust Regression<a class="headerlink" href="#robust-regression" title="Link to this heading">#</a></h2>
 <p>For outliers</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span>
+<span class="n">mod.robust</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rlm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">rlm</span><span class="o">.</span><span class="n">default</span><span class="p">():</span> <span class="n">argument</span> <span class="s2">&quot;x&quot;</span> <span class="ow">is</span> <span class="n">missing</span><span class="p">,</span> <span class="k">with</span> <span class="n">no</span> <span class="n">default</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">rlm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="ridge-regression">
 <h2>Ridge Regression<a class="headerlink" href="#ridge-regression" title="Link to this heading">#</a></h2>
@@ -563,6 +580,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <p>This would be useful in cases of severe departures from both the normality and homoscedasticity assumptions, where a Box-Cox transformation has not resulted in a suitable transformation. In these cases, we can use the simulated sampling distributions of the test statistics from the permutation framework, whilst also weighting the estimation to accommodate non-constant variance. The only limitation here is that more general variance structures are not available, we need to specifiy the reciprocal of a variable explicitly, and we need to use <span class="math notranslate nohighlight">\(\sqrt{w_{i}}e_{i}\)</span> for diagnostics, so that the effect of the weights is correctly visualised (CHECK THIS IS TRUE).</p>
 </section>
 </section>
+<section id="what-to-use-with-multiple-issues">
+<h2>What to Use With Multiple Issues?<a class="headerlink" href="#what-to-use-with-multiple-issues" title="Link to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -596,12 +616,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="4.predictor-transforms.html"
+       href="4.transformations.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Transforming the Predictor Variables</p>
+        <p class="prev-next-title">Transformations</p>
       </div>
     </a>
     <a class="right-next"
@@ -638,6 +658,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-variance-weights-with-lm-and-lmp">Using Variance Weights with <code class="docutils literal notranslate"><span class="pre">lm()</span></code> and <code class="docutils literal notranslate"><span class="pre">lmp()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-use-with-multiple-issues">What to Use With Multiple Issues?</a></li>
 </ul>
   </nav></div>
 
