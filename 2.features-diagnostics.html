@@ -371,25 +371,20 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage">High Leverage</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-data">Missing Data</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-measures-for-checking-assumptions">Diagnostic Measures for Checking Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-complexities-with-raw-residuals">Some Complexities with Raw Residuals</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-fitted-values">Predicted/Fitted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
 </li>
 </ul>
@@ -405,29 +400,29 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="data-features-and-diagnostic-measures">
 <h1>Data Features and Diagnostic Measures<a class="headerlink" href="#data-features-and-diagnostic-measures" title="Link to this heading">#</a></h1>
-<p>Now that we have established the nature of testing assumptions visually, as well as introducing the core assumptions made by a linear model, we can start investigating <em>how</em> to check the assumptions. Before getting there, we first need to discuss some data features that are not assumptions per-se, but which can point to invalid assumptions, or can unduly influence the model fit. We will then look at information we can extract from the model to help us assess whether these data features are present, as well as helping us assess the model assumptions. Finally, we will examine a standard selection of plots that can be used for diagnostic purposes.</p>
+<p>Now that we have established the nature of testing assumptions visually, as well as introducing the core assumptions made by a linear model, we can start investigating <em>how</em> to check the assumptions. Before getting there, we first need to discuss some data features that are not assumptions per-se, but which can point to invalid assumptions, or can unduly influence the model fit. We will then look at information we can extract from the model to help us assess whether these data features are present, as well as helping us assess the model assumptions. These <em>diagnostic measures</em> will be central to the plots we create in the next part of the lesson.</p>
 <section id="data-features-that-may-invalidate-the-model">
 <h2>Data Features that May Invalidate the Model<a class="headerlink" href="#data-features-that-may-invalidate-the-model" title="Link to this heading">#</a></h2>
-<p>To begin with, we will discuss certain features of data that we need to be aware of. In some cases, these can point to potential assumption violations, but in others these can simply be aspects that disort or overly-influence the results of our models.</p>
+<p>To begin with, we will discuss certain features of data that we need to check for in every analysis. In some cases these can point to assumption violations, but in others these can be aspects that disort or overly-influence the results of our models. We will just focus on defining these features below. In the next part of the lesson, we will focus on their identification, before seeing what can be done about them later in the lesson.</p>
 <section id="outliers">
 <h3>Outliers<a class="headerlink" href="#outliers" title="Link to this heading">#</a></h3>
-<p>In the context of our model, an outlier is a datapoint that <em>does not fit</em>. These are points that sit much further away from our prediction than we would expect, given the rest of the data. In other words, points that have <em>large residuals</em>. There could be many reasons for this. It may indicate a problem with out model, implying that these points <em>would fit</em> if we chose a more complex mean function. It may also indicate a problem with our data, which implies there could have been some mistake when the data was collected. Or, it could simply be that we have observed a rare event. Either way, it is important to remember that “outlier” does not mean that the data are <em>wrong</em> and that an outlier is only defined as such <em>relative</em> to our model prediction. The same datapoints may not be outliers in a different model. Furthermore, changing the model fit via removal of these points may make other points that were not originally outliers suddenly more extreme, introducing further outliers to the analysis. Indeed, <em>removal</em> of outliers is the most extreme of solutions and should be considered a <em>last resort</em><a class="footnote-reference brackets" href="#nasa-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<p>Outliers are problematic because they can bias parameter estimates, as well as increase the value of the estimated variance. Outliers therefore run the risk of biasing inference and causing us to reach erroenous conclusions. We will discuss the definition and identification of outliers further below. However, it is worth considering what should be done if a suspected outlier is detected:</p>
+<p>In the context of our model, an outlier is a datapoint that <em>does not fit</em>. These are points that sit much further away from the model prediction than we expect, given the rest of the data. In other words, these are points that have <em>large residuals</em>. There could be many reasons for this. It may indicate a problem with the model, implying that these points <em>would fit</em> if we chose a more complex mean function. It may also indicate a problem with the data, which implies there could have been some mistake when the data was collected. Or, it could simply be that we have observed a rare event. Whatever the reason, it is important to remember that “outlier” does not necessarily mean that the data are <em>wrong</em> and that an outlier is only defined as such <em>relative</em> to our model prediction. The same datapoints may not be outliers in a different model. Furthermore, changing the model fit via removal of these points may make the residuals of other points larger, introducing new outliers to the analysis. Indeed, <em>removal</em> of outliers is the most extreme solution and should always be considered a <em>last resort</em><a class="footnote-reference brackets" href="#nasa-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>Outliers are problematic because they can bias parameter estimates, as well as increase the value of the estimated variance. Outliers therefore run the risk of biasing inference, leading to erroenous conclusions. We will discuss the definition and identification of outliers later in the lesson. For the moment, it is worth considering what should be done if a suspected outlier is detected:</p>
 <ol class="arabic simple">
-<li><p>Check the data itself to make sure there has been no data-entry mistakes. For instance, placing a decimal-point in the wrong position, giving rise to an erroneously small or large value.</p></li>
-<li><p>If the data entry seems correct, consider the physical context. Although the value may be extreme relative to the rest of the data, is it unreasonably so? For instance, a very large score on a depression questionnaire must be assumed genuine, unless you have evidence that this particular subject was completing the questionnaire incorrectly.</p></li>
+<li><p>Check the data itself to make sure there has been no data-entry mistakes.</p></li>
+<li><p>If the data entry seems correct, consider the physical context. Although the value may be extreme relative to the rest of the data, is it unreasonably so?</p></li>
 <li><p>If you have good evidence to indicate that the data is wrong, then removal would be appropriate. However, this is rarely the case and outliers should not just be removed for the sake of it.</p></li>
-<li><p>If the datapoints are extreme, but removal is not justified, a method such as <em>robust regression</em> can be used, as discussed at the end of this lesson. What should be avoided is the classic Psychology trick of making an outlier less extreme by changing its value to lie just above the second most extreme point in the data. This is data tampering and should be avoided at all costs.</p></li>
+<li><p>If the datapoints are extreme, but removal is not justified, a method such as <em>robust regression</em> can be used, as discussed at the end of this lesson. What should be avoided is the classic Psychology trick of making an outlier less extreme by changing its value to lie just above the second most extreme point in the data. This is data tampering.</p></li>
 </ol>
 <div class="tip admonition">
 <p class="admonition-title">Perspective on Outliers</p>
-<p>When dealing with outliers, always try to retain a suitable perspective. Remember, outliers are <em>relative</em> to the model, are not automatically <em>wrong</em> and must be considered <em>in context</em>. Removal should be a last resort and data tampering should be avoided. If we have a point that does not fit the model, we should consider why the model may be wrong first. We should also remember that rare events <em>do happen</em>. The probability in the tails of the distribution is not 0. For many research areas, the most useful points are those that lie in the extremes. If we are interested in depression then surely the <em>most</em> depressed subjects are of interest, even if they are rarer. In many instances, we simply need to accept that outliers are there and <em>could</em> be influencing the model, but that we may have no real justification for removal. Remember, our model should fit our data. Changing our data to make it fit our model is <em>not</em> the right approach.</p>
+<p>When dealing with outliers, always try to retain a suitable perspective. Remember, outliers are <em>relative</em> to the model, are not automatically <em>wrong</em> and must be considered <em>in context</em>. Removal should be a last resort and data tampering should be avoided. If we have a point that does not fit the model, we should consider why the model may be wrong first. We should also remember that rare events <em>do happen</em>. The probability in the tails of the distribution is not 0. For many research areas, the most useful points are those that lie in the extremes. If we are interested in depression then surely the <em>most</em> depressed subjects are of interest, even if they are rarer? In many instances, we simply need to accept that outliers are there and <em>could</em> be influencing the model, but that we may have no real justification for removal.</p>
 </div>
 </section>
-<section id="leverage">
-<h3>Leverage<a class="headerlink" href="#leverage" title="Link to this heading">#</a></h3>
+<section id="high-leverage">
+<h3>High Leverage<a class="headerlink" href="#high-leverage" title="Link to this heading">#</a></h3>
 <p>As discussed above, an outlier is an extreme value of <span class="math notranslate nohighlight">\(y\)</span>. However, we can also have extreme values of the predictor variables <span class="math notranslate nohighlight">\(\mathbf{x} = \{x_{1},x_{2},\dots,x_{k}\}\)</span>. Because there are usually <span class="math notranslate nohighlight">\(k &gt; 1\)</span> predictors, the definition of an outlier in predictor space is more complex. The easiest way to think about this is that an outlier in predictor space is an unsual <em>combination</em> of predictor values. As an example, we can use a slightly altered version of the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset. Row 31 of the original dataset has a value of <code class="docutils literal notranslate"><span class="pre">hp</span></code> equal to 335. We will replace this with a value of 60. On its own, this value is not suprising as there are other cars in the dataset with a similar horsepower. However, what <em>is</em> unusual is a value of 60 for a car with 8 cylinders and a weight above 3. So this value is unusal when <em>combined</em> with the other predictors.</p>
-<p>This is illustrated in the scatter plot of predictor space below. Each axis represents one of these 3 variables and the observation we have changed is highlighted in red. If we rotate the plot around, we can see that this point looks unsual in terms of the full pattern of data across all the variables. However, the values of this point are not particularly unsual within any single dimension.</p>
+<p>This is illustrated in the plot of predictor space below. Each axis represents one of the variables and the observation we have changed is highlighted in red. If we rotate the plot around, we can see that this point looks unsual in terms of the full pattern of data across all the variables. However, the values of this point are not particularly unsual within any single dimension.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><!doctype html>
@@ -465,7 +460,7 @@
 </html>
 </div></div>
 </div>
-<p>In the context of linear models, the most commonly used metric to assess outliers in predictor space is called <em>leverage</em>. We will discuss the calculation of leverage below, but for the moment the term can be understood in reference to points that are highly influential in the model fit. Thinking of a regression line, a point with high leverage is able to pull the regression line away from the rest of the data.</p>
+</br><p>In the context of linear models, the most commonly used metric to assess outliers in predictor space is called <em>leverage</em>. We will discuss the calculation of leverage below, but for the moment the term can be understood in reference to points that are highly influential in the model fit. Thinking of a regression line, a point with high leverage is able to pull the regression line away from the rest of the data. Importantly, leverage captures the idea that if many points have very similar combinations of predictor values, then no single point is overly-influencing the model fit. In this sense, the fit is a <em>balance</em> between all those points. However, if there is a single point that has an unsual combination of predictor values, then there are no other similar points to balance the fit and much more of the influence will be placed on that one point. In an ideal situation, all our measured points would have similar amounts of leverage and the model fit would be a balance between all of them. However, if some points have <em>high</em> leverage then it indicates that they have combinations of predictor values that are not similar to the rest of the data. Thus, these individual points have much more influence over the model fit, resulting in a situation where the model fit is <em>unbalanced</em>. This is not necessarily a bad thing, as certain unique combinations of predictor values may be of interest due to their rareity. However, this is usually a flag to <em>check the data</em>, particularly when removal of high leverage values will change the model fit moreso than removal of other datapoints.</p>
 <div class="tip admonition">
 <p class="admonition-title">Outliers and Leverage</p>
 <p>An important element to understand is that an observation that exerts high leverage on the fit will not necessarily be an outlier. Similarly, an outlier is not necessarily associated with high leverage. Remember, outliers and leverage concern the <em>outcome</em> and the <em>predictors</em> separately. We can have an observation that sits far away from the model prediction, but has a perfectly usual collection of predictor values. Similarly, we can have an observation that lies very close to the model prediction, but has a very unusual combination of predictor values. Of course, the most concern comes from an observation that is <em>both</em> an outlier and exerts high leverage. Again, this data may not be <em>wrong</em>, but it does require some consideration given that it is unusal in both outcome and predictor space. We will see a little later how this combination of outliers and leverage can be quantified using a measure known as <em>Cook’s Distance</em>.</p>
@@ -473,12 +468,12 @@
 </section>
 <section id="multicollinearity">
 <h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
-<p>Remembering that we can conceptualise a linear model as dividing explanatory variance between the predictor variables. When those variables are correlated, there is greater <em>uncertainty</em> in terms of how to divide this up. When predictors are <em>independent</em>, this is very easy. However, when there is a lot of overlap, ambiguity exists about which variable should be assigned this variation. We can think back to the Venn diagram intuition behind multiple regression. … This uncertainty manifests in much greater uncertainty about the parameter estimates. More ambiguity means a wider range of possible parameter values for each variable and thus a larger standard error. This will make the test statistics <em>smaller</em> and our statistical power will be harmed. In the worst scenarios, the standard errors are said to “blow-up”, and our inference becomes wildly unstable. Clearly, this is a situation we wish to avoid.</p>
-<p><em>Perfect</em> multicollinearity would cause the model estimation to <em>fail</em>. So, in <code class="docutils literal notranslate"><span class="pre">R</span></code>, when we have two variables that are perfectly correlated, one will have all its associated estimates set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, as we can see below.</p>
+<p>Beyond outliers and observations with high leverage, we also need to take the <em>correlation</em> between our predictor variables into account. High correlation results in an issue known as <em>multicollinearity</em>, where our estimation and inference can become wildy unstable. To understand this, remember that we can conceptualise a linear model as dividing explanatory variance between the predictor variables. When predictors are <em>independent</em> (i.e. correlation is 0), this is very easy. However, when there is a lot of shared overlap, ambiguity exists about which variable should be assigned different chunks of this variation. We can think back to the <a class="reference external" href="https://pchn63101-advanced-data-skills.github.io/Simple-Multiple-Regression/5.multiple-regression.html#venn-diagram-intuition">Venn diagram intuition</a> behind multiple regression. When multicollinearity if high, the shared region between two predictor variables is very large and their unique contribution shrinks. Even if the total amount of variation across the two predictors is large, there is greater uncertainty about how this should be split between them. This uncertainty manifests in much greater uncertainty about the parameter estimates. Because of the shared variation there is much wider range of possible parameter values for each variable, depending upon how the variation is split. As such, there will be a larger standard error. This will make the test statistics <em>smaller</em> and our statistical power will be harmed. In the worst scenarios, the standard errors are said to “blow-up”, and our inference becomes wildly unstable because we just cannot say with any certainty what value each predictor is likely to have. Clearly, this is a situation we wish to avoid.</p>
+<p>We can also make an important distinction between <em>perfect</em> multicollinearity and <em>high</em> multicollinearity. When multicollinearity is <em>perfect</em>, the correlation between the predictors is <span class="math notranslate nohighlight">\(r = 1\)</span>. This would actually cause the model estimation to <em>fail</em>. For example, in <code class="docutils literal notranslate"><span class="pre">R</span></code>, when we have two variables that are perfectly correlated, one will have all its associated estimates set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="w"> </span><span class="c1"># identical copy of wt</span>
 <span class="n">mod</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
@@ -507,13 +502,13 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 </div>
 </div>
 </div>
-<p>We can see that a warning had been generated saying that one coefficient is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">defined</span> <span class="pre">because</span> <span class="pre">of</span> <span class="pre">singularities</span></code>. This is an obvious problem that has been dealt with gracefully. The more insidious issue is when we have multicollinearity that is <em>high</em>, rather than <em>perfect</em>. We can generate a predictor with a high correlation (but not perfect correlation) by simply adding some random noise to the copy of the <code class="docutils literal notranslate"><span class="pre">wt</span></code> variable, like so:</p>
+<p>We can see that a warning had been generated saying that one coefficient is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">defined</span> <span class="pre">because</span> <span class="pre">of</span> <span class="pre">singularities</span></code>. This is an obvious problem that has been dealt with gracefully. The more insidious issue is when we have multicollinearity that is <em>high</em> (i.e. <span class="math notranslate nohighlight">\(r &gt; 0.8\)</span>), rather than <em>perfect</em>. This will not cause the estimation to fail, but it will cause problems. To see this, we can generate a predictor with a high correlation by adding a small amount of random noise to the copy of <code class="docutils literal notranslate"><span class="pre">wt</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
 <span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">wt</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
-<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span><span class="w"> </span><span class="c1"># add small amount of noise</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">wt.copy</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -524,7 +519,7 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 </div>
 </div>
 </div>
-<p>So, we can see that <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have a correlation of <span class="math notranslate nohighlight">\(r = 0.97\)</span>, which would be considered very high. Now let us see what happens when these are both in the same model</p>
+<p>So, we can see that <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have a correlation of <span class="math notranslate nohighlight">\(r = 0.97\)</span>, which would be considered very high. Now let us see what happens when both these variable are in the same model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -546,7 +541,7 @@ Coefficients:
 wt            -6.966      2.467  -2.824   0.0085 ** 
 wt.copy        1.559      2.309   0.675   0.5049    
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 3.074 on 29 degrees of freedom
 Multiple R-squared:  0.7567,	Adjusted R-squared:  0.7399 
@@ -555,32 +550,234 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 </div>
 </div>
-<p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.559 to 2.467. This is effectively a <em>four-fold</em> increase in uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic close to <em>one third</em> of its original value, going from -9.559 to -2.824. This is often referred to as the standard errors <em>blowing-up</em>, due to the increased uncertainty that the correlation introduces. We will discuss ways of diagnosing this below and then will discuss some “solutions” later in the lesson.</p>
+<p>Notice that the standard error of <code class="docutils literal notranslate"><span class="pre">wt</span></code> has <em>increased</em> dramatically from 0.559 to 2.467. This is effectively a <em>four-fold</em> increase in uncertainty, with the <span class="math notranslate nohighlight">\(t\)</span>-statistic close to <em>one third</em> of its original value, going from -9.559 to -2.824. In general, perfect multicollinearity is usually a mistake that can be easily rectified. High multicollinearity, on the other hand, comes from variables that are very closely related, to the extent that one could be used as a proxy for another. This often happens in real-world datasets. For instance, a sample of depressed individuals who all have high levels of anxiety. Here, depressions severity and anxiety severity are highly correlated and both have similar degrees of explanatory power. We will discuss ways of diagnosing the degree of multicollinearity and will discuss some potential “solutions” later in the lesson.</p>
 </section>
 <section id="missing-data">
 <h3>Missing Data<a class="headerlink" href="#missing-data" title="Link to this heading">#</a></h3>
-<p>We also need to consider the <em>reason</em> for the data being missing. For instance, if we are studing a condition like anxiety, it could be that the <em>most</em> anxious subjects are the ones who will not return for the follow-up visit. In this case, there is a systematic reason for the data being missing. Not only does this make imputation of missing data inappropriate, it also means that any analysis of complete data will be biased towards those with less severe anxiety. Again, the context is the most important element here for interpretation.</p>
-</section>
-</section>
-<section id="model-outputs-for-checking-assumptions">
-<h2>Model Outputs for Checking Assumptions<a class="headerlink" href="#model-outputs-for-checking-assumptions" title="Link to this heading">#</a></h2>
-<section id="residuals">
-<h3>Residuals<a class="headerlink" href="#residuals" title="Link to this heading">#</a></h3>
-<p>… These can be extracted using the <code class="docutils literal notranslate"><span class="pre">resid()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>, as shown below</p>
+<p>A final data feature that we always need to be aware of is <em>missing data</em>. Linear models do not have any facility to work with missing data. The regression equations require complete data for every observation. As such, any observations where values are missing will be removed by default in <code class="docutils literal notranslate"><span class="pre">R</span></code>. Other functions require explicit indication of what to do when data are missing. For instance, the <code class="docutils literal notranslate"><span class="pre">mean()</span></code> function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y.missing</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="kc">NA</span><span class="p">,</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">y.missing</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">y.missing</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] NA
+[1] 3.666667
 </pre></div>
 </div>
 </div>
 </div>
+<p>Our options in the face of missing data are either <em>removal</em> or <em>imputation</em>. Removal is generally the default approach but, depending on the data in question, we can lose a lot of power. Imputation involves replacing the missing the values. However, this is always effectively a <em>guess</em>, no matter how principled the approach. The simplest method is to replace the missing values with the <em>mean</em> or <em>median</em> of the variable in question. Whilst easy to do, this method can result in biased model estimates as the imputed data adds no new information and makes the average appear more certain that it is. More complex methods are based on imputing model predictions. For instance, we could use the regression predictions from the data with missing values removed. We gain back power in terms of degrees of freedom, but this method will bias the model fit because we make it seem more certain, if more data lies on the regression line. Much more complex methods are available by using <em>multiple imputation</em> approaches. For instance, a sophisticated imputation algorithm is available in the <code class="docutils literal notranslate"><span class="pre">R</span></code> package <code class="docutils literal notranslate"><span class="pre">mice</span></code>. However, no matter how complex the method, we can never <em>fully</em> justify imputation as we can never definitively know what values would have been there in the first place.</p>
+<p>Perhaps more important is the <em>reason</em> for the data being missing. For instance, if we are studying a condition like anxiety, it could be that the <em>most</em> anxious subjects are the ones who will not return for the follow-up visit. In this case, there is a systematic reason for the data being missing. Not only does this make imputation of missing data inappropriate, it also means that any analysis of complete data will be biased towards those with less severe anxiety. Again, the context is the most important element here for interpretation. This is the difference between data being <em>missing at random</em> (MAR) and <em>missing not at random</em> (MNAR). Imputation relies on assuming MAR, but if the data is MNAR then we cannot possibly know the systematic reason for the missingness and impute properly. We will not be discussing imputation any further at this point on the course and would recommend removal as the most appropriate method at present.</p>
+</section>
+</section>
+<section id="diagnostic-measures-for-checking-assumptions">
+<h2>Diagnostic Measures for Checking Assumptions<a class="headerlink" href="#diagnostic-measures-for-checking-assumptions" title="Link to this heading">#</a></h2>
+<p>Now that we have established both the core assumptions of the linear model and have discussed some important data features, we can now examine some of the key diagnostic measures we will use for assessing both of these elements. Importantly, these diagnostics are all calculated directly from the model itself. As such, we do not usually check the assumptions <em>before</em> fitting the model. Instead, we fit the model, derive diagnostic measures from the model and then check its suitability. This is important because we want our diagnostics to be tied as closely to the model as possible. Although possible to create useful visualisations from the raw data, we can only accurately assess the model if we have the precise numeric values the model is using. This necessitates fitting the model <em>first</em>. However, we need to take care that we do not enter into <em>interpreting</em> the model until we are satisfied the assumptions are suitably met.</p>
+</section>
+<section id="leverage">
+<h2>Leverage<a class="headerlink" href="#leverage" title="Link to this heading">#</a></h2>
+<p>… We start with the leverage values because, as we will see below, these actually have some important consequences for interpreting other diagnostic measures.</p>
+<section id="residuals">
+<h3>Residuals<a class="headerlink" href="#residuals" title="Link to this heading">#</a></h3>
+<p>Perhaps the most useful diagnostic we can get from our model is the <em>residuals</em>. We know already that the distribution of the residuals is important as a proxy for the distribution of the errors. We also know that homoscedasticity is a condition of the errors, which we can again assess using the residuals. Beyond these two elements, we can also use the residuals to detect outliers, given that our original definition was precisely that a particular datapoint had a large residual. Although not immediately obvious, we can also use the residuals to check for evidence of non-linearity in the model fit, and can diagnose any issues with how viable the assumption of a continuous outcome may be when working with data that is technically non-continuous. So, as we can see, the residuals are incredibly useful as a diagnostic tool and can be extracted using the <code class="docutils literal notranslate"><span class="pre">resid()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mod</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">resid.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -1.8204257          -1.0128476          -3.1603990           0.4639233 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          1.5322025          -2.1503588          -1.1934238           0.6356864 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.4957351          -0.7890124          -2.1890124           1.3175861 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          1.1408152          -0.8008361          -0.4944331           0.2370012 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          4.5573819           5.5725355           1.4673228           5.8985522 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -3.9290355          -1.8653922          -2.4345849          -1.3383411 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          3.3148266          -0.3667124          -0.5665304           2.2446157 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.6174892          -1.4729031           1.1300053          -2.8149817 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each row in <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> is named with the type of car and this is carried over into the residuals. Here, each value represents the difference between the model prediction and the original data. The residuals are therefore in the original units of the outcome which, in this example, is MPG.</p>
+</section>
+<section id="some-complexities-with-raw-residuals">
+<h3>Some Complexities with Raw Residuals<a class="headerlink" href="#some-complexities-with-raw-residuals" title="Link to this heading">#</a></h3>
+<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
+\]</div>
+<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
 </section>
 <section id="standardised-residuals">
 <h3>Standardised Residuals<a class="headerlink" href="#standardised-residuals" title="Link to this heading">#</a></h3>
-<p>… These can be extracted using this <code class="docutils literal notranslate"><span class="pre">rstandard()</span></code> function in `R, as shown below</p>
+<p>Given that the raw residuals are in the original units of the outcome, determining whether a residual is <em>large</em> (and therefore a potential outlier) can be challenging. As an alternative, we can instead generate <em>standardised</em> residuals which are scaled to standard deviation units. Given the discussion we had above about the variance of the residuals, the standardised residual <span class="math notranslate nohighlight">\(r_{i}\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
+\]</div>
+<p>which is just the residual divided by its theoretical standard deviation. This then has an additional advantage, because we also remove the effect of leverage from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity without the misleading effect of leverage. In terms of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typical values are 2 or 3 standard deviations. We will see how these can be used to assess homoscedasticity a little later. Standardised residuals can be calculated manually in <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span>
+<span class="n">leverage</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hatvalues</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="n">resid.std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">resid.raw</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="nf">sqrt</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">leverage</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -0.7536168          -0.4155405          -1.3159524           0.1898494 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.6465994          -0.8877596          -0.5058544           0.2757372 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.2143459          -0.3217930          -0.8927730           0.5465378 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.4745219          -0.3327434          -0.2203141           0.1085104 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          2.0752892           2.3166769           0.6266424           2.4750788 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -1.6413307          -0.8052115          -1.0554848          -0.5627602 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          1.3803474          -0.1532577          -0.2359408           0.9761207 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.2757995          -0.6082438           0.6143003          -1.1973029 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or, more easily, using the <code class="docutils literal notranslate"><span class="pre">rstandard()</span></code> function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstandard</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -0.7536168          -0.4155405          -1.3159524           0.1898494 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.6465994          -0.8877596          -0.5058544           0.2757372 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.2143459          -0.3217930          -0.8927730           0.5465378 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.4745219          -0.3327434          -0.2203141           0.1085104 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          2.0752892           2.3166769           0.6266424           2.4750788 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -1.6413307          -0.8052115          -1.0554848          -0.5627602 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          1.3803474          -0.1532577          -0.2359408           0.9761207 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.2757995          -0.6082438           0.6143003          -1.1973029 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see a few observations with residuals larger than 2 standard deviations from the model fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">resid.std</span><span class="p">[</span><span class="nf">abs</span><span class="p">(</span><span class="n">resid.std</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chrysler Imperial          Fiat 128    Toyota Corolla 
+         2.075289          2.316677          2.475079 
+</pre></div>
+</div>
+</div>
+</div>
+<p>These could be potential outliers, though we will see ways of visualising these later so that they can be seen in context with the rest of the data.</p>
+</section>
+<section id="studentised-residuals">
+<h3>Studentised Residuals<a class="headerlink" href="#studentised-residuals" title="Link to this heading">#</a></h3>
+<p>An alternative, but potentially more powerful approach, to standardised residuals is to computer <em>studentised</em> residuals. These are based on scaling the residuals into standard deviation units, but they do so differently for each individual datapoint. Rather than using the global variance estimate <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>, studentised residuals use <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}_{-i}\)</span>, which is the variance estimate from a model with datapoint <span class="math notranslate nohighlight">\(i\)</span> removed. The reason for doing this is that an outlier will artifically inflate the global variance estimate, meaning that extreme points will have <em>smaller</em> values when standardised. In other words, outliers can hide and appear less extreme than they are, due to their effect on the global variance estimate. This is corrected by removing the point in question from the variance used to scale it into standard deviation units.</p>
+<p>Studentised residuals can be calculated manually in <code class="docutils literal notranslate"><span class="pre">R</span></code>. This is more involved, but can make the logic clearer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">leverage</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hatvalues</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">)</span>
+<span class="n">resid.stud</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">){</span>
+<span class="w">    </span><span class="n">mod.i</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="o">=-</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="c1"># remove row i</span>
+<span class="w">    </span><span class="n">sigma.i</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod.i</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span>
+<span class="w">    </span><span class="n">resid.stud</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">resid.raw</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">sigma.i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">leverage</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="p">}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.stud</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [1] -0.7476584 -0.4093168 -1.3341552  0.1865485  0.6397422 -0.8842967
+ [7] -0.4990246  0.2711369 -0.2106564 -0.3165804 -0.8894363  0.5395753
+[13]  0.4678563 -0.3273955 -0.2165319  0.1065775  2.2153833  2.5303244
+[19]  0.6197115  2.7498370 -1.6953756 -0.8000188 -1.0577210 -0.5557716
+[25]  1.4040889 -0.1505592 -0.2319199  0.9752688 -0.2711984 -0.6012690
+[31]  0.6073374 -1.2070326
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, we can just use the <code class="docutils literal notranslate"><span class="pre">rstudent()</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.stud</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.stud</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -0.7476584          -0.4093168          -1.3341552           0.1865485 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.6397422          -0.8842967          -0.4990246           0.2711369 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.2106564          -0.3165804          -0.8894363           0.5395753 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.4678563          -0.3273955          -0.2165319           0.1065775 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          2.2153833           2.5303244           0.6197115           2.7498370 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -1.6953756          -0.8000188          -1.0577210          -0.5557716 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          1.4040889          -0.1505592          -0.2319199           0.9752688 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.2711984          -0.6012690           0.6073374          -1.2070326 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see that the previous standardised residuals with values over 2 have all gotten <em>bigger</em> when using studentised residuals. This shows how their inclusion was artifically inflating the variance and thus making their standardised score <em>smaller</em>. This makes studentised residuals much more useful for detecting outliers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">resid.stud</span><span class="p">[</span><span class="nf">abs</span><span class="p">(</span><span class="n">resid.stud</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chrysler Imperial          Fiat 128    Toyota Corolla 
+         2.215383          2.530324          2.749837 
 </pre></div>
 </div>
 </div>
@@ -597,11 +794,6 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 </div>
 </div>
-</section>
-<section id="studentised-residuals">
-<h3>Studentised Residuals<a class="headerlink" href="#studentised-residuals" title="Link to this heading">#</a></h3>
-<p>Studentised residuals take the leverage value into account.</p>
-<p>… These can be extracted using the <code class="docutils literal notranslate"><span class="pre">rstudent()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>, as shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.student</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -623,6 +815,7 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h3>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h3>
+<p>Although raw correlation between the predictors can be one sign, the advantage of the VIF is that it characterised the precise issue that we are concerned about, in terms of the <em>inflation</em> of the standard errors when a variable is included in the model.</p>
 <p>… This can be calculated using the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package, as shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -640,44 +833,37 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
 </div>
 <p>In general, we can take:</p>
 <ul class="simple">
-<li><p>VIF = 1 — No multicollinearity</p></li>
-<li><p>1 &lt; VIF &lt; 5 — Moderate multicollinearity. Some caution may be needed, but not necessarily a problem for the model. We might expect some increase in the standard error compared to no multicollinearity, especially at the higher end, but not to the extent where we could consider it to have “blown-up”.</p></li>
-<li><p>VIF &gt; 5 — Very high multicollinearity. Standard errors will be much larger than usual and inference will become very unstable. Almost certainly an issues and some mitigation will be needed<a class="footnote-reference brackets" href="#vif-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>VIF = 1 — No multicollinearity</p>
+<ul>
+<li><p>No issues and no action required.</p></li>
 </ul>
-</section>
-</section>
-<section id="standard-diagnostic-plots">
-<h2>Standard Diagnostic Plots<a class="headerlink" href="#standard-diagnostic-plots" title="Link to this heading">#</a></h2>
-<section id="residual-vs-fitted-plot">
-<h3>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h3>
-</section>
-<section id="q-q-normal-plot">
-<h3>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h3>
-</section>
-<section id="scale-vs-location-plot">
-<h3>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h3>
-</section>
-<section id="residuals-vs-leverage-plot">
-<h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
-<p>Cook’s distance…</p>
-<div class="tip admonition">
-<p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
-<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
-<div class="math notranslate nohighlight">
-\[
-\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
-\]</div>
-<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
-</div>
+</li>
+<li><p>1 &lt; VIF &lt; 5 — Small to moderate multicollinearity.</p>
+<ul>
+<li><p>Some caution needed, but not usually a problem for the model.</p></li>
+</ul>
+</li>
+<li><p>VIF &gt; 5 — High multicollinearity.</p>
+<ul>
+<li><p>Standard errors will be larger than usual.</p></li>
+<li><p>Inference will become unstable.</p></li>
+<li><p>Some mitigation will usually be needed.</p></li>
+</ul>
+</li>
+<li><p>VIF &gt; 10 — Severe multicollinearity.</p>
+<ul>
+<li><p>Standard errors will have blown-up at this point.</p></li>
+<li><p>Inference will become untrustworthy.</p></li>
+<li><p>This cannot be ignored and something needs to be done.</p></li>
+</ul>
+</li>
+</ul>
+<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. Th easiest solution here would be to remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>, though we will see an alternative method known as <em>ridge regression</em> at the end of the lesson.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="nasa-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://www.utstat.toronto.edu/~brunner/books/LinearModelsWithR.pdf">Faraway (2005)</a> provides a real-world example of why this is <em>not</em> good practise. This concerns the delay in the discovery of the hole in the Ozone layer due to NASA’s automatic data analysis algorithms discarding very low readings assumed to be mistakes.</p>
-</aside>
-<aside class="footnote brackets" id="vif-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>Note that some authors suggest VIF &gt; 10 to be the marker for concerning multicollinearity. Here, we would recommend the more cautious approach of using VIF &gt; 5.</p>
 </aside>
 </aside>
 </section>
@@ -751,25 +937,20 @@ F-statistic: 45.09 on 2 and 29 DF,  p-value: 1.259e-09
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-features-that-may-invalidate-the-model">Data Features that May Invalidate the Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers">Outliers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-leverage">High Leverage</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-data">Missing Data</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-outputs-for-checking-assumptions">Model Outputs for Checking Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-measures-for-checking-assumptions">Diagnostic Measures for Checking Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage">Leverage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-complexities-with-raw-residuals">Some Complexities with Raw Residuals</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-fitted-values">Predicted/Fitted Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diagnostic-plots">Standard Diagnostic Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
 </li>
 </ul>

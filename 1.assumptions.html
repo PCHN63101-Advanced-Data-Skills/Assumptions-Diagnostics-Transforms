@@ -418,10 +418,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c4c9ee78acde754a39393a38391be2985a7e17d6e33f090a87438f51bba05976.png"><img alt="_images/c4c9ee78acde754a39393a38391be2985a7e17d6e33f090a87438f51bba05976.png" src="_images/c4c9ee78acde754a39393a38391be2985a7e17d6e33f090a87438f51bba05976.png" style="width: 720px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/30e9c17ae7484b191a956f858efc84d2974cd0da5c45c14a89e78d666b0fcb1e.png"><img alt="_images/30e9c17ae7484b191a956f858efc84d2974cd0da5c45c14a89e78d666b0fcb1e.png" src="_images/30e9c17ae7484b191a956f858efc84d2974cd0da5c45c14a89e78d666b0fcb1e.png" style="width: 720px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/1a21e09a10b7dc333d0f5e1c24c53ca69a527b2e6687203bd55dcd28c5ffff9d.png"><img alt="_images/1a21e09a10b7dc333d0f5e1c24c53ca69a527b2e6687203bd55dcd28c5ffff9d.png" src="_images/1a21e09a10b7dc333d0f5e1c24c53ca69a527b2e6687203bd55dcd28c5ffff9d.png" style="width: 720px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/93dd1a785ab8a9caeae2528d12867759c93bc24136fff88b481d98a96a39f189.png"><img alt="_images/93dd1a785ab8a9caeae2528d12867759c93bc24136fff88b481d98a96a39f189.png" src="_images/93dd1a785ab8a9caeae2528d12867759c93bc24136fff88b481d98a96a39f189.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png"><img alt="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png" src="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/60194fff94846f186621289247922d7cf8eb8188e07167058ac7b664a15b38af.png"><img alt="_images/60194fff94846f186621289247922d7cf8eb8188e07167058ac7b664a15b38af.png" src="_images/60194fff94846f186621289247922d7cf8eb8188e07167058ac7b664a15b38af.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/780faa42c2fc419e65699c952dfbeaa7b1f2cd56615ded9d5315a412dd0abe46.png"><img alt="_images/780faa42c2fc419e65699c952dfbeaa7b1f2cd56615ded9d5315a412dd0abe46.png" src="_images/780faa42c2fc419e65699c952dfbeaa7b1f2cd56615ded9d5315a412dd0abe46.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/a31141353024712b9c46058dbbe76237fc76036e6af3af5df790d5c384b9f28c.png"><img alt="_images/a31141353024712b9c46058dbbe76237fc76036e6af3af5df790d5c384b9f28c.png" src="_images/a31141353024712b9c46058dbbe76237fc76036e6af3af5df790d5c384b9f28c.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
 <p>We will discuss what all these plots are showing us and how to interpret them later in this lesson. For now, just notice that the default method in <code class="docutils literal notranslate"><span class="pre">R</span></code> is to draw plots to check assumptions, <em>not</em> run a bunch of inferential tests of assumptions. This is for very good reason, as we will now discuss.</p>
@@ -455,7 +455,7 @@ data:  y
 W = 0.95294, p-value = 0.5719
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/41b2d7c6b5fdfb7c495674e443c7959133c4447b6d4a4a795db61a9b5a6273c8.png"><img alt="_images/41b2d7c6b5fdfb7c495674e443c7959133c4447b6d4a4a795db61a9b5a6273c8.png" src="_images/41b2d7c6b5fdfb7c495674e443c7959133c4447b6d4a4a795db61a9b5a6273c8.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png"><img alt="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png" src="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
 <p>The test has produced a <em>non-significant</em> <span class="math notranslate nohighlight">\(p\)</span>-value, which tells us that the test has failed to reject the null hypothesis that our data comes from a normal distribution. This would usually be interpreted as <em>no significant depature from normality</em>. The important point is that we know this is wrong. Would we have noticed this lack of normality from the visualisation? Looking the plot, we can see that the small sample actually makes it quite difficult to determine the distribution. Based on this, we should at least be wary of accepting any particular shape, but this is a subtlety that <em>cannot</em> be conveyed with the test. Importantly, the inferential test has not provided us with a correct objective alternative to our “subjective” interpretation of the plot.</p>
@@ -486,7 +486,7 @@ data:  y
 W = 0.99836, p-value = 0.04526
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/e0af43e9f8ed1b6af1381daa219fe4c60a8a16a18a1e98b97cc747d457d8547c.png"><img alt="_images/e0af43e9f8ed1b6af1381daa219fe4c60a8a16a18a1e98b97cc747d457d8547c.png" src="_images/e0af43e9f8ed1b6af1381daa219fe4c60a8a16a18a1e98b97cc747d457d8547c.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png"><img alt="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png" src="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here, the test says that there is a <em>significant</em> violation of normality. The test is not wrong, however, looking at the histogram it is very clear that the violation of slightly more density on the positive side of the distribution is very trivial. Practically, the distribution looks as close to normal as we are ever likely to see with real data. Based on this histogram, any attempt to correct for non-normality would likely be taken as wildly unnecessary. However, if we just believed the test then we could be off on a wild goose chase trying to change our model and transform our data to accomodate this violation. Again, visualising this assumption gives us the richest information for deciding how close to normal the distribution is and how comfortable we are relying on results that depend upon this assumption.</p>
