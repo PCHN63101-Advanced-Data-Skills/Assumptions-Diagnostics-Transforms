@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -410,6 +411,67 @@ document.write(`
 </section>
 <section id="q-q-normal-plot">
 <h3>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h3>
+<p>The logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the errors. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart.</p>
+<p>There are two choices here, the default method and the more correct method.</p>
+<p>As an alternative, we could <em>studentise</em> the residuals and check against a student-t with <span class="math notranslate nohighlight">\(n-p-1\)</span> degrees of freedom</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the model</span>
+<span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="c1"># Extract residuals</span>
+<span class="n">resid.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstandard</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">resid.t</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w"> </span>
+
+<span class="c1"># Degrees of freedom</span>
+<span class="n">n</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="n">p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span>
+
+<span class="c1"># Set up 2x2 plot grid</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+
+<span class="c1"># --- 1) Q-Q plot: Normal quantiles vs standard residuals ---</span>
+<span class="nf">qqnorm</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">,</span>
+<span class="w">       </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Q-Q Plot: Raw Residuals vs Normal&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Normal Quantiles&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Raw Residuals&quot;</span><span class="p">)</span>
+<span class="nf">qqline</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">)</span>
+
+<span class="c1"># --- 2) Q-Q plot: t quantiles vs studentised residuals ---</span>
+<span class="nf">qqplot</span><span class="p">(</span><span class="nf">qt</span><span class="p">(</span><span class="nf">ppoints</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">),</span><span class="w"> </span><span class="n">resid.t</span><span class="p">,</span>
+<span class="w">       </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Q-Q Plot: Studentised Residuals vs t&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t Quantiles&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">)</span>
+
+<span class="c1"># --- 3) Histogram + Normal density: Standard residuals ---</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">std_resid</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Normal Density&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Raw Residuals&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="nf">mean</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">),</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sd</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">)),</span>
+<span class="w">      </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1"># --- 4) Histogram + t density: Studentised residuals ---</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">stud_resid</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t Density&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/922e478a97224b2ec0c485cd95bf7556b07f64c91d8ce15fe8fad562cdcdce1a.png"><img alt="_images/922e478a97224b2ec0c485cd95bf7556b07f64c91d8ce15fe8fad562cdcdce1a.png" src="_images/922e478a97224b2ec0c485cd95bf7556b07f64c91d8ce15fe8fad562cdcdce1a.png" style="width: 840px; height: 540px;" /></a>
+</div>
+</div>
+<p>As we can see, in this example, there is not a huge amount between these. This is one of the reasons why the standard (but slightly incorrect) default method is often <em>good enough</em>.</p>
 </section>
 <section id="scale-vs-location-plot">
 <h3>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h3>
