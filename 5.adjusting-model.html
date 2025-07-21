@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Changing the Model &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
+    <title>Adjusting the Model &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
   
   
   
@@ -184,10 +184,11 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.features-diagnostics.html">Data Features and Diagnostic Measures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.data-features.html">Data Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-measures.html">Diagnostic Measures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.transformations.html">Transformations</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Changing the Model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -374,7 +375,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Changing the Model</h1>
+    <h1>Adjusting the Model</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -384,6 +385,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression">Robust Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-gls">Generalised Least Squares (GLS)</a><ul class="nav section-nav flex-column">
@@ -404,9 +406,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="changing-the-model">
-<h1>Changing the Model<a class="headerlink" href="#changing-the-model" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="adjusting-the-model">
+<h1>Adjusting the Model<a class="headerlink" href="#adjusting-the-model" title="Link to this heading">#</a></h1>
 <p>We have now seen methods that we can use to accomodate non-normality of the residuals, as well as capturing more complex relationships in the data, improving our ability to interpret the regression model, dealing with outliers and dealing with multicollinearity. However, the one issues we have yet to address is how to accommodate unequal variances across the range of the outcome variable, a situation known as <em>heteroscedasticity</em>. In this section, we will see a way of doing this using an approach known as <em>Generalised Least Squares</em>, that can be fit within <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">nlme</span></code> package and REML estimation.</p>
+<section id="polynomial-regression">
+<h2>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h2>
+</section>
 <section id="robust-regression">
 <h2>Robust Regression<a class="headerlink" href="#robust-regression" title="Link to this heading">#</a></h2>
 <p>For outliers</p>
@@ -664,6 +669,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression">Robust Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-gls">Generalised Least Squares (GLS)</a><ul class="nav section-nav flex-column">
