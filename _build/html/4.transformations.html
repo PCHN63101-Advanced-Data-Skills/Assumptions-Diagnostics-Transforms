@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '4.transformations';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Changing the Model" href="5.adjusting-model.html" />
+    <link rel="next" title="Adjusting the Model" href="5.adjusting-model.html" />
     <link rel="prev" title="Diagnostic Plots" href="3.diagnostic-plots.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -182,10 +182,11 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.features-diagnostics.html">Data Features and Diagnostic Measures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.data-features.html">Data Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-measures.html">Diagnostic Measures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Changing the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -383,16 +384,20 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-approaches-for-non-normality">Other Approaches for Non-normality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-normality">Non-normality</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-methods">Permutation Methods</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
 </ul>
             </nav>
         </div>
@@ -409,82 +414,32 @@ document.write(`
 <p>…</p>
 <section id="transforming-the-outcome">
 <h2>Transforming the Outcome<a class="headerlink" href="#transforming-the-outcome" title="Link to this heading">#</a></h2>
+<p>Typically, transforming the outcome concerns the distributional assumptions of the linear model, in the sense that a transformation applied to the outcome will be carried into a transformation of the residuals. Transformation of the outcome can also work to linearise any non-linear relationships with the predictor variables and can sometimes improve interpretation of the model.</p>
+<section id="non-normality">
+<h3>Non-normality<a class="headerlink" href="#non-normality" title="Link to this heading">#</a></h3>
 <section id="box-cox-transformations">
-<h3>Box-Cox Transformations<a class="headerlink" href="#box-cox-transformations" title="Link to this heading">#</a></h3>
+<h4>Box-Cox Transformations<a class="headerlink" href="#box-cox-transformations" title="Link to this heading">#</a></h4>
 </section>
-<section id="other-approaches-for-non-normality">
-<h3>Other Approaches for Non-normality<a class="headerlink" href="#other-approaches-for-non-normality" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">lmPerm</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">mod.lm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod.lm</span><span class="p">)</span>
-
-<span class="n">mod.perm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lmp</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="s">&quot;EXACT&quot;</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod.perm</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ wt + hp, data = mtcars)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-wt          -3.87783    0.63273  -6.129 1.12e-06 ***
-hp          -0.03177    0.00903  -3.519  0.00145 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Settings:  unique SS : numeric variables centered&quot;
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lmp(formula = mpg ~ wt + hp, data = mtcars, perm = &quot;EXACT&quot;)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
-
-Coefficients:
-   Estimate Std. Error t value Pr(&gt;|t|)    
-wt -3.87783    0.63273  -6.129 1.12e-06 ***
-hp -0.03177    0.00903  -3.519  0.00145 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-Squared: 0.8268,	Adjusted R-squared: 0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12 
-</pre></div>
-</div>
-</div>
-</div>
+<section id="permutation-methods">
+<h4>Permutation Methods<a class="headerlink" href="#permutation-methods" title="Link to this heading">#</a></h4>
 </section>
-</section>
-<section id="transforming-the-predictors">
-<h2>Transforming the Predictors<a class="headerlink" href="#transforming-the-predictors" title="Link to this heading">#</a></h2>
-<section id="polynomial-regression">
-<h3>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h3>
 </section>
 <section id="linearising-relationships">
 <h3>Linearising Relationships<a class="headerlink" href="#linearising-relationships" title="Link to this heading">#</a></h3>
 </section>
-<section id="standardised-regression">
-<h3>Standardised Regression<a class="headerlink" href="#standardised-regression" title="Link to this heading">#</a></h3>
 </section>
+<section id="transforming-the-predictors">
+<h2>Transforming the Predictors<a class="headerlink" href="#transforming-the-predictors" title="Link to this heading">#</a></h2>
+<p>Typically, the reasons for transforming the predictors come down to trying to adjust for multicollinearity or trying to adjust for non-linear relationships.</p>
+<section id="multicollinearity">
+<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
+</section>
+<section id="id1">
+<h3>Linearising Relationships<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="standardised-regression">
+<h2>Standardised Regression<a class="headerlink" href="#standardised-regression" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -532,7 +487,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Changing the Model</p>
+        <p class="prev-next-title">Adjusting the Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -553,16 +508,20 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-approaches-for-non-normality">Other Approaches for Non-normality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-normality">Non-normality</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-methods">Permutation Methods</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
 </ul>
   </nav></div>
 

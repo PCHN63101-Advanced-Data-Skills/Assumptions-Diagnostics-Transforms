@@ -1,0 +1,860 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Diagnostic Measures &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.diagnostic-measures';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Diagnostic Plots" href="3.diagnostic-plots.html" />
+    <link rel="prev" title="Data Features" href="2.data-features.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.data-features.html">Data Features</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Measures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.transformations.html">Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F3.diagnostic-measures.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/3.diagnostic-measures.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Diagnostic Measures</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-complexities-with-raw-residuals">Some Complexities with Raw Residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-fitted-values">Predicted/Fitted Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="diagnostic-measures">
+<h1>Diagnostic Measures<a class="headerlink" href="#diagnostic-measures" title="Link to this heading">#</a></h1>
+<p>Now that we have established both the core assumptions of the linear model and have discussed some important data features, we can now examine some of the key diagnostic measures we will use for assessing both of these elements. Importantly, these diagnostics are all calculated directly from the model itself. As such, we do not usually check the assumptions <em>before</em> fitting the model. Instead, we fit the model, derive diagnostic measures from the model and then check its suitability. This is important because we want our diagnostics to be tied as closely to the model as possible. Although possible to create useful visualisations from the raw data, we can only accurately assess the model if we have the precise numeric values the model is using. This necessitates fitting the model <em>first</em>. However, we need to take care that we do not enter into <em>interpreting</em> the model until we are satisfied the assumptions are suitably met.</p>
+<section id="leverage-values">
+<h2>Leverage Values<a class="headerlink" href="#leverage-values" title="Link to this heading">#</a></h2>
+<p>We will start our tour of diagnostic measures with the <em>leverage values</em> because, as we will see below, these have some important consequences for interpreting other diagnostic measures. As mentioned above, leverage concerns the degree to which a single data point is influencing the model fit. The <em>leverage values</em> are measures of leverage and range <span class="math notranslate nohighlight">\(0 \leq h_{i} \leq 1\)</span>. These can be interpreted as</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(h_{i}\)</span> is close to 0, then the predicted value <span class="math notranslate nohighlight">\(\hat{y}_{i}\)</span> is mostly determined by the other data points.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(h_{i}\)</span> is close to 1, then the predicted value <span class="math notranslate nohighlight">\(\hat{y}_{i}\)</span> is determined almost entirely by <span class="math notranslate nohighlight">\(y_{i}\)</span>.</p></li>
+</ul>
+<p>So, in this sense, higher leverage means that the predicted value of point <span class="math notranslate nohighlight">\(i\)</span> is not very related to the rest of the data in the dataset, as it depends almost entirely on that single point. This implies that this point is an outlier in predictor space, but also that the model fit for that combination of predictor values is not a balance between mutliple observations, as it is biased towards that single observation.</p>
+<p>The actual calculation of the leverage values in multiple regression is complex and involves diving into the linear algebraic representation of linear models (which is beyond the scope of the unit). However, they can be easily extracted in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">hatvalues()</span></code> function<a class="footnote-reference brackets" href="#hatmat-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">lev</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hatvalues</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">lev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         0.07495754          0.05815750          0.08563345          0.05334688 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+         0.10981841          0.06986080          0.11762078          0.15741830 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         0.15201954          0.04691578          0.04691578          0.07862927 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+         0.08370579          0.08169851          0.20155034          0.24373270 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+         0.23547715          0.08274176          0.13078212          0.09961207 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         0.09155927          0.14918089          0.15654328          0.10338967 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+         0.08575683          0.09233897          0.08597706          0.16171087 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         0.20532691          0.07037046          0.46356582          0.12368549 
+</pre></div>
+</div>
+</div>
+</div>
+<p>None of the data here exerts very large leverage in <em>absolute</em> terms, as all the leverage values are quite far below 1. Neverthless, it is typical to interpret leverage in a <em>relative</em> fashion for a given dataset. As such, a common cutoff for defining <em>high leverage</em> is <span class="math notranslate nohighlight">\(h_{i} &gt; 2\frac{p}{n}\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> is the number of model parameters and <span class="math notranslate nohighlight">\(n\)</span> is the sample size. For reasons related to how leverage is calculated, this gives a cutoff of <em>twice</em> the average leverage<a class="footnote-reference brackets" href="#levcutoff-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. For the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> model above this would be</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mod</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">)</span>
+<span class="n">p</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mod</span><span class="o">$</span><span class="n">coefficients</span><span class="p">)</span>
+<span class="n">big.lev</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="n">n</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">big.lev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.25
+</pre></div>
+</div>
+</div>
+</div>
+<p>So our <em>relative</em> cutoff would be <span class="math notranslate nohighlight">\(h_{i} &gt; 0.25\)</span>. We can examine any concerning cases using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">lev</span><span class="p">[</span><span class="n">lev</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">big.lev</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Maserati Bora 
+    0.4635658 
+</pre></div>
+</div>
+</div>
+</div>
+<p>So we have one observation with high relative leverage, suggesting this may be an outlier in predictor space and may be unduly influencing the model fit. We would need to examine this specific case in more detail and assess why its particular combination of predictor values is unusual, and whether any mistakes have been made. We could also assess the sensitivity of our model to this point by fitting it both <em>with</em> and <em>without</em> this observation, taking note of whether our inference substantially changes. We will see how leverage factors into some standard diagnostic plots a little later.</p>
+</section>
+<section id="residuals">
+<h2>Residuals<a class="headerlink" href="#residuals" title="Link to this heading">#</a></h2>
+<p>Beyond leverage values, one of the most useful diagnostic we can get from our model is the <em>residuals</em>. As we know, many of the linear model assumptions centre on the distribution of the errors. As such, it would stand to reason that we can use the residuals as a proxy for the errors to assess these assumptions (though there is a catch, as we will discuss below). Beyond the distributional assumptions, we can also use the residuals to detect outliers, check for evidence of non-linearity in the model fit, and can diagnose any issues with the assumption of a continuous outcome when working with data that is technically non-continuous. So, as we can see, the residuals are incredibly useful as a diagnostic tool and can be extracted using the <code class="docutils literal notranslate"><span class="pre">resid()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -1.8204257          -1.0128476          -3.1603990           0.4639233 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          1.5322025          -2.1503588          -1.1934238           0.6356864 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.4957351          -0.7890124          -2.1890124           1.3175861 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          1.1408152          -0.8008361          -0.4944331           0.2370012 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          4.5573819           5.5725355           1.4673228           5.8985522 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -3.9290355          -1.8653922          -2.4345849          -1.3383411 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          3.3148266          -0.3667124          -0.5665304           2.2446157 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.6174892          -1.4729031           1.1300053          -2.8149817 
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each car, the residual value represents the difference between the model prediction and the original data. The residuals are therefore in the original units of the outcome which, in this example, is MPG. This can be difficult to interpret in terms of defining which residuals are <em>large</em>, but this is something we will come back to below.</p>
+<section id="some-complexities-with-raw-residuals">
+<h3>Some Complexities with Raw Residuals<a class="headerlink" href="#some-complexities-with-raw-residuals" title="Link to this heading">#</a></h3>
+<p>As indicated above, it would seem reasonable to assume that we can use the residuals as a proxy for the true errors and thus use them to assess the distributional assumptions of our model. Although we can do this in an <em>approximate</em> fashion, there is an important technical detail to consider. One of the main reasons that we have made a point of distinguishing <em>errors</em> from <em>residuals</em> is that the estimation process <em>changes the distributional properties of the errors</em>. This means that <em>errors</em> and <em>residuals</em> are not expected to behave identically. So while it is correct to assume</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
+\]</div>
+<p>it is <em>not</em> technically correct to assume the same for the <em>residuals</em>. In fact, the variance of the residuals is <em>not</em> <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>, as we might expect, it is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Var}\left(e_{i}\right) = \sigma^{2}\left(1 - h_{i}\right).
+\]</div>
+<p>So, rather than being constant (as is the case with the true <em>errors</em>), the variance of the residuals is <em>scaled</em> by the leverage. Because we have a leverage value for each observation, the variance will be different for each observation. In other words, the residuals <em>cannot be homoscedastic</em>, even if the errors are. In the equation above, the key element is that the variance is scaled by <span class="math notranslate nohighlight">\(\left(1 - h_{i}\right)\)</span>. So, if <span class="math notranslate nohighlight">\(h_{i} = 0.8\)</span> then the variance would be multiplied by <span class="math notranslate nohighlight">\(1 - 0.8 = 0.2\)</span>. As such, the <em>higher</em> the leverage, the <em>smaller</em> the variance gets.</p>
+<p>Why does this happen? It is actually due to the inherent properties of estimating the parameters from data. Because observations with high leverage pull the model fit towards them, the variance around those points will be smaller than elsewhere in the fit. As such, points with high leverage will often sit closer to the regression line, making the variance <em>smaller</em> for that particular combination of predictor values. This is illustrated in the plot of residuals below. Although these data are simulated from a homoscedastic population, we can see that the variance (illustrated by the green dashed lines) shrinks as the leverage of individual points gets higher. The points in red indicate those that are above the typical cutoff of twice the average leverage. We can also see that the degree to which we may be mislead by the heteroscedasticity of the residuals will depend upon how extreme the leverage is.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/2d9b87ca2f9fc1858b4f1f947f78758dcb8af74d8c31703a1950b70d0c0e37d0.png"><img alt="_images/2d9b87ca2f9fc1858b4f1f947f78758dcb8af74d8c31703a1950b70d0c0e37d0.png" src="_images/2d9b87ca2f9fc1858b4f1f947f78758dcb8af74d8c31703a1950b70d0c0e37d0.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="standardised-residuals">
+<h2>Standardised Residuals<a class="headerlink" href="#standardised-residuals" title="Link to this heading">#</a></h2>
+<p>At this point, we have established that residuals are potentially very useful diagnostically, but they have two issues:</p>
+<ol class="arabic simple">
+<li><p>Residuals are in the original units of the outcome and therefore difficult to interpret in terms of which are <em>large</em> and which are <em>small</em>.</p></li>
+<li><p>The homoscedasticity of the residuals depends upon the leverage, even if the true errors are homoscedastic. So any assessment of constant variance that uses the residuals could be misleading.</p></li>
+</ol>
+<p>In order to solve both these issues, we can <em>standardise</em> the residuals by computing</p>
+<div class="math notranslate nohighlight">
+\[
+r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
+\]</div>
+<p>which is just the residual divided by its theoretical standard deviation. This has the effect of scaling the residuals into units of standard deviation. So, for the purpose of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typical values are either 2 or 3 standard deviations. This scaling also has an additional advantage, because the effect of leverage is removed from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity without the misleading effect of leverage. This is shown below where we can see that there is no longer any dependence between the variance and leverage when the residuals are standardised.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/0cd2f827cbde067c6e85d6661459325a01c49d71854cc63fb345791c2d4c3237.png"><img alt="_images/0cd2f827cbde067c6e85d6661459325a01c49d71854cc63fb345791c2d4c3237.png" src="_images/0cd2f827cbde067c6e85d6661459325a01c49d71854cc63fb345791c2d4c3237.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>Standardised residuals can be calculated in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">rstandard()</span></code> function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mod</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">resid.std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstandard</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -0.7536168          -0.4155405          -1.3159524           0.1898494 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.6465994          -0.8877596          -0.5058544           0.2757372 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.2143459          -0.3217930          -0.8927730           0.5465378 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.4745219          -0.3327434          -0.2203141           0.1085104 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          2.0752892           2.3166769           0.6266424           2.4750788 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -1.6413307          -0.8052115          -1.0554848          -0.5627602 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          1.3803474          -0.1532577          -0.2359408           0.9761207 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.2757995          -0.6082438           0.6143003          -1.1973029 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see a few observations with residuals larger than 2 standard deviations from the model fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">resid.std</span><span class="p">[</span><span class="nf">abs</span><span class="p">(</span><span class="n">resid.std</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        9        23        33        79 
+ 2.382486  3.228289 -2.064226  2.044849 
+</pre></div>
+</div>
+</div>
+</div>
+<p>These could be potential outliers, though we will see ways of visualising these later so that they can be seen in context with the rest of the data. We will also see how visualisations can be used to assess homoscedasticity.</p>
+</section>
+<section id="studentised-residuals">
+<h2>Studentised Residuals<a class="headerlink" href="#studentised-residuals" title="Link to this heading">#</a></h2>
+<p>An alternative, but potentially more powerful approach, to standardised residuals is to computer <em>studentised</em> residuals. These are based on scaling the residuals into standard deviation units, but they do so differently for each individual datapoint. Rather than using the global variance estimate <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>, studentised residuals use <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}_{-i}\)</span>, which is the variance estimate from a model with datapoint <span class="math notranslate nohighlight">\(i\)</span> removed.</p>
+<div class="math notranslate nohighlight">
+\[
+t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
+\]</div>
+<p>The reason for doing this is that an outlier will artifically inflate the global variance estimate, meaning that extreme points will have <em>smaller</em> values when standardised. In other words, outliers can hide and appear less extreme than they really are. This is corrected by removing the point in question from the variance when scaling it into standard deviation units.</p>
+<p>Studentised residuals can be calculated using the <code class="docutils literal notranslate"><span class="pre">rstudent()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">resid.t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+         -0.7476584          -0.4093168          -1.3341552           0.1865485 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.6397422          -0.8842967          -0.4990246           0.2711369 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+         -0.2106564          -0.3165804          -0.8894363           0.5395753 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.4678563          -0.3273955          -0.2165319           0.1065775 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          2.2153833           2.5303244           0.6197115           2.7498370 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+         -1.6953756          -0.8000188          -1.0577210          -0.5557716 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          1.4040889          -0.1505592          -0.2319199           0.9752688 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+         -0.2711984          -0.6012690           0.6073374          -1.2070326 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see that the previous standardised residuals with values over 2 have all gotten <em>bigger</em> when using studentised residuals. This shows how their inclusion was artifically inflating the variance and thus making their standardised score <em>smaller</em>. This makes studentised residuals much more useful for detecting outliers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">resid.t</span><span class="p">[</span><span class="nf">abs</span><span class="p">(</span><span class="n">resid.t</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chrysler Imperial          Fiat 128    Toyota Corolla 
+         2.215383          2.530324          2.749837 
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is also interesting to note that the <code class="docutils literal notranslate"><span class="pre">Maserati</span> <span class="pre">Bora</span></code>, which had high relative leverage, has <em>not</em> been identified as an outlier. This highlights how the two concepts are somewhat independent, particularly when we recognise that observations with high leverage will often live close to the regression line.</p>
+<div class="tip admonition">
+<p class="admonition-title">The Distribution of Studentised Residuals</p>
+<p>Another advantage of <em>studentised</em> residuals is that they have a known distribution. As the notation <span class="math notranslate nohighlight">\(t_{i}\)</span> implies, the residuals are distributed as a <span class="math notranslate nohighlight">\(t\)</span>-distribution with <span class="math notranslate nohighlight">\(n-p-1\)</span> degrees of freedom. This means that we <em>could</em> calculate a <span class="math notranslate nohighlight">\(p\)</span>-value for each residual to test the null hypothesis that this observation is consistent with the model. For instance, we can calculate <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">pt(abs(resid.t),</span> <span class="pre">df=mod$df.residual-1,</span> <span class="pre">lower.tail=FALSE)</span></code> to get <span class="math notranslate nohighlight">\(p\)</span>-values for the studentised residuals. <em>However</em>, we have calculated <span class="math notranslate nohighlight">\(n\)</span> tests here and so would need some form of correction (which we will discuss further next week). Furthermore, we are again relying on NHST here for assumption checking, which we have already indicated is flawed. However, we will see how this distribution crops up again a little later on.</p>
+</div>
+</section>
+<section id="predicted-fitted-values">
+<h2>Predicted/Fitted Values<a class="headerlink" href="#predicted-fitted-values" title="Link to this heading">#</a></h2>
+<p>… These can be extracted using the <code class="docutils literal notranslate"><span class="pre">fitted()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>, as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">fitted</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-variance-inflation-factor-vif">
+<h2>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h2>
+<p>Although raw correlation between the predictors can be one sign, the advantage of the VIF is that it characterised the precise issue that we are concerned about, in terms of the <em>inflation</em> of the standard errors when a variable is included in the model.</p>
+<p>… This can be calculated using the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package, as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      wt  wt.copy 
+19.12063 19.12063 
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general, we can take:</p>
+<ul class="simple">
+<li><p>VIF = 1 — No multicollinearity</p>
+<ul>
+<li><p>No issues and no action required.</p></li>
+</ul>
+</li>
+<li><p>1 &lt; VIF &lt; 5 — Small to moderate multicollinearity.</p>
+<ul>
+<li><p>Some caution needed, but not usually a problem for the model.</p></li>
+</ul>
+</li>
+<li><p>VIF &gt; 5 — High multicollinearity.</p>
+<ul>
+<li><p>Standard errors will be larger than usual.</p></li>
+<li><p>Inference will become unstable.</p></li>
+<li><p>Some mitigation will usually be needed.</p></li>
+</ul>
+</li>
+<li><p>VIF &gt; 10 — Severe multicollinearity.</p>
+<ul>
+<li><p>Standard errors will have blown-up at this point.</p></li>
+<li><p>Inference will become untrustworthy.</p></li>
+<li><p>This cannot be ignored and something needs to be done.</p></li>
+</ul>
+</li>
+</ul>
+<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. Th easiest solution here would be to remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>, though we will see an alternative method known as <em>ridge regression</em> at the end of the lesson.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="hatmat-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This function is named after the fact that the leverage values come from the diagonal a special matrix called the <em>hat matrix</em>, which is used to form the predicted values (i.e. it puts the “hats” on <span class="math notranslate nohighlight">\(y\)</span> to form <span class="math notranslate nohighlight">\(\hat{y}\)</span>).</p>
+</aside>
+<aside class="footnote brackets" id="levcutoff-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>You can verify this for yourself by also calculating <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">mean(lev)</span></code>.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.data-features.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Features</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3.diagnostic-plots.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Diagnostic Plots</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leverage-values">Leverage Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-complexities-with-raw-residuals">Some Complexities with Raw Residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-residuals">Standardised Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#studentised-residuals">Studentised Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-fitted-values">Predicted/Fitted Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-variance-inflation-factor-vif">The Variance Inflation Factor (VIF)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

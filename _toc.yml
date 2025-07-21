@@ -5,7 +5,8 @@ format: jb-book
 root: 0.intro
 chapters:
 - file: 1.assumptions
-- file: 2.features-diagnostics
+- file: 2.data-features
+- file: 3.diagnostic-measures
 - file: 3.diagnostic-plots
 - file: 4.transformations
 - file: 5.adjusting-model
