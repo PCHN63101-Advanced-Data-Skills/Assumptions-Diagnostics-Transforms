@@ -645,7 +645,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 \[
 \hat{y}_{i} = \hat{\beta}_{0} + \sum_{j=1}^{p} \hat{\beta}_{j}x_{ij}.
 \]</div>
-<p>So, these are the results of evaluating the model equation for each observation. Because of this, we can express the full model as</p>
+<p>These are the results of evaluating the model equation for each observation, meaning we can express the full model in terms of the predicted values as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -653,7 +653,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
           &amp;= \hat{y}_{i} + e_{i}. \\
 \end{align*}
 \end{split}\]</div>
-<p>The predicted values are also known as <em>fitted</em> values, and can be extracted using the <code class="docutils literal notranslate"><span class="pre">fitted()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>These are also known as the <em>fitted</em> values, and can be extracted using the <code class="docutils literal notranslate"><span class="pre">fitted()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">fitted</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
