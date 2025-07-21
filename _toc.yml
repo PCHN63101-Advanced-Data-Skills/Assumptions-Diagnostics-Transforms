@@ -7,7 +7,7 @@ chapters:
 - file: 1.assumptions
 - file: 2.data-features
 - file: 3.diagnostic-measures
-- file: 3.diagnostic-plots
-- file: 4.transformations
-- file: 5.adjusting-model
+- file: 4.diagnostic-plots
+- file: 5.transformations
+- file: 6.adjusting-model
 - file: summary

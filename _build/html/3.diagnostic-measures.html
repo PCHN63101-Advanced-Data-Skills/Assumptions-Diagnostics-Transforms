@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '3.diagnostic-measures';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Diagnostic Plots" href="3.diagnostic-plots.html" />
+    <link rel="next" title="Diagnostic Plots" href="4.diagnostic-plots.html" />
     <link rel="prev" title="Data Features" href="2.data-features.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -186,9 +186,9 @@
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.data-features.html">Data Features</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Measures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.transformations.html">Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.diagnostic-plots.html">Diagnostic Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.transformations.html">Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.adjusting-model.html">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -650,11 +650,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </div>
 </div>
 </div>
-<p>It is also interesting to note that the <code class="docutils literal notranslate"><span class="pre">Maserati</span> <span class="pre">Bora</span></code>, which had high relative leverage, has <em>not</em> been identified as an outlier. This highlights how the two concepts are somewhat independent, particularly when we recognise that observations with high leverage will often live close to the regression line.</p>
-<div class="tip admonition">
-<p class="admonition-title">The Distribution of Studentised Residuals</p>
-<p>Another advantage of <em>studentised</em> residuals is that they have a known distribution. As the notation <span class="math notranslate nohighlight">\(t_{i}\)</span> implies, the residuals are distributed as a <span class="math notranslate nohighlight">\(t\)</span>-distribution with <span class="math notranslate nohighlight">\(n-p-1\)</span> degrees of freedom. This means that we <em>could</em> calculate a <span class="math notranslate nohighlight">\(p\)</span>-value for each residual to test the null hypothesis that this observation is consistent with the model. For instance, we can calculate <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">pt(abs(resid.t),</span> <span class="pre">df=mod$df.residual-1,</span> <span class="pre">lower.tail=FALSE)</span></code> to get <span class="math notranslate nohighlight">\(p\)</span>-values for the studentised residuals. <em>However</em>, we have calculated <span class="math notranslate nohighlight">\(n\)</span> tests here and so would need some form of correction (which we will discuss further next week). Furthermore, we are again relying on NHST here for assumption checking, which we have already indicated is flawed. However, we will see how this distribution crops up again a little later on.</p>
-</div>
+<p>It is also interesting to note that the <code class="docutils literal notranslate"><span class="pre">Maserati</span> <span class="pre">Bora</span></code>, which had high relative leverage, has <em>not</em> been identified as an outlier. This highlights how the two concepts are somewhat independent, particularly when we recognise that observations with high leverage will often live close to the regression line and thus will have <em>smaller</em> residuals.</p>
 </section>
 <section id="predicted-fitted-values">
 <h2>Predicted/Fitted Values<a class="headerlink" href="#predicted-fitted-values" title="Link to this heading">#</a></h2>
@@ -770,7 +766,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
       </div>
     </a>
     <a class="right-next"
-       href="3.diagnostic-plots.html"
+       href="4.diagnostic-plots.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

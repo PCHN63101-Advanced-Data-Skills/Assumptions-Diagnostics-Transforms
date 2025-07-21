@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Transformations &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
+    <title>Diagnostic Plots &#8212; Linear Models III: Assumptions, Diagnostics and Transformations</title>
   
   
   
@@ -58,11 +58,13 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '4.transformations';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4.diagnostic-plots';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Adjusting the Model" href="5.adjusting-model.html" />
-    <link rel="prev" title="Diagnostic Plots" href="3.diagnostic-plots.html" />
+    <link rel="next" title="Transformations" href="5.transformations.html" />
+    <link rel="prev" title="Diagnostic Measures" href="3.diagnostic-measures.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,9 +186,9 @@
 <li class="toctree-l1"><a class="reference internal" href="1.assumptions.html">The Linear Model Assumptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.data-features.html">Data Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.diagnostic-measures.html">Diagnostic Measures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.diagnostic-plots.html">Diagnostic Plots</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.adjusting-model.html">Adjusting the Model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.transformations.html">Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.adjusting-model.html">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -259,7 +261,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F4.transformations.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Assumptions-Diagnostics-Transforms/issues/new?title=Issue%20on%20page%20%2F4.diagnostic-plots.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -289,7 +291,7 @@
       
       
       
-      <li><a href="_sources/4.transformations.ipynb" target="_blank"
+      <li><a href="_sources/4.diagnostic-plots.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -373,7 +375,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Transformations</h1>
+    <h1>Diagnostic Plots</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -383,21 +385,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-normality">Non-normality</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-methods">Permutation Methods</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
             </nav>
         </div>
@@ -409,37 +400,36 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="transformations">
-<h1>Transformations<a class="headerlink" href="#transformations" title="Link to this heading">#</a></h1>
-<p>…</p>
-<section id="transforming-the-outcome">
-<h2>Transforming the Outcome<a class="headerlink" href="#transforming-the-outcome" title="Link to this heading">#</a></h2>
-<p>Typically, transforming the outcome concerns the distributional assumptions of the linear model, in the sense that a transformation applied to the outcome will be carried into a transformation of the residuals. Transformation of the outcome can also work to linearise any non-linear relationships with the predictor variables and can sometimes improve interpretation of the model.</p>
-<section id="non-normality">
-<h3>Non-normality<a class="headerlink" href="#non-normality" title="Link to this heading">#</a></h3>
-<section id="box-cox-transformations">
-<h4>Box-Cox Transformations<a class="headerlink" href="#box-cox-transformations" title="Link to this heading">#</a></h4>
+  <section class="tex2jax_ignore mathjax_ignore" id="diagnostic-plots">
+<h1>Diagnostic Plots<a class="headerlink" href="#diagnostic-plots" title="Link to this heading">#</a></h1>
+<p>… All these plots are produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> when we call <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code> on a model fit using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p>
+<section id="residual-vs-fitted-plot">
+<h2>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h2>
 </section>
-<section id="permutation-methods">
-<h4>Permutation Methods<a class="headerlink" href="#permutation-methods" title="Link to this heading">#</a></h4>
+<section id="q-q-normal-plot">
+<h2>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h2>
+<p>The logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the errors. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. As such, we typically compare the <em>standardised</em> residuals to a normal distribution, given that the effect of leverage has been removed.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png"><img alt="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png" src="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png" style="width: 840px; height: 600px;" /></a>
+</div>
+</div>
 </section>
+<section id="scale-vs-location-plot">
+<h2>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h2>
 </section>
-<section id="linearising-relationships">
-<h3>Linearising Relationships<a class="headerlink" href="#linearising-relationships" title="Link to this heading">#</a></h3>
-</section>
-</section>
-<section id="transforming-the-predictors">
-<h2>Transforming the Predictors<a class="headerlink" href="#transforming-the-predictors" title="Link to this heading">#</a></h2>
-<p>Typically, the reasons for transforming the predictors come down to trying to adjust for multicollinearity or trying to adjust for non-linear relationships.</p>
-<section id="multicollinearity">
-<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
-</section>
-<section id="id1">
-<h3>Linearising Relationships<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-</section>
-</section>
-<section id="standardised-regression">
-<h2>Standardised Regression<a class="headerlink" href="#standardised-regression" title="Link to this heading">#</a></h2>
+<section id="residuals-vs-leverage-plot">
+<h2>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h2>
+<p>Cook’s distance…</p>
+<div class="tip admonition">
+<p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
+<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
+<div class="math notranslate nohighlight">
+\[
+\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
+\]</div>
+<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
+</div>
 </section>
 </section>
 
@@ -474,20 +464,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="3.diagnostic-plots.html"
+       href="3.diagnostic-measures.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Diagnostic Plots</p>
+        <p class="prev-next-title">Diagnostic Measures</p>
       </div>
     </a>
     <a class="right-next"
-       href="5.adjusting-model.html"
+       href="5.transformations.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Adjusting the Model</p>
+        <p class="prev-next-title">Transformations</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -507,21 +497,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-normality">Non-normality</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-methods">Permutation Methods</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
 </ul>
   </nav></div>
 
