@@ -177,7 +177,6 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Measures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.diagnostic-plots.html">Diagnostic Plots</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5.transformations.html">Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6.adjusting-model.html">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -532,7 +531,7 @@
 \[
 r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
 \]</div>
-<p>which is just the residual divided by its theoretical standard deviation. This has the effect of scaling the residuals into units of standard deviation. So, for the purpose of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typical values are either 2 or 3 standard deviations. This scaling also has an additional advantage, because the effect of leverage is removed from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity without the misleading effect of leverage. This is shown below where we can see that there is no longer any dependence between the variance and leverage when the residuals are standardised.</p>
+<p>which is just the residual divided by its theoretical standard deviation. This has the effect of scaling the residuals into units of standard deviation. So, for the purpose of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typically, values of either 2 or 3 standard deviations are used to detect outliers. This scaling also has an additional advantage because the effect of leverage is removed from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity, as the misleading effect of leverage is gone. This is shown in the plot below, where we can see that there is no longer any dependence between the variance and leverage when the residuals are standardised.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png"><img alt="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png" src="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png" style="width: 720px; height: 420px;" /></a>
@@ -640,20 +639,12 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </section>
 <section id="predicted-values">
 <h2>Predicted Values<a class="headerlink" href="#predicted-values" title="Link to this heading">#</a></h2>
-<p>Beyond the residuals and their various standardisations, the <em>predicted</em> values from the model are very useful diagnostically. As a reminder, the predicted values in a regression model are</p>
+<p>Beyond the residuals and their standardisation, the <em>predicted</em> values from the model are very useful diagnostically. As a reminder, the predicted values in a regression model are</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{y}_{i} = \hat{\beta}_{0} + \sum_{j=1}^{p} \hat{\beta}_{j}x_{ij}.
+\hat{y}_{i} = E(y_{i}|\mathbf{x}_{i}) = \hat{\beta}_{0} + \sum_{j=1}^{p} \hat{\beta}_{j}x_{ij},
 \]</div>
-<p>These are the results of evaluating the model equation for each observation, meaning we can express the full model in terms of the predicted values as</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-    y_{i} &amp;= \hat{\beta}_{0} + \sum_{j=1}^{p} \hat{\beta}_{j}x_{ij} + e_{i}\\
-          &amp;= \hat{y}_{i} + e_{i}. \\
-\end{align*}
-\end{split}\]</div>
-<p>These are also known as the <em>fitted</em> values, and can be extracted using the <code class="docutils literal notranslate"><span class="pre">fitted()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>which are the results of evaluating the model equation for each observation. These are also known as the <em>fitted</em> values, and can be extracted using the <code class="docutils literal notranslate"><span class="pre">fitted()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">fitted</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -682,15 +673,89 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </div>
 </div>
 </div>
-<p>The reason these values are useful diagnostically is because our assumptions about homoscedasticity relate to an equal spread of data above and below each point on the regression plane. As such, when we plot the predicted values against the standardised residuals, we should see an even and equal vertical spread of points. Furthermore, we can use this form of visualisation to assess evidence of <em>non-linear</em> relationships in the data. As an example, if we have a straight-line fit but the actual relationship is a <em>curve</em>, the residuals will not be evenly spread around the prediction. Instead, they will be skewed in one direction. This will form a characteristic shape that diverges from our expectation of an even cloud of points. We will see this when we examine standard diagnostic plots in the next part of the lesson.</p>
+<p>Adding together the predicted values and the residuals completes the model sum to give <span class="math notranslate nohighlight">\(y_{i} = \hat{y}_{i} + e_{i}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mod.fit</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">resid.raw</span>
+<span class="n">mpg</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span>
+<span class="n">compare</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">mpg</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">compare</span><span class="p">))</span><span class="w"> </span><span class="c1"># compare the sum of the model components to the raw data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                     y  mpg
+Mazda RX4         21.0 21.0
+Mazda RX4 Wag     21.0 21.0
+Datsun 710        22.8 22.8
+Hornet 4 Drive    21.4 21.4
+Hornet Sportabout 18.7 18.7
+Valiant           18.1 18.1
+</pre></div>
+</div>
+</div>
+</div>
+<p>This demonstrates how the model <em>splits</em> each data value into its expectation and error.</p>
+<p>We have already seen why the error component of this sum is useful diagnostically. The reason why the prediction is also useful is because our assumptions about homoscedasticity relate to an equal spread of data above and below the regression plane. Each predicted value represents a point on this plane from some combination of predictor values. As such, when we plot the predicted values against the standardised residuals, we should see an even and equal vertical spread of points above and below the prediction. We can use this form of visualisation to assess evidence of <em>non-linear</em> relationships in the data. For instance, if we have a straight-line fit but the actual relationship is a <em>curve</em>, the residuals will not be evenly spread around the prediction and will have some characteristic shape that bends around the prediction. We will see this when we examine some standard diagnostic plots in the next part of the lesson.</p>
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h2>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h2>
-<p>Although raw correlation between the predictors can be one sign, the advantage of the VIF is that it characterised the precise issue that we are concerned about, in terms of the <em>inflation</em> of the standard errors when a variable is included in the model.</p>
-<p>… This can be calculated using the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package, as shown below.</p>
+<p>Our final diagnostic measure deviates from the other measures discussed in this section because it is only a single number, is not a direct output from the model and requires an external package to calculate. Neverthless, this is one of the most useful tools because it helps diagnose issues of <em>multicollinearity</em>.</p>
+<p>In the previous section, we discussed multicollinearity in terms of high correlation between predictors. As a diagnostic measure, we can certainly calculate the correlation amongst predictors and use that to highlight potential problems. As an example, we can calculate the correlation between the predictors easily in <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">wt</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">wt.copy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">preds</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span><span class="n">wt.copy</span><span class="p">)[,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="s">&#39;wt.copy&#39;</span><span class="p">,</span><span class="s">&#39;hp&#39;</span><span class="p">,</span><span class="s">&#39;cyl&#39;</span><span class="p">)]</span><span class="w"> </span><span class="c1"># just the predictors</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">preds</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               wt   wt.copy        hp       cyl
+wt      1.0000000 0.9734991 0.6587479 0.7824958
+wt.copy 0.9734991 1.0000000 0.6101981 0.7534608
+hp      0.6587479 0.6101981 1.0000000 0.8324475
+cyl     0.7824958 0.7534608 0.8324475 1.0000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>A threshold of <span class="math notranslate nohighlight">\(r &gt; 0.8\)</span> is sometimes used for this purpose, though lower threshold of <span class="math notranslate nohighlight">\(r &gt; 0.7\)</span> or <span class="math notranslate nohighlight">\(r &gt; 0.6\)</span> are sometimes seen. Depending on the choice, there is either a concern only for <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>, or a concern for <em>all</em> the predictors in this model. This indicates that there is a strong degree of interdependency between all these measurements, which should give us pause to consider whether any of our predictors are redundant or even whether our questions about these data are sensible. In addition, this highlight an issue with raw correlation because this is only an indictor that there <em>might</em> be a problem. For the purpose of characterising whether there actually <em>is</em> a problem, a better metric is the <em>Variance Inflation Factor</em> (VIF).</p>
+<p>Remembering back to when we defined the sampling distribution of the coefficients in a multiple regression model, we stated that</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta}_{j} \sim \mathcal{N}\left(\beta_{j},\frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2} \times \left(1 - R^{2}_{j}\right)}}\right).
+\]</div>
+<p>From this, we can see that the variance is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Var}\left(\hat{\beta}_{j}\right) = \frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2} \times \left(1 - R^{2}_{j}\right)}}
+\]</div>
+<p>which we can rewrite as</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Var}\left(\hat{\beta}_{j}\right) = \frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2}}} \times \frac{1}{1 - R^{2}_{j}}
+\]</div>
+<p>So the variance can be taken as the expression we already know from simple regression, scaled by the factor <span class="math notranslate nohighlight">\(\frac{1}{1 - R^{2}}\)</span>. This is the <em>variance inflation factor</em>. So</p>
+<div class="math notranslate nohighlight">
+\[
+\text{VIF}_{j} = \frac{1}{1 - R^{2}_{j}}
+\]</div>
+<p>and the variance of our parameter estimate can be expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Var}\left(\hat{\beta}_{j}\right) = \frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2}}} \times \text{VIF}_{j}
+\]</div>
+<p>The term <span class="math notranslate nohighlight">\(R^{2}_{j}\)</span> is something we will cover in more detail <em>next week</em> when we discuss model comparisons. For the moment, this can be understood as the proportion of total variation in predictor <span class="math notranslate nohighlight">\(j\)</span> that can be explained by all the other predictors in the model. So, when predictors are independent, <span class="math notranslate nohighlight">\(R^{2}_{j} = 0\)</span> and <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0} = 1\)</span>. This means that there is <em>no scaling</em> and the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is the same as in simple regression. However, for non-indpendent predictors with (for example) <span class="math notranslate nohighlight">\(R^{2}_{j} = 0.9\)</span>, we would have <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0.9} = \frac{1}{0.1} = 10\)</span>. This means that the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is <em>ten times larger</em> than it would be if there were independence. We can also take <span class="math notranslate nohighlight">\(\sqrt{\text{VIF}_{j}}\)</span> for a similar intepretation on the scale of the <em>standard error</em>.</p>
+<p>In terms of calculating the VIF, we can do this easily using the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -699,16 +764,13 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">envir</span><span class="p">,</span> <span class="n">enclos</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;mod.multicol&#39;</span> <span class="ow">not</span> <span class="n">found</span>
-<span class="ne">Traceback</span>:
-
-<span class="mi">1</span><span class="o">.</span> <span class="nb">print</span><span class="p">(</span><span class="n">vif</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">multicol</span><span class="p">))</span>
-<span class="mi">2</span><span class="o">.</span> <span class="n">vif</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">multicol</span><span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       wt   wt.copy        hp       cyl 
+22.174855 19.921678  3.383464  4.794902 
 </pre></div>
 </div>
 </div>
 </div>
-<p>In general, we can take:</p>
+<p>In terms of interpretation, it is usual to take:</p>
 <ul class="simple">
 <li><p>VIF = 1 — No multicollinearity</p>
 <ul>
@@ -718,6 +780,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 <li><p>1 &lt; VIF &lt; 5 — Small to moderate multicollinearity.</p>
 <ul>
 <li><p>Some caution needed, but not usually a problem for the model.</p></li>
+<li><p>Concern gets greater the closer to 5 the measure is.</p></li>
 </ul>
 </li>
 <li><p>VIF &gt; 5 — High multicollinearity.</p>
@@ -735,7 +798,21 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </ul>
 </li>
 </ul>
-<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. Th easiest solution here would be to remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>, though we will see an alternative method known as <em>ridge regression</em> at the end of the lesson.</p>
+<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. For <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, that value is also 1 &lt; VIF &lt; 5, however it is much closer to 5 and this may be slightly more concerning. In this situation, we would likely remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>. For instance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">vif</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      wt       hp      cyl 
+2.580486 3.258481 4.757456 
+</pre></div>
+</div>
+</div>
+</div>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="hatmat-foot" role="note">
