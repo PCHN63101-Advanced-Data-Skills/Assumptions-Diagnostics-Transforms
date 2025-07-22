@@ -9,5 +9,4 @@ chapters:
 - file: 3.diagnostic-measures
 - file: 4.diagnostic-plots
 - file: 5.transformations
-- file: 6.adjusting-model
 - file: summary

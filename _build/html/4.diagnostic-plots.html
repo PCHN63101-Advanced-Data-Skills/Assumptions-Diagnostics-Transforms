@@ -177,7 +177,6 @@
 <li class="toctree-l1"><a class="reference internal" href="3.diagnostic-measures.html">Diagnostic Measures</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnostic Plots</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5.transformations.html">Transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6.adjusting-model.html">Adjusting the Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -371,10 +370,21 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plot">Additional Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-variable Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -388,34 +398,191 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="diagnostic-plots">
 <h1>Diagnostic Plots<a class="headerlink" href="#diagnostic-plots" title="Link to this heading">#</a></h1>
-<p>… All these plots are produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> when we call <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code> on a model fit using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p>
+<p>In the previous part of this lesson, we examined a number of diagnostic measures that we can use to assess both the model assumptions and identify any data features that may indicate modelling issues. Although we discussed interpretation of their numeric values, it is more typical to <em>visualise</em> these measures in various useful ways. We already saw some indication of these visualisations earlier when calling <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code> on a model fit using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. In this part of the lesson, we will discuss all the standard plots that <code class="docutils literal notranslate"><span class="pre">R</span></code> produces, as well as some additional visualisations that can be useful for assessing the suitability of the model for any given dataset.</p>
+<section id="diagnostic-plots-for-lm">
+<h2>Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code><a class="headerlink" href="#diagnostic-plots-for-lm" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Plot</p></th>
+<th class="head"><p>Main purpose</p></th>
+<th class="head"><p>What we want to see</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Residuals vs Fitted</p></td>
+<td><p>Linearity</p></td>
+<td><p>The pattern across the fitted values is a flat line.</p></td>
+</tr>
+<tr class="row-odd"><td><p>QQ Normal</p></td>
+<td><p>Residual normality</p></td>
+<td><p>All points lying along the main diagonal.</p></td>
+</tr>
+<tr class="row-even"><td><p>Scale-Location</p></td>
+<td><p>Homoscedasticity</p></td>
+<td><p>An equal vertical scattering of points.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Residuals vs Leverage</p></td>
+<td><p>Outliers</p></td>
+<td><p>No points within the bands in the top-right or bottom-left corners.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="residual-vs-fitted-plot">
-<h2>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h2>
+<h3>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h3>
 </section>
 <section id="q-q-normal-plot">
-<h2>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h2>
+<h3>Q-Q Normal Plot<a class="headerlink" href="#q-q-normal-plot" title="Link to this heading">#</a></h3>
 <p>The logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the errors. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. As such, we typically compare the <em>standardised</em> residuals to a normal distribution, given that the effect of leverage has been removed.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png"><img alt="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png" src="_images/9b9c43cc1ba9f8043f6adb056b4ebf2b0953715d0087c4fcb7c843f177f16f21.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png"><img alt="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png" src="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png" style="width: 600px; height: 720px;" /></a>
 </div>
 </div>
 </section>
 <section id="scale-vs-location-plot">
-<h2>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h2>
+<h3>Scale vs Location Plot<a class="headerlink" href="#scale-vs-location-plot" title="Link to this heading">#</a></h3>
 </section>
 <section id="residuals-vs-leverage-plot">
-<h2>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h2>
+<h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
 <p>Cook’s distance…</p>
-<div class="tip admonition">
-<p class="admonition-title">Residuals are Not Independent with Constant Variance</p>
-<p>One of the main reasons for distinguishing between <em>errors</em> and <em>residuals</em> is that the estimation process <em>changes</em> the distributional properties of the errors. This means that <em>errors</em> and <em>residuals</em> are not expected to behave idnetically. So while it is correct to assume</p>
-<div class="math notranslate nohighlight">
-\[
-\epsilon_{i} \overset{\text{i.i.d.}}{\sim} \mathcal{N}\left(0,\sigma^{2}\right),
-\]</div>
-<p>it is <em>not</em> technically correct to assume the same for the <em>errors</em>. This is because the estimation procedure can <em>induce</em> correlation between the errors and the errors can have non-constant variance, depending upon a property known as <em>leverage</em>. We will discuss some of these concepts next week. For now, just note that the residuals can be used as an <em>approximation</em> for the errors, but we need to perform some additional checks to make sure that this approximation is reasonable.</p>
+</section>
+</section>
+<section id="additional-plot">
+<h2>Additional Plot<a class="headerlink" href="#additional-plot" title="Link to this heading">#</a></h2>
+<p>As well as the standard plots produced by calling <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code>, there are some additional plots that can be useful to see various assumptions or data features more clearly. Here, we will have a brief rundown of some of the more useful.</p>
+<section id="correlation-plots">
+<h3>Correlation Plots<a class="headerlink" href="#correlation-plots" title="Link to this heading">#</a></h3>
+<p>Although previously we indicated that assessing correlation between predictors is best served by the VIF, it can be useful at times to investigate correlation as part of the initial descriptive exploration of the data, prior to fitting any model. For that purpose, a correlation plot can be useful. In the example below, we use the <code class="docutils literal notranslate"><span class="pre">corrplot</span></code> package to visualise the entire <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">12</span><span class="p">)</span>
+</pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;corrplot&#39;</span><span class="p">)</span>
+
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
+<span class="nf">corrplot</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">mtcars</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="n">type</span><span class="o">=</span><span class="s">&#39;upper&#39;</span><span class="p">,</span><span class="w">            </span><span class="c1"># just upper-diagonal</span>
+<span class="w">        </span><span class="n">addCoef.col</span><span class="o">=</span><span class="s">&#39;lightgrey&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1"># add coeficient labels</span>
+<span class="w">        </span><span class="n">diag</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">              </span><span class="c1"># hide diagonal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png"><img alt="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png" src="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png" style="width: 720px; height: 720px;" /></a>
+</div>
+</div>
+</section>
+<section id="vif-barplot">
+<h3>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h3>
+<p>Once we have a model and we want to use VIF, it can be useful to visualise this as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used previously.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">wt</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">wt.copy</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">vif.values</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">)</span>
+
+<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/5f944b704031478ff4234780ca677222736fd303cb967979aacf92e0c707ac83.png"><img alt="_images/5f944b704031478ff4234780ca677222736fd303cb967979aacf92e0c707ac83.png" src="_images/5f944b704031478ff4234780ca677222736fd303cb967979aacf92e0c707ac83.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+<section id="influence-plot">
+<h3>Influence Plot<a class="headerlink" href="#influence-plot" title="Link to this heading">#</a></h3>
+<p>0.5 and 1 are common cutoffs for Cook’s Distance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
+<span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 5 × 3</caption>
+<thead>
+	<tr><th></th><th scope=col>StudRes</th><th scope=col>Hat</th><th scope=col>CookD</th></tr>
+	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>Lincoln Continental</th><td>0.1065775</td><td>0.24373270</td><td>0.0009486833</td></tr>
+	<tr><th scope=row>Chrysler Imperial</th><td>2.2153833</td><td>0.23547715</td><td>0.3316313326</td></tr>
+	<tr><th scope=row>Fiat 128</th><td>2.5303244</td><td>0.08274176</td><td>0.1210330843</td></tr>
+	<tr><th scope=row>Toyota Corolla</th><td>2.7498370</td><td>0.09961207</td><td>0.1694339333</td></tr>
+	<tr><th scope=row>Maserati Bora</th><td>0.6073374</td><td>0.46356582</td><td>0.0815260489</td></tr>
+</tbody>
+</table>
+</div><a class="reference internal image-reference" href="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png"><img alt="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png" src="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png" style="width: 720px; height: 540px;" /></a>
+</div>
+</div>
+</section>
+<section id="added-variable-plots">
+<h3>Added-variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png"><img alt="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png" src="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png" style="width: 720px; height: 600px;" /></a>
+</div>
+</div>
+</section>
+<section id="effects-plots">
+<h3>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png"><img alt="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png" src="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png" style="width: 720px; height: 600px;" /></a>
+</div>
+</div>
+<p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, so it is worthwhile introducing them now.</p>
+</section>
 </section>
 </section>
 
@@ -484,10 +651,21 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-normal-plot">Q-Q Normal Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-vs-location-plot">Scale vs Location Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plot">Additional Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-variable Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
