@@ -61,8 +61,6 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '4.diagnostic-plots';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -523,26 +521,29 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
-<span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="n">bad.points</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table class="dataframe">
-<caption>A data.frame: 5 × 3</caption>
-<thead>
-	<tr><th></th><th scope=col>StudRes</th><th scope=col>Hat</th><th scope=col>CookD</th></tr>
-	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
-</thead>
-<tbody>
-	<tr><th scope=row>Lincoln Continental</th><td>0.1065775</td><td>0.24373270</td><td>0.0009486833</td></tr>
-	<tr><th scope=row>Chrysler Imperial</th><td>2.2153833</td><td>0.23547715</td><td>0.3316313326</td></tr>
-	<tr><th scope=row>Fiat 128</th><td>2.5303244</td><td>0.08274176</td><td>0.1210330843</td></tr>
-	<tr><th scope=row>Toyota Corolla</th><td>2.7498370</td><td>0.09961207</td><td>0.1694339333</td></tr>
-	<tr><th scope=row>Maserati Bora</th><td>0.6073374</td><td>0.46356582</td><td>0.0815260489</td></tr>
-</tbody>
-</table>
-</div><a class="reference internal image-reference" href="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png"><img alt="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png" src="_images/4bd02293c75cfc9be379d878669aac39ad66d42adfa9fb1a3795e797d2b11375.png" style="width: 720px; height: 540px;" /></a>
+<a class="reference internal image-reference" href="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png"><img alt="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png" src="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png" style="width: 720px; height: 600px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">bad.points</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                      StudRes        Hat        CookD
+Lincoln Continental 0.1065775 0.24373270 0.0009486833
+Chrysler Imperial   2.2153833 0.23547715 0.3316313326
+Fiat 128            2.5303244 0.08274176 0.1210330843
+Toyota Corolla      2.7498370 0.09961207 0.1694339333
+Maserati Bora       0.6073374 0.46356582 0.0815260489
+</pre></div>
+</div>
 </div>
 </div>
 </section>
