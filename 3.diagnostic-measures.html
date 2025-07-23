@@ -509,13 +509,9 @@
 \text{Var}\left(e_{i}\right) = \sigma^{2}\left(1 - h_{i}\right).
 \]</div>
 <p>So, rather than being constant (as is the case with the true <em>errors</em>), the variance of the residuals is <em>scaled</em> by the leverage. Because we have a leverage value for each observation, the variance will be different for each observation. In other words, the residuals <em>cannot be homoscedastic</em>, even if the errors are. In the equation above, the key element is that the variance is scaled by <span class="math notranslate nohighlight">\(\left(1 - h_{i}\right)\)</span>. So, if <span class="math notranslate nohighlight">\(h_{i} = 0.8\)</span> then the variance would be multiplied by <span class="math notranslate nohighlight">\(1 - 0.8 = 0.2\)</span>. As such, the <em>higher</em> the leverage, the <em>smaller</em> the variance gets.</p>
-<p>Why does this happen? It is actually due to the inherent properties of estimating the parameters from data. Because observations with high leverage pull the model fit towards them, the variance around those points will be smaller than elsewhere in the fit. As such, points with high leverage will often sit closer to the regression line, making the variance <em>smaller</em> for that particular combination of predictor values. This is illustrated in the plot of residuals below. Although these data are simulated from a homoscedastic population, we can see that the variance (illustrated by the green dashed lines) shrinks as the leverage of individual points gets higher. The points in red indicate those that are above the typical cutoff of twice the average leverage. We can also see that the degree to which we may be mislead by the heteroscedasticity of the residuals will depend upon how extreme the leverage is.</p>
-<div class="cell tag_remove-input docutils container">
-</div>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/1340d8850e568f78263ac7862dca7b47e8b830b9b018745eba098794026e34e4.png"><img alt="_images/1340d8850e568f78263ac7862dca7b47e8b830b9b018745eba098794026e34e4.png" src="_images/1340d8850e568f78263ac7862dca7b47e8b830b9b018745eba098794026e34e4.png" style="width: 720px; height: 420px;" /></a>
-</div>
+<div class="tip admonition">
+<p class="admonition-title">Why Does Leverage Reduce the Variance?</p>
+<p>The reason that this relationship between leverage and variance exists is because of the inherent properties of the estimation process. This is easiest to think about in terms of <em>least-squares</em>. In order to minimise the sum of squared residuals, observations with high leverage pull the model fit towards them. Because there may be no other points around them, there is nothing to balance the model fit by pulling in the opposite direction. The result is that the variance around those points will be smaller than elsewhere in the data, where the fit is more of a balanced between many data points. As such, points with high leverage will often sit closer to the regression line, making the variance <em>smaller</em> for that particular combination of predictor values. The question is then whether the influence of these individual data points is biasing the model, despite initial appearences of a good fit.</p>
 </div>
 </section>
 </section>
@@ -531,13 +527,7 @@
 \[
 r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
 \]</div>
-<p>which is just the residual divided by its theoretical standard deviation. This has the effect of scaling the residuals into units of standard deviation. So, for the purpose of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typically, values of either 2 or 3 standard deviations are used to detect outliers. This scaling also has an additional advantage because the effect of leverage is removed from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity, as the misleading effect of leverage is gone. This is shown in the plot below, where we can see that there is no longer any dependence between the variance and leverage when the residuals are standardised.</p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png"><img alt="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png" src="_images/ba02d41d265257253ac975b387a2fbb7d95beffc6f3aa54e2ec1eb47442e2c03.png" style="width: 720px; height: 420px;" /></a>
-</div>
-</div>
-<p>Standardised residuals can be calculated in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">rstandard()</span></code> function</p>
+<p>which is just the residual divided by its theoretical standard deviation. This has the effect of scaling the residuals into units of standard deviation. So, for the purpose of outlier detection, we just need to decide how many standard deviations we would consider <em>large</em>. Typically, values of either 2 or 3 standard deviations are used to detect outliers. This scaling also has an additional advantage because the effect of leverage is removed from each residual. This makes standardised residuals useful for decting outliers <em>and</em> for assessing homoscedasticity, as the misleading effect of leverage is gone. Standardised residuals can be calculated in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">rstandard()</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -591,8 +581,7 @@ r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
 \[
 t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 \]</div>
-<p>The reason for doing this is that an outlier will artifically inflate the global variance estimate, meaning that extreme points will have <em>smaller</em> values when standardised. In other words, outliers can hide and appear less extreme than they really are. This is corrected by removing the point in question from the variance when scaling it into standard deviation units.</p>
-<p>Studentised residuals can be calculated using the <code class="docutils literal notranslate"><span class="pre">rstudent()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<p>The reason for doing this is that an outlier will artifically inflate the global variance estimate, meaning that extreme points will have <em>smaller</em> values when standardised. In other words, outliers can <em>hide</em> and appear less extreme than they really are. This is corrected by removing the point in question from the variance when scaling it into standard deviation units. Studentised residuals can be calculated using the <code class="docutils literal notranslate"><span class="pre">rstudent()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -673,30 +662,7 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </div>
 </div>
 </div>
-<p>Adding together the predicted values and the residuals completes the model sum to give <span class="math notranslate nohighlight">\(y_{i} = \hat{y}_{i} + e_{i}\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mod.fit</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">resid.raw</span>
-<span class="n">mpg</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span>
-<span class="n">compare</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">mpg</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">compare</span><span class="p">))</span><span class="w"> </span><span class="c1"># compare the sum of the model components to the raw data</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                     y  mpg
-Mazda RX4         21.0 21.0
-Mazda RX4 Wag     21.0 21.0
-Datsun 710        22.8 22.8
-Hornet 4 Drive    21.4 21.4
-Hornet Sportabout 18.7 18.7
-Valiant           18.1 18.1
-</pre></div>
-</div>
-</div>
-</div>
-<p>This demonstrates how the model <em>splits</em> each data value into its expectation and error.</p>
-<p>We have already seen why the error component of this sum is useful diagnostically. The reason why the prediction is also useful is because our assumptions about homoscedasticity relate to an equal spread of data above and below the regression plane. Each predicted value represents a point on this plane from some combination of predictor values. As such, when we plot the predicted values against the standardised residuals, we should see an even and equal vertical spread of points above and below the prediction. We can use this form of visualisation to assess evidence of <em>non-linear</em> relationships in the data. For instance, if we have a straight-line fit but the actual relationship is a <em>curve</em>, the residuals will not be evenly spread around the prediction and will have some characteristic shape that bends around the prediction. We will see this when we examine some standard diagnostic plots in the next part of the lesson.</p>
+<p>The reason why the prediction is useful diagnostically is because our assumptions about homoscedasticity relate to an equal spread of data above and below the regression plane. Each predicted value represents a point on this plane from some combination of predictor values. As such, when we plot the predicted values against the standardised residuals, we should see an even and equal vertical spread of points above and below the predictions. We can also use this form of visualisation to assess evidence of <em>non-linear</em> relationships in the data. For instance, if we have a straight-line fit but the actual relationship is a <em>curve</em>, the residuals will not be evenly spread around the prediction and will have some characteristic shape that bends around the prediction. We will see this when we examine some standard diagnostic plots in the next part of the lesson.</p>
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h2>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h2>
@@ -770,35 +736,35 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 </div>
 </div>
 </div>
-<p>In terms of interpretation, it is usual to take:</p>
-<ul class="simple">
-<li><p>VIF = 1 — No multicollinearity</p>
-<ul>
-<li><p>No issues and no action required.</p></li>
-</ul>
-</li>
-<li><p>1 &lt; VIF &lt; 5 — Small to moderate multicollinearity.</p>
-<ul>
-<li><p>Some caution needed, but not usually a problem for the model.</p></li>
-<li><p>Concern gets greater the closer to 5 the measure is.</p></li>
-</ul>
-</li>
-<li><p>VIF &gt; 5 — High multicollinearity.</p>
-<ul>
-<li><p>Standard errors will be larger than usual.</p></li>
-<li><p>Inference will become unstable.</p></li>
-<li><p>Some mitigation will usually be needed.</p></li>
-</ul>
-</li>
-<li><p>VIF &gt; 10 — Severe multicollinearity.</p>
-<ul>
-<li><p>Standard errors will have blown-up at this point.</p></li>
-<li><p>Inference will become untrustworthy.</p></li>
-<li><p>This cannot be ignored and something needs to be done.</p></li>
-</ul>
-</li>
-</ul>
-<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. For <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, that value is also 1 &lt; VIF &lt; 5, however it is much closer to 5 and this may be slightly more concerning. In this situation, we would likely remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>. For instance:</p>
+<p>In terms of interpretation, the table below gives some general guidance.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>VIF Value</p></th>
+<th class="head"><p>Multicollinearity</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>None</p></td>
+<td><p>No issues and no action required.</p></td>
+</tr>
+<tr class="row-odd"><td><p>1 to 5</p></td>
+<td><p>Small to Moderate</p></td>
+<td><p>Some caution needed, but not usually a problem. Concern gets greater closer to 5.</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 5</p></td>
+<td><p>High</p></td>
+<td><p>Standard errors will be larger than usual and inference will become unstable.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&gt; 10</p></td>
+<td><p>Severe</p></td>
+<td><p>Standard errors will have blown-up and inference will become untrustworthy.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In the example above, both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> have VIF &gt; 10, showing <em>severe</em> multicollinearity. This points to a big problem with the model, specifically in relation to those two predictors. Notice that <code class="docutils literal notranslate"><span class="pre">hp</span></code> has 1 &lt; VIF &lt; 5, which gives little reason for concern. For <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, that value is also 1 &lt; VIF &lt; 5, however it is much closer to 5 and this may be slightly more concerning. In this situation, we would likely remove either <code class="docutils literal notranslate"><span class="pre">wt</span></code> or <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code>. If we do so and then recalculate VIF, we get</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -813,6 +779,7 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 </div>
 </div>
 </div>
+<p>So there is now no immediate cause for concern. The VIF for <code class="docutils literal notranslate"><span class="pre">cyl</span></code> is still getting close to 5, which is something we may need to bear in mind. This is likely due to the fact that engines that produce more horsepower often have more cylinders, which will also have an impact on the weight of the car. So this dependence is somewhat unavoidable, but could cause us to question whether <code class="docutils literal notranslate"><span class="pre">cyl</span></code> is adding anything useful to the model.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="hatmat-foot" role="note">
