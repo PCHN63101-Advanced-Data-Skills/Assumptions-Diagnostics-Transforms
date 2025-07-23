@@ -61,6 +61,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '4.diagnostic-plots';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -473,6 +475,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>corrplot 0.92 loaded
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png"><img alt="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png" src="_images/f4fd2d92c2fe8931892e84d5945c0e58bbe1e35734025a61f03af95b5de8e1c8.png" style="width: 720px; height: 720px;" /></a>
 </div>
 </div>
@@ -510,28 +515,25 @@
 </section>
 <section id="influence-plot">
 <h3>Influence Plot<a class="headerlink" href="#influence-plot" title="Link to this heading">#</a></h3>
-<p>0.5 and 1 are common cutoffs for Cook’s Distance.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">9</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Another useful plot included as part of the <code class="docutils literal notranslate"><span class="pre">car</span></code> package is the <em>influence</em> plot, where studentised residuals, leverage, Cook’s distance and standard thresholds for extreme points are all combined into the same plot. As an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
-<span class="n">bad.points</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="n">note</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="c1"># Make thresholds visible (DON&#39;T DO THIS NORMALLY)</span>
+<span class="w">                </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png"><img alt="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png" src="_images/af7b2b96d53968173b739aa723fff433873babcfe4671fccacdf6d56baf96ae8.png" style="width: 720px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/24ae4c49709a10bcb9a853a36680628798116546bfdb2b46bc40375b29d0f25e.png"><img alt="_images/24ae4c49709a10bcb9a853a36680628798116546bfdb2b46bc40375b29d0f25e.png" src="_images/24ae4c49709a10bcb9a853a36680628798116546bfdb2b46bc40375b29d0f25e.png" style="width: 720px; height: 540px;" /></a>
 </div>
 </div>
+<p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. In addition, heuristics of 2 and -2 are shown vertically for outliers, with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">bad.points</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -546,43 +548,78 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 </div>
 </div>
+<p>How these points are chosen requires a little explanation. The labels are based on the top two points for each of the influence measures. For the studentised residuals, the two largest points are the Toyota Corolla and the Fiat 128. For the leverage values, the two largest points are the Maserati Bora and the Lincoln Continental. For Cook’s Distance, the two largest points are Chrysler Imperial and the Toyota Corolla. So this gives five unique data points (because the Toyota appears <em>twice</em>). The labelling in the plot can then be thought of as the two largest values horizontally, the two largest vertically, and the two largest in terms of their bubble size. Of note is that this will happen irrespective of whether any of the data points are above any threshold of concern on any measure. For instance, none of these data have Cook’s D &gt; 0.5, despite the function still labelling the top two values. As such, we need to use the labelling in conjunction with the heuristics shown in the plot.</p>
 </section>
 <section id="added-variable-plots">
 <h3>Added-variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png"><img alt="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png" src="_images/01edea22e74e1f59b9548458082d2b97ffacd224ca64fbe93318229bcddd4716.png" style="width: 720px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png"><img alt="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png" src="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png" style="width: 840px; height: 600px;" /></a>
 </div>
 </div>
 </section>
 <section id="effects-plots">
 <h3>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h3>
+<p>As an alternative to added-variable plots, we can instead create <em>effects</em> plots. Here, rather than removing the influence of other effects in the model, we simply fix them at some constant value. For instance, in plotting the effects of <span class="math notranslate nohighlight">\(x_{i1}\)</span> in the following model</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
+\]</div>
+<p>we can calculate predicted values by setting <span class="math notranslate nohighlight">\(x_{i2}\)</span> and <span class="math notranslate nohighlight">\(x_{i3}\)</span> to their means</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}^{(x_1)}_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}\bar{x}_{2} + \beta_{3}\bar{x}_{3}.
+\]</div>
+<p>In this way, we do not remove the other variables, we just keep them fixed so that only the variable of interest changes. The advantage of doing this is that we can examine the effect without the need to residualise the data, which can provide a more inuitive display of the model. For instance, we can make these types of plots using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package in <code class="docutils literal notranslate"><span class="pre">R</span></code>. For instance:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
-<span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">0</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png"><img alt="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png" src="_images/bbef250260069308eac693c7ee4506cbf61e1d49d46ad72853f7c5787e369db3.png" style="width: 720px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/672a4db1c3deac7b08095c1313691973fdfba4013e75666f118dadadb420de0d.png"><img alt="_images/672a4db1c3deac7b08095c1313691973fdfba4013e75666f118dadadb420de0d.png" src="_images/672a4db1c3deac7b08095c1313691973fdfba4013e75666f118dadadb420de0d.png" style="width: 840px; height: 600px;" /></a>
 </div>
 </div>
-<p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, so it is worthwhile introducing them now.</p>
+<p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
+<p>These plots can also be advanced further by taking the effects predictions and adding back in the original residuals from the model. This allows us to see how close the model fit is to the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package then takes this further and draws a smooth curve through the pattern of residuals. This allows us to see whether there are any non-linear patterns that are not being captured by the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png"><img alt="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png" src="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png" style="width: 840px; height: 600px;" /></a>
+</div>
+</div>
+<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots. As an aside, if you ever want to turn the smoothing curve <em>off</em>, you can use</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png"><img alt="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png" src="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png" style="width: 840px; height: 600px;" /></a>
+</div>
+</div>
+<p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
 </section>
 </section>
 </section>
