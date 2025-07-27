@@ -394,7 +394,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-linear-model-assumptions">
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.resolution</span><span class="o">=</span><span class="m">120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="the-linear-model-assumptions">
 <h1>The Linear Model Assumptions<a class="headerlink" href="#the-linear-model-assumptions" title="Link to this heading">#</a></h1>
 <p>In the previous weeks, we outlined the modelling framework behind both simple and multiple regression. In doing so, we made a number of assumptions that allowed this framework to be tractable and useable. However, we never acually checked whether any of these assumptions held when using our example data. In this section, we will discuss the nature of checking modelling assumptions, as well as discussing each of the assumptions we made. In the rest of this lesson, we will discuss standard ways of checking these assumptions, as well as tactics that can be employed when those assumptions appear to be violated.</p>
 <div class="tip admonition">
@@ -412,15 +419,13 @@
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="c1"># 2x2 grid with reduced margins</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/6c119ea9f45d08cba64a2fe2c73fe96f09c795d215117a9a3a32c11405cabb25.png"><img alt="_images/6c119ea9f45d08cba64a2fe2c73fe96f09c795d215117a9a3a32c11405cabb25.png" src="_images/6c119ea9f45d08cba64a2fe2c73fe96f09c795d215117a9a3a32c11405cabb25.png" style="width: 840px; height: 840px;" /></a>
+<a class="reference internal image-reference" href="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png"><img alt="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" src="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>We will discuss what all these plots are showing us and how to interpret them later in this lesson. For now, just notice that the default method in <code class="docutils literal notranslate"><span class="pre">R</span></code> is to draw plots to check assumptions, <em>not</em> run a bunch of inferential tests of assumptions. This is for very good reason, as we will now discuss.</p>
@@ -440,7 +445,6 @@
 <span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
 
 <span class="c1"># Visualisation</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
 <span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Small Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
 <span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="m">15</span><span class="p">)</span>
 <span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
@@ -454,7 +458,7 @@ data:  y
 W = 0.95294, p-value = 0.5719
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png"><img alt="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png" src="_images/e710589e3cb2e65f0bb7976d3c7aba4f2890c5f4cf7281bd2fb3357f5a321069.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/ca0d68cd749c128dafbe8417704567d120df7d80f88aacb6b8978176c5911594.png"><img alt="_images/ca0d68cd749c128dafbe8417704567d120df7d80f88aacb6b8978176c5911594.png" src="_images/ca0d68cd749c128dafbe8417704567d120df7d80f88aacb6b8978176c5911594.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>The test has produced a <em>non-significant</em> <span class="math notranslate nohighlight">\(p\)</span>-value, which tells us that the test has failed to reject the null hypothesis that our data comes from a normal distribution. This would usually be interpreted as <em>no significant depature from normality</em>. The important point is that we know this is wrong. Would we have noticed this lack of normality from the visualisation? Looking the plot, we can see that the small sample actually makes it quite difficult to determine the distribution. Based on this, we should at least be wary of accepting any particular shape, but this is a subtlety that <em>cannot</em> be conveyed with the test. Importantly, the inferential test has not provided us with a correct objective alternative to our “subjective” interpretation of the plot.</p>
@@ -471,7 +475,6 @@ W = 0.95294, p-value = 0.5719
 <span class="nf">print</span><span class="p">(</span><span class="n">shap.test</span><span class="p">)</span>
 
 <span class="c1"># Visualisation</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
 <span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Large Sample Histogram&quot;</span><span class="p">,</span><span class="w"> </span>
 <span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">.</span><span class="m">45</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="m">25</span><span class="p">)</span>
 <span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
@@ -485,7 +488,7 @@ data:  y
 W = 0.99836, p-value = 0.04526
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png"><img alt="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png" src="_images/621ce193084ad0171785ac94534de039dfd7c0837f3c927ce09744ec507ff0cf.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/0bad07bbfc3199293d97c4e5cf7df929226ea13ee0bb13639a5a9e412508b50e.png"><img alt="_images/0bad07bbfc3199293d97c4e5cf7df929226ea13ee0bb13639a5a9e412508b50e.png" src="_images/0bad07bbfc3199293d97c4e5cf7df929226ea13ee0bb13639a5a9e412508b50e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here, the test says that there is a <em>significant</em> violation of normality. The test is not wrong, however, looking at the histogram it is very clear that the violation of slightly more density on the positive side of the distribution is very trivial. Practically, the distribution looks as close to normal as we are ever likely to see with real data. Based on this histogram, any attempt to correct for non-normality would likely be taken as wildly unnecessary. However, if we just believed the test then we could be off on a wild goose chase trying to change our model and transform our data to accomodate this violation. Again, visualising this assumption gives us the richest information for deciding how close to normal the distribution is and how comfortable we are relying on results that depend upon this assumption.</p>
