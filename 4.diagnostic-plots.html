@@ -381,8 +381,16 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Simulated Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plots">Additional Plots</a><ul class="nav section-nav flex-column">
@@ -499,10 +507,22 @@
 </section>
 <section id="scale-location-plot">
 <h3>Scale-Location Plot<a class="headerlink" href="#scale-location-plot" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h4>Interpreting the Plot<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+</section>
+<section id="id5">
+<h4>Simulated Example<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+</section>
 </section>
 <section id="residuals-vs-leverage-plot">
 <h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
 <p>Cook’s distance…</p>
+<section id="id6">
+<h4>Interpreting the Plot<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+</section>
+<section id="id7">
+<h4>Simulated Example<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+</section>
 </section>
 </section>
 <section id="additional-plots">
@@ -556,18 +576,15 @@
 <p>Another useful plot included as part of the <code class="docutils literal notranslate"><span class="pre">car</span></code> package is the <em>influence</em> plot, where studentised residuals, leverage, Cook’s distance and standard thresholds for extreme points are all combined into the same plot. As an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">notable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span>
-<span class="w">                        </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="c1"># Make thresholds visible (DON&#39;T DO THIS NORMALLY)</span>
-<span class="w">                        </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">                        </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">notable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png"><img alt="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" src="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png"><img alt="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png" src="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. This agrees with what we saw earlier, as no points fell within the contour lines of <span class="math notranslate nohighlight">\(D = 0.5\)</span> and <span class="math notranslate nohighlight">\(D = 1\)</span>. In addition, heuristics of 2 and -2 are shown vertically for outliers, with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
+<p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. This agrees with what we saw earlier, as no points fell within the contour lines of <span class="math notranslate nohighlight">\(D = 0.5\)</span> and <span class="math notranslate nohighlight">\(D = 1\)</span>. In addition, heuristics of 2 and -2 are shown vertically for outliers (though the lower threshold is not visible in the above plot), with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">notable</span><span class="p">)</span>
@@ -737,8 +754,16 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Simulated Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plots">Additional Plots</a><ul class="nav section-nav flex-column">
