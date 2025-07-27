@@ -442,14 +442,13 @@
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="c1"># 2x2 grid with tighter margins</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/89c4903da6fb49dc2501037ef63360ee091d978b7706ba6021a33936b396dc93.png"><img alt="_images/89c4903da6fb49dc2501037ef63360ee091d978b7706ba6021a33936b396dc93.png" src="_images/89c4903da6fb49dc2501037ef63360ee091d978b7706ba6021a33936b396dc93.png" style="width: 840px; height: 720px;" /></a>
+<a class="reference internal image-reference" href="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png"><img alt="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" src="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <section id="residual-vs-fitted-plot">
@@ -457,13 +456,12 @@
 <p>The first plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Residuals vs Fitted plot, which you can generate on its own by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png"><img alt="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png" src="_images/9238ec1c619d6741bea56cfb533651774b180cbf7a75aedb802dc187cad71d8d.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png"><img alt="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png" src="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>This plots the fitted values along the <span class="math notranslate nohighlight">\(x\)</span>-axis with the raw residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis. The three largest absolute values of the residuals are automatically labelled, which is a behaviour you can change by setting the argument <code class="docutils literal notranslate"><span class="pre">id.n</span></code> in the call to <code class="docutils literal notranslate"><span class="pre">plot()</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">id.n=0</span></code> will turn the labelling <em>off</em>, <code class="docutils literal notranslate"><span class="pre">id.n=5</span></code> will label the 5 largest points and so on). Remember, this labelling is not based on any threshold, it is a relative measure and does not automatically denote outliers.</p>
@@ -477,7 +475,7 @@
 <p>To get a sense of what this plot would look like with <em>extreme</em> depatures from linearity, the plot below shows this same diagnostic applied to simulated data with a true linear relationship (<em>top left</em>) and then three other datasets with true non-linear relationships. This lack of fit should be very clear. Although you are unlikely to see anything this extreme in a real dataset, this should give you a clear idea about what to look for in this plot.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/4fdb5a9642d5a49842e4fcbae4055ca18fc67f7414c4caa9ee79945193b8e979.png"><img alt="_images/4fdb5a9642d5a49842e4fcbae4055ca18fc67f7414c4caa9ee79945193b8e979.png" src="_images/4fdb5a9642d5a49842e4fcbae4055ca18fc67f7414c4caa9ee79945193b8e979.png" style="width: 840px; height: 720px;" /></a>
+<a class="reference internal image-reference" href="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png"><img alt="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png" src="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -487,7 +485,7 @@
 <p>The logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the errors. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. As such, we typically compare the <em>standardised</em> residuals to a normal distribution, given that the effect of leverage has been removed.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png"><img alt="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png" src="_images/5bafd9edd08293da5f6ce07dc83481764874cd2f96939e46146a5888b5e84883.png" style="width: 600px; height: 720px;" /></a>
+<a class="reference internal image-reference" href="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png"><img alt="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png" src="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <section id="id2">
@@ -515,17 +513,8 @@
 <p>Although previously we indicated that assessing correlation between predictors is best served by the VIF, it can be useful at times to investigate correlation as part of the initial descriptive exploration of the data, prior to fitting any model. For that purpose, a correlation plot can be useful. In the example below, we use the <code class="docutils literal notranslate"><span class="pre">corrplot</span></code> package to visualise the entire <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">12</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;corrplot&#39;</span><span class="p">)</span>
-
 <span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span>
 <span class="nf">corrplot</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">mtcars</span><span class="p">),</span><span class="w"> </span>
 <span class="w">        </span><span class="n">type</span><span class="o">=</span><span class="s">&#39;upper&#39;</span><span class="p">,</span><span class="w">            </span><span class="c1"># just upper-diagonal</span>
 <span class="w">        </span><span class="n">addCoef.col</span><span class="o">=</span><span class="s">&#39;lightgrey&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1"># add coeficient labels</span>
@@ -534,20 +523,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/a21156d589149bac688c6dfe01f9cd48887f6f7d38cb1d0e2c8ec7393c3fa834.png"><img alt="_images/a21156d589149bac688c6dfe01f9cd48887f6f7d38cb1d0e2c8ec7393c3fa834.png" src="_images/a21156d589149bac688c6dfe01f9cd48887f6f7d38cb1d0e2c8ec7393c3fa834.png" style="width: 720px; height: 720px;" /></a>
+<a class="reference internal image-reference" href="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png"><img alt="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" src="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
 <section id="vif-barplot">
 <h3>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h3>
 <p>Once we have a model and we want to use VIF, it can be useful to visualise this as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used previously.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
@@ -558,7 +540,6 @@
 <span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">vif.values</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">)</span>
 
-<span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span>
 <span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
@@ -566,7 +547,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/fc957d152624ba413b8c5497c0230c1c22cec6fdde39d5b8c278e612066e3db1.png"><img alt="_images/fc957d152624ba413b8c5497c0230c1c22cec6fdde39d5b8c278e612066e3db1.png" src="_images/fc957d152624ba413b8c5497c0230c1c22cec6fdde39d5b8c278e612066e3db1.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png"><img alt="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" src="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -575,22 +556,21 @@
 <p>Another useful plot included as part of the <code class="docutils literal notranslate"><span class="pre">car</span></code> package is the <em>influence</em> plot, where studentised residuals, leverage, Cook’s distance and standard thresholds for extreme points are all combined into the same plot. As an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex</span><span class="o">=</span><span class="m">1.6</span><span class="p">)</span>
-<span class="n">note</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span>
-<span class="w">                </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="c1"># Make thresholds visible (DON&#39;T DO THIS NORMALLY)</span>
-<span class="w">                </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">                </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">notable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                        </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="c1"># Make thresholds visible (DON&#39;T DO THIS NORMALLY)</span>
+<span class="w">                        </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                        </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/926c450a161132487bfe7012ec3a883b12e56420bf9792f761647976e260d4f8.png"><img alt="_images/926c450a161132487bfe7012ec3a883b12e56420bf9792f761647976e260d4f8.png" src="_images/926c450a161132487bfe7012ec3a883b12e56420bf9792f761647976e260d4f8.png" style="width: 720px; height: 540px;" /></a>
+<a class="reference internal image-reference" href="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png"><img alt="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" src="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. This agrees with what we saw earlier, as no points fell within the contour lines of <span class="math notranslate nohighlight">\(D = 0.5\)</span> and <span class="math notranslate nohighlight">\(D = 1\)</span>. In addition, heuristics of 2 and -2 are shown vertically for outliers, with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">notable</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -611,19 +591,12 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 <h3>Added-variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png"><img alt="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png" src="_images/2284764e544505e8a2d3f4ae1ac71a7826cb2257279263620e1d4e10e848481d.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -643,12 +616,13 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
 <span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c82166bf41bc38911d2f88efa30131fd3b91264f782d5e8dfc071cffb2f0ed07.png"><img alt="_images/c82166bf41bc38911d2f88efa30131fd3b91264f782d5e8dfc071cffb2f0ed07.png" src="_images/c82166bf41bc38911d2f88efa30131fd3b91264f782d5e8dfc071cffb2f0ed07.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png"><img alt="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" src="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
@@ -661,7 +635,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png"><img alt="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png" src="_images/f24f7fde2b416c7406df9d1395c2bdbada62e61f23e2ae55f16652a04fee4303.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png"><img alt="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" src="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots. As an aside, if you ever want to turn the smoothing curve <em>off</em>, you can use</p>
@@ -672,7 +646,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png"><img alt="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png" src="_images/408f952d5dd925e834a1bb869531faa9df3d9246811a019780bc834e58a39386.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png"><img alt="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png" src="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
