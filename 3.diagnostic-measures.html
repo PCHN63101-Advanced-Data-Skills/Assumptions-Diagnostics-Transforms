@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -70,7 +67,6 @@
     <link rel="prev" title="Data Features" href="2.data-features.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -86,8 +82,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -95,6 +102,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -102,8 +110,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -119,8 +127,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -150,17 +157,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -186,14 +197,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,16 +343,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -667,12 +681,12 @@ t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
 </section>
 <section id="cook-s-distance">
 <h2>Cook’s Distance<a class="headerlink" href="#cook-s-distance" title="Link to this heading">#</a></h2>
-<p><span class="math notranslate nohighlight">\(D_{i}\)</span> is calculated directly from the studentised residual <span class="math notranslate nohighlight">\(t_{i}\)</span> and the leverage value <span class="math notranslate nohighlight">\(h_{i}\)</span></p>
+<p>Another common diagnostic measure is a quantity known as <em>Cook’s Distance</em>, which combines both the studentised residuals and the leverage to produce a single metric of whether an observation is an outlier in <em>both</em> outcome and predictor space. For each observation, the Cook’s Distance <span class="math notranslate nohighlight">\(D_{i}\)</span> is calculated as</p>
 <div class="math notranslate nohighlight">
 \[
 D_{i} = \frac{1}{p} \times t_{i}^{2} \times \frac{h_{i}}{1 - h_{i}},
 \]</div>
-<p>so we can see here that <span class="math notranslate nohighlight">\(D_{i}\)</span> is a metric that combines <em>both</em> the detection of outliers <em>and</em> high relative leverage. A data value with a high <span class="math notranslate nohighlight">\(D_{i}\)</span> is both an outlier in outcome space and an outlier in predictor space.</p>
+<p>These values can be returned in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">cooks.distance()</span></code> function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cooks.distance</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -701,7 +715,7 @@ D_{i} = \frac{1}{p} \times t_{i}^{2} \times \frac{h_{i}}{1 - h_{i}},
 </div>
 </div>
 </div>
-<p>Values of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span> are cause for concern and values of <span class="math notranslate nohighlight">\(D &gt; 1\)</span> are indications of a potential problem. Remember, this relates to a data point being extreme relative to the model fit and in terms of the patterns of predictors. This does not necessarily make it <em>wrong</em>, but does require investigation. We can filter the returned values of <span class="math notranslate nohighlight">\(D\)</span> to check</p>
+<p>In terms of interpretation, values of <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span> are cause for concern and values of <span class="math notranslate nohighlight">\(D_{i} &gt; 1\)</span> are indications of a potential problem. Remember, this relates to a data point being extreme relative to the model fit <em>and</em> in terms of the patterns of predictors. This does not necessarily make it <em>wrong</em>, but does require investigation. We can filter the returned values of <span class="math notranslate nohighlight">\(D_{i}\)</span> to check</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">D</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">])</span>
@@ -716,12 +730,11 @@ named numeric(0)
 </div>
 </div>
 </div>
-<p>In this case, we have <em>no</em> observations with high values of <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<p>In this case, we have <em>no</em> observations with high values of <span class="math notranslate nohighlight">\(D_{i}\)</span>.</p>
 </section>
 <section id="the-variance-inflation-factor-vif">
 <h2>The Variance Inflation Factor (VIF)<a class="headerlink" href="#the-variance-inflation-factor-vif" title="Link to this heading">#</a></h2>
-<p>Our final diagnostic measure deviates from the other measures discussed in this section because it is only a single number, is not a direct output from the model and requires an external package to calculate. Neverthless, this is one of the most useful tools because it helps diagnose issues of <em>multicollinearity</em>.</p>
-<p>In the previous section, we discussed multicollinearity in terms of high correlation between predictors. As a diagnostic measure, we can certainly calculate the correlation amongst predictors and use that to highlight potential problems. As an example, we can calculate the correlation between the predictors easily in <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<p>Our final diagnostic measure deviates from the other measures discussed in this section because it is only a single number, is not a direct output from the model and requires an external package to calculate. Neverthless, this is one of the most useful tools because it helps diagnose issues of <em>multicollinearity</em>. In the previous section, we discussed multicollinearity in terms of high correlation between predictors. As a diagnostic measure, we can certainly calculate the correlation amongst predictors and use that to highlight potential problems. For instance, we can calculate the correlation between the predictors easily in <code class="docutils literal notranslate"><span class="pre">R</span></code> using</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
@@ -760,7 +773,7 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 \[
 \text{Var}\left(\hat{\beta}_{j}\right) = \frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2}}} \times \frac{1}{1 - R^{2}_{j}}
 \]</div>
-<p>So the variance can be taken as the expression we already know from simple regression, scaled by the factor <span class="math notranslate nohighlight">\(\frac{1}{1 - R^{2}}\)</span>. This is the <em>variance inflation factor</em>. So</p>
+<p>So the variance can be taken as the expression we already know from simple regression, scaled by the factor <span class="math notranslate nohighlight">\(\frac{1}{1 - R^{2}}\)</span>. This is precisely the <em>variance inflation factor</em>. So</p>
 <div class="math notranslate nohighlight">
 \[
 \text{VIF}_{j} = \frac{1}{1 - R^{2}_{j}}
@@ -770,7 +783,7 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 \[
 \text{Var}\left(\hat{\beta}_{j}\right) = \frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2}}} \times \text{VIF}_{j}
 \]</div>
-<p>The term <span class="math notranslate nohighlight">\(R^{2}_{j}\)</span> is something we will cover in more detail <em>next week</em> when we discuss model comparisons. For the moment, this can be understood as the proportion of total variation in predictor <span class="math notranslate nohighlight">\(j\)</span> that can be explained by all the other predictors in the model. So, when predictors are independent, <span class="math notranslate nohighlight">\(R^{2}_{j} = 0\)</span> and <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0} = 1\)</span>. This means that there is <em>no scaling</em> and the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is the same as in simple regression. However, for non-indpendent predictors with (for example) <span class="math notranslate nohighlight">\(R^{2}_{j} = 0.9\)</span>, we would have <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0.9} = \frac{1}{0.1} = 10\)</span>. This means that the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is <em>ten times larger</em> than it would be if there were independence. We can also take <span class="math notranslate nohighlight">\(\sqrt{\text{VIF}_{j}}\)</span> for a similar intepretation on the scale of the <em>standard error</em>.</p>
+<p>The term <span class="math notranslate nohighlight">\(R^{2}_{j}\)</span> is something we will cover in more detail <em>next week</em> when we discuss model comparisons. For the moment, this can be understood as the proportion of total variation in predictor <span class="math notranslate nohighlight">\(j\)</span> that can be explained by all the other predictors in the model. So, when predictors are independent, <span class="math notranslate nohighlight">\(R^{2}_{j} = 0\)</span> and <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0} = 1\)</span>. This means that there is <em>no scaling</em> and the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is the same as in simple regression. However, for non-independent predictors with (for example) <span class="math notranslate nohighlight">\(R^{2}_{j} = 0.9\)</span>, we would have <span class="math notranslate nohighlight">\(\text{VIF}_{j} = \frac{1}{1 - 0.9} = \frac{1}{0.1} = 10\)</span>. This means that the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{j}\)</span> is <em>ten times larger</em> than it would be if there were independence.</p>
 <p>In terms of calculating the VIF, we can do this easily using the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -903,8 +916,7 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -971,8 +983,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

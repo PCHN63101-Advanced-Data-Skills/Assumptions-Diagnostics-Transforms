@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -70,7 +67,6 @@
     <link rel="prev" title="Diagnostic Measures" href="3.diagnostic-measures.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -86,8 +82,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -95,6 +102,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -102,8 +110,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -119,8 +127,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -150,17 +157,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -186,14 +197,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,16 +343,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -387,8 +401,8 @@
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Simulated Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
 </ul>
@@ -456,7 +470,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png"><img alt="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" src="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/6bfff3a65eb061145e03f8b0c9fcb9ac9ec1a4c7fa71ed194a7ece4d5e4ef122.png"><img alt="_images/6bfff3a65eb061145e03f8b0c9fcb9ac9ec1a4c7fa71ed194a7ece4d5e4ef122.png" src="_images/6bfff3a65eb061145e03f8b0c9fcb9ac9ec1a4c7fa71ed194a7ece4d5e4ef122.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <section id="residual-vs-fitted-plot">
@@ -469,7 +483,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png"><img alt="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png" src="_images/ebff24c1b2a92488a8528a5cd4b9768df6866bc3d43de723873ed97c10982a88.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/51fd5537455b626fcbd15c9cea9b01c5a91a469432cbe508261103752e756c36.png"><img alt="_images/51fd5537455b626fcbd15c9cea9b01c5a91a469432cbe508261103752e756c36.png" src="_images/51fd5537455b626fcbd15c9cea9b01c5a91a469432cbe508261103752e756c36.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>This plots the fitted values along the <span class="math notranslate nohighlight">\(x\)</span>-axis with the raw residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis. The three largest absolute values of the residuals are automatically labelled, which is a behaviour you can change by setting the argument <code class="docutils literal notranslate"><span class="pre">id.n</span></code> in the call to <code class="docutils literal notranslate"><span class="pre">plot()</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">id.n=0</span></code> will turn the labelling <em>off</em>, <code class="docutils literal notranslate"><span class="pre">id.n=5</span></code> will label the 5 largest points and so on). Remember, this labelling is not based on any threshold, it is a relative measure and does not automatically denote outliers.</p>
@@ -483,45 +497,100 @@
 <p>To get a sense of what this plot would look like with <em>extreme</em> depatures from linearity, the plot below shows this same diagnostic applied to simulated data with a true linear relationship (<em>top left</em>) and then three other datasets with true non-linear relationships. This lack of fit should be very clear. Although you are unlikely to see anything this extreme in a real dataset, this should give you a clear idea about what to look for in this plot.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png"><img alt="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png" src="_images/bd0b40a6efb22f9c150a9f8ac4bb9ef19c469c5ba31d1ce0a6a77e5a8dc9ccf2.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/50ad84575482eff87143b0dc3f76e71da5907878f812a48b381c65ee29f047c9.png"><img alt="_images/50ad84575482eff87143b0dc3f76e71da5907878f812a48b381c65ee29f047c9.png" src="_images/50ad84575482eff87143b0dc3f76e71da5907878f812a48b381c65ee29f047c9.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
 </section>
 <section id="q-q-residuals-plot">
 <h3>Q-Q Residuals Plot<a class="headerlink" href="#q-q-residuals-plot" title="Link to this heading">#</a></h3>
-<p>The logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the errors. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. As such, we typically compare the <em>standardised</em> residuals to a normal distribution, given that the effect of leverage has been removed.</p>
-<div class="cell tag_remove-input docutils container">
+<p>The second plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Q-Q Residuals plot, which you can generate on its own by calling</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png"><img alt="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png" src="_images/dd3bd4a8d0de83f3e4d65400a47019e795305e8dafe14b3abd458326ab56d82e.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/bbe8c5cb18a2603890a844aa7c278d7d501f4258b11d75fcd25a480f58ba5ccf.png"><img alt="_images/bbe8c5cb18a2603890a844aa7c278d7d501f4258b11d75fcd25a480f58ba5ccf.png" src="_images/bbe8c5cb18a2603890a844aa7c278d7d501f4258b11d75fcd25a480f58ba5ccf.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
+<p>Here we see the standardised residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis and values from a theoretical normal distribution on the <span class="math notranslate nohighlight">\(x\)</span>-axis. These values are paired together by splitting both the data and the theoretical distribtion into <em>quantiles</em> (hence the name <em>quantile-quantile</em> or <em>Q-Q</em> plot). A quantile is just a way of splitting data into chunks. This is typically done by ordering the data, calculating the cumulative probability of each observation and then matching it with the value from a normal distributon with the same cumulative probability. As with the previous plot, <code class="docutils literal notranslate"><span class="pre">R</span></code> automatically labels the 3 largest absolute values of the standardised residuals. Again, this is not based on any threshold and does not necessarily indicate outliers.</p>
 <section id="id2">
 <h4>Interpreting the Plot<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>Interpreting the Q-Q Residuals plot is very simple. The idea is that if the data matches the theoretical distribution, the values will lie along the diagnal line in the plot. If the values deviate from this line, this is indicative a deviation from the theoretical distribution.</p>
+<p>An important point here is the use of the <em>standardised</em> residuals. Remember that the logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the residuals. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. This is why it is important to assess the distribution of the <em>standardised</em> residuals and not the <em>raw</em> residulas, because the standardised residuals have had the effect of leverage removed and thus should be much closer to i.i.d.</p>
 </section>
 <section id="id3">
 <h4>Simulated Example<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
-<p>…</p>
-<p>Remember that our ability to determine the distribution will depend upon the sample size. For example, the plots below all show random draws from a normal distribution with <span class="math notranslate nohighlight">\(n=.\)</span>. Hopefully it is clear how variable the distribution of the sample can be, even when the normality assumption is met.</p>
+<p>To get a sense of what this plot would look like under different circumstances, the plots below show data drawn from a true normal distribution (<em>top left</em>) as well as several other non-normal distributions.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/64c0b29729f284f707bfcdfb56f003180af0abc359da53123010cad28dc1bbad.png"><img alt="_images/64c0b29729f284f707bfcdfb56f003180af0abc359da53123010cad28dc1bbad.png" src="_images/64c0b29729f284f707bfcdfb56f003180af0abc359da53123010cad28dc1bbad.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Remember as well that our ability to determine the distribution will depend upon the sample size. For example, the plots below all show random draws from a normal distribution with <span class="math notranslate nohighlight">\(n=10\)</span>. Hopefully it is clear how variable the distribution of the sample can be, even when the normality assumption is met.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/fe05dcaad5096532e2ce83f90838557483bc2df007539f1c7d2de16866e89657.png"><img alt="_images/fe05dcaad5096532e2ce83f90838557483bc2df007539f1c7d2de16866e89657.png" src="_images/fe05dcaad5096532e2ce83f90838557483bc2df007539f1c7d2de16866e89657.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 <section id="scale-location-plot">
 <h3>Scale-Location Plot<a class="headerlink" href="#scale-location-plot" title="Link to this heading">#</a></h3>
+<p>The third plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Scale-Location plot, which you can generate on its own by calling</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/3173e713addc4fb431652e9bf7c0dc71f65f8f9b127946f3560ece016ac44efb.png"><img alt="_images/3173e713addc4fb431652e9bf7c0dc71f65f8f9b127946f3560ece016ac44efb.png" src="_images/3173e713addc4fb431652e9bf7c0dc71f65f8f9b127946f3560ece016ac44efb.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This shows the fitted values along the <span class="math notranslate nohighlight">\(x\)</span>-axis with the square-root of the absolute value of the residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis. Again, the 3 largest residuals are highlighted. The main aim of this plot is to assess <em>homoscedasticity</em>, but it requires a little explanation around why the <span class="math notranslate nohighlight">\(y\)</span>-axis used <span class="math notranslate nohighlight">\(\sqrt{|r_{i}|}\)</span>. To begin with, we use the standardised residuals because these have been corrected for leverage and thus will not mislead us about heteroscedasticity. Taking the absolute value of the residuals then allows us to focus on their magnitude, rather than their sign. We care about the <em>variance</em> here and so it does not matter whether a residual has a large positive value or a large negative value, it contributes to the variance equally. We therefore just focus on the magnitude of the residuals along the <span class="math notranslate nohighlight">\(y\)</span>-axis from the bottom of the plot. However, an issue with using the absolute value is that the visual scale of the <span class="math notranslate nohighlight">\(y\)</span>-axis can be distorted by extreme values, squashing all other values to the bottom of the plot. To prevent this, the square-root is used to reduce skew and make the vertical spread of points easier to see.</p>
 <section id="id4">
 <h4>Interpreting the Plot<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p>To interpret the Scale-Location plot, we simply look to see whether the vertical pattern of points is roughly the same throughout the range of fitted values. If it is, this indicates that the degree to which the raw data differs from the model is roughly the same across the whole dataset. To make this easier to see, <code class="docutils literal notranslate"><span class="pre">R</span></code> again uses a LOESS smoother to draw the general pattern in these data. The close this line is to <em>flat</em>, then more confident we are that no violations of homoscedasticity have occurred. However, if there is some clear pattern here that deviates from a flat line, this could indicate a problem.</p>
 </section>
 <section id="id5">
 <h4>Simulated Example<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>To get a better sense of what to look for in this plot, the examples below show true homoscedastic data (<em>top-left</em>) along with 3 examples of heteroscedasticity.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f242fafa6210a539a005a97e353f733555fd1ec00b4af3b15616aac077bfe62a.png"><img alt="_images/f242fafa6210a539a005a97e353f733555fd1ec00b4af3b15616aac077bfe62a.png" src="_images/f242fafa6210a539a005a97e353f733555fd1ec00b4af3b15616aac077bfe62a.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 <section id="residuals-vs-leverage-plot">
 <h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
-<p>Cook’s distance…</p>
-<section id="id6">
-<h4>Interpreting the Plot<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p>The final plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Residuals vs Leverage plot, which can be generated on its own using<a class="footnote-reference brackets" href="#hidden-foot" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/b002e847931fc4189cff598998384cbdc5d9b30723c075edf51dafae6316c993.png"><img alt="_images/b002e847931fc4189cff598998384cbdc5d9b30723c075edf51dafae6316c993.png" src="_images/b002e847931fc4189cff598998384cbdc5d9b30723c075edf51dafae6316c993.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This shows the leverage values along the <span class="math notranslate nohighlight">\(x\)</span>-axis and the studentised residuals<a class="footnote-reference brackets" href="#label-foot" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> along the <span class="math notranslate nohighlight">\(y\)</span>-axis, with isocontour lines denoting which combinations of leverage and residual values lead to Cook’s Distances of 0.5 and 1.</p>
+<section id="id8">
+<h4>Interpreting the Plot<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<p>The aim of this plot is to highlight outliers in both predictor space, outcome space or both. Any point that sits far along the <span class="math notranslate nohighlight">\(x\)</span>-axis has high leverage and thus might be an outlier in predictor space. Similarly, any point that sits far along the <span class="math notranslate nohighlight">\(y\)</span>-axis (in either direction) has a large studentised residuals and so might be an outlier in outcome space. Points that have large values along <em>both</em> axes will sit in the top-right or bottom-right corners of the plot. These regions correspond to large values of Cook’s Distance, as indicated by the curved boundaries in the corners of the plot. Any data points that sit within these boundaries may require some careful investigation.</p>
 </section>
-<section id="id7">
-<h4>Simulated Example<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<section id="id9">
+<h4>Simulated Example<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p>The examples below show 4 different scenarios that can be highlighted by this plot. The <em>top-left</em> shows data with no outliers (using a cutoff of 3 standard deviations) and no high-leverage values. The <em>top-right</em> shows data with outliers but no high leverage. The <em>bottom-left</em> shows data with high leverage and no outliers. The <em>bottom-right</em> shows data with both high leverage and outliers, leading to values of <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span>.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/2da28f905a79659662b6ade43f803b8abdb67c2c5c75f3c9f00f15c9533cdf3a.png"><img alt="_images/2da28f905a79659662b6ade43f803b8abdb67c2c5c75f3c9f00f15c9533cdf3a.png" src="_images/2da28f905a79659662b6ade43f803b8abdb67c2c5c75f3c9f00f15c9533cdf3a.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -543,18 +612,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png"><img alt="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" src="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/1051ae20dc674405ae6b3f1549d19609451d0dc77124936f7c89195fc4a1982a.png"><img alt="_images/1051ae20dc674405ae6b3f1549d19609451d0dc77124936f7c89195fc4a1982a.png" src="_images/1051ae20dc674405ae6b3f1549d19609451d0dc77124936f7c89195fc4a1982a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
 <section id="vif-barplot">
 <h3>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h3>
-<p>Once we have a model and we want to use VIF, it can be useful to visualise this as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used previously.</p>
+<p>Although we have already seen how to produce the VIF values, it can be useful to visualise this as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used previously.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">wt</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
 <span class="n">wt.copy</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
 <span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -567,7 +634,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png"><img alt="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" src="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/acac36b7c5f2aff092c3eab65e0133c7ded2659e1679eadbe569e268832e3368.png"><img alt="_images/acac36b7c5f2aff092c3eab65e0133c7ded2659e1679eadbe569e268832e3368.png" src="_images/acac36b7c5f2aff092c3eab65e0133c7ded2659e1679eadbe569e268832e3368.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -581,7 +648,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png"><img alt="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png" src="_images/4f129eaf0d965c3691c8aafeefcf2f28f28d7ce5a73c1210659cd719faa1a9a0.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/fa3fe8606ef17fb11ae1b78cb1356d59d37a324d2068a0890306b1aa86ff5244.png"><img alt="_images/fa3fe8606ef17fb11ae1b78cb1356d59d37a324d2068a0890306b1aa86ff5244.png" src="_images/fa3fe8606ef17fb11ae1b78cb1356d59d37a324d2068a0890306b1aa86ff5244.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. This agrees with what we saw earlier, as no points fell within the contour lines of <span class="math notranslate nohighlight">\(D = 0.5\)</span> and <span class="math notranslate nohighlight">\(D = 1\)</span>. In addition, heuristics of 2 and -2 are shown vertically for outliers (though the lower threshold is not visible in the above plot), with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
@@ -602,7 +669,7 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 </div>
 </div>
-<p>How these points are chosen requires a little explanation. The labels are based on the top two points for each of the influence measures. For the studentised residuals, the two largest points are the Toyota Corolla and the Fiat 128. For the leverage values, the two largest points are the Maserati Bora and the Lincoln Continental. For Cook’s Distance, the two largest points are Chrysler Imperial and the Toyota Corolla. So this gives five unique data points (because the Toyota appears <em>twice</em>). The labelling in the plot can then be thought of as the two largest values horizontally, the two largest vertically, and the two largest in terms of their bubble size. Of note is that this will happen irrespective of whether any of the data points are above any threshold of concern on any measure. For instance, none of these data have Cook’s D &gt; 0.5, despite the function still labelling the top two values. As such, we need to use the labelling in conjunction with the heuristics shown in the plot.</p>
+<p>How these points are chosen requires a little explanation. The labels are based on the top two points for each of the influence measures. For the studentised residuals, the two largest points are the Toyota Corolla and the Fiat 128. For the leverage values, the two largest points are the Maserati Bora and the Lincoln Continental. For Cook’s Distance, the two largest points are Chrysler Imperial and the Toyota Corolla. So this gives five unique data points (because the Toyota appears <em>twice</em>). The labelling in the plot can then be thought of as the two largest values horizontally, the two largest vertically, and the two largest in terms of their bubble size. Of note is that this will happen irrespective of whether any of the data points are above any threshold of concern on any measure. For instance, none of these data have <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span>, despite the function still labelling the top two values.</p>
 </section>
 <section id="added-variable-plots">
 <h3>Added-variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
@@ -613,7 +680,7 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/4123b952a04fe993b067214ec942175ce7c76e9d8fd5a6c8127d3589d1112646.png"><img alt="_images/4123b952a04fe993b067214ec942175ce7c76e9d8fd5a6c8127d3589d1112646.png" src="_images/4123b952a04fe993b067214ec942175ce7c76e9d8fd5a6c8127d3589d1112646.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -639,7 +706,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png"><img alt="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" src="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/59ffb293b2c3559e25f379542192a68bb12e64cc3778b18031e954616cd0ea81.png"><img alt="_images/59ffb293b2c3559e25f379542192a68bb12e64cc3778b18031e954616cd0ea81.png" src="_images/59ffb293b2c3559e25f379542192a68bb12e64cc3778b18031e954616cd0ea81.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
@@ -652,26 +719,28 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png"><img alt="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" src="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/b81231be1b84c863a2976ef15bc3b5cd9886819e1ed9adbcec81e7db51677728.png"><img alt="_images/b81231be1b84c863a2976ef15bc3b5cd9886819e1ed9adbcec81e7db51677728.png" src="_images/b81231be1b84c863a2976ef15bc3b5cd9886819e1ed9adbcec81e7db51677728.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots. As an aside, if you ever want to turn the smoothing curve <em>off</em>, you can use</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png"><img alt="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png" src="_images/b82b4845bd4ae326e2cb28ef7f0c25eb2bf839888e8fbb130cd1d9b690110e75.png" style="width: 420px; height: 420px;" /></a>
-</div>
-</div>
+<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots<a class="footnote-reference brackets" href="#smooth-foot" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
 <p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="par-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>You can reset this by calling <code class="docutils literal notranslate"><span class="pre">par(mfrow=c(1,1))</span></code>, otherwise all your future plots in the same <code class="docutils literal notranslate"><span class="pre">R</span></code> session will be placed into a 2 x 2 grid.</p>
+</aside>
+<aside class="footnote brackets" id="hidden-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">2</a><span class="fn-bracket">]</span></span>
+<p>The observant amongst you will have notice that this uses <code class="docutils literal notranslate"><span class="pre">which=5</span></code> rather than <code class="docutils literal notranslate"><span class="pre">which=4</span></code>. There are in fact <em>two</em> hidden diagnostic plots available by calling <code class="docutils literal notranslate"><span class="pre">which=4</span></code> and <code class="docutils literal notranslate"><span class="pre">which=6</span></code>.</p>
+</aside>
+<aside class="footnote brackets" id="label-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">3</a><span class="fn-bracket">]</span></span>
+<p>Notice that the <span class="math notranslate nohighlight">\(y\)</span>-axis is actually mislabelled in this plot as <em>Standardised residuals</em> rather than <em>Studentised residuals</em>.</p>
+</aside>
+<aside class="footnote brackets" id="smooth-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">4</a><span class="fn-bracket">]</span></span>
+<p>If you ever want to turn the smoothing curve <em>off</em>, you can use <code class="docutils literal notranslate"><span class="pre">plot(allEffects(mod,residuals=TRUE),</span> <span class="pre">partial.residuals=list(smooth=FALSE))</span></code>.</p>
 </aside>
 </aside>
 </section>
@@ -733,8 +802,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -760,8 +828,8 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Simulated Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
 </ul>
@@ -822,8 +890,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
