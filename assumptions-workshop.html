@@ -7850,7 +7850,7 @@ See ?effectsTheme for details.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code>wt</code>. In addition, notice that the effects plot has retained the more categorical nature of <code>cyl</code>, which was removed when this variable was adjusted for the added-variable plots[^smooth-foot].</p>
+<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code>wt</code>. In addition, notice that the effects plot has retained the more categorical nature of <code>cyl</code>, which was removed when this variable was adjusted for the added-variable plots. If you ever want to turn the smoothing curve <em>off</em>, you can use <code>plot(allEffects(mod,residuals=TRUE), partial.residuals=list(smooth=FALSE))</code>.</p>
 </div>
 </div>
 </div>
