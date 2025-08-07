@@ -61,6 +61,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '5.transformations';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -370,13 +372,11 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>
@@ -394,29 +394,179 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformations">
 <h1>Transformations<a class="headerlink" href="#transformations" title="Link to this heading">#</a></h1>
-<p>…</p>
+<p>In the final part of this lesson, we will discuss variables transformations. These can be applied either to the outcome variable or to the predictors and can be used for a variety of reasons. Often, transformations are employed so that the model fits better or to correct for violations of certain assumptions. Other times, transformations can be used to help the interpretation of the model, or can be used to add functions of existing predictors to make the fit more flexible. In this part of the lesson, we will discuss methods of transformation for all these purposes.</p>
 <section id="transforming-the-outcome">
 <h2>Transforming the Outcome<a class="headerlink" href="#transforming-the-outcome" title="Link to this heading">#</a></h2>
-<p>Typically, transforming the outcome concerns the distributional assumptions of the linear model, in the sense that a transformation applied to the outcome will be carried into a transformation of the residuals. Transformation of the outcome can also work to linearise any non-linear relationships with the predictor variables and can sometimes improve interpretation of the model.</p>
+<p>Typically, transformations applied to the outcome variable concern the model fit, but can also be used to improve the assumptions given that any transformation applied to the outcome will be carried into a transformation of the residuals.</p>
+<p>It is important that we constrain the types of transformations we apply to the data. Typically, we only want to consider transformations that are <em>monotonic</em>. This means that the order of the data is preserved. One example would be taking <span class="math notranslate nohighlight">\(\log y_{i}\)</span>, as the data will remain in the same order. However, an example of a <em>non-monotonic</em> transformation would be the absolute value <span class="math notranslate nohighlight">\(|y_{i}|\)</span> because if there are <em>negative</em> values of <span class="math notranslate nohighlight">\(y\)</span> they will be made <em>positive</em> and the data order will change. A similar situation happens with negative values and <span class="math notranslate nohighlight">\(y^{2}\)</span>.</p>
 <section id="box-cox-transformations">
 <h3>Box-Cox Transformations<a class="headerlink" href="#box-cox-transformations" title="Link to this heading">#</a></h3>
-</section>
-<section id="linearising-relationships">
-<h3>Linearising Relationships<a class="headerlink" href="#linearising-relationships" title="Link to this heading">#</a></h3>
+<p>Given that there are a wide variety of possible transformations, we could simply guess and try lots of different transformations to see what happens. However, a more principled method was given by <a class="reference external" href="http://www.econ.illinois.edu/~econ508/Papers/boxcox64.pdf">Box &amp; Cox (1964)</a>. Here, transformations of the form <span class="math notranslate nohighlight">\(y^{\lambda}_{i}\)</span> are considered. When <span class="math notranslate nohighlight">\(\lambda \neq 0\)</span> this is a simple power transformation and when <span class="math notranslate nohighlight">\(\lambda = 0\)</span> then this is defined as <span class="math notranslate nohighlight">\(\log y_{i}\)</span>. This then encompasses a wide-range of possible transformations. For instance, <span class="math notranslate nohighlight">\(\lambda = \frac{1}{2}\)</span> would lead to <span class="math notranslate nohighlight">\(y^\frac{1}{2}_{i} = \sqrt{y_{i}}\)</span>, <span class="math notranslate nohighlight">\(\lambda = -1\)</span> would lead to <span class="math notranslate nohighlight">\(y^{-1} = \frac{1}{y_{i}}\)</span> and <span class="math notranslate nohighlight">\(\lambda = 1\)</span> would lead to <span class="math notranslate nohighlight">\(y^{1}_{i} = y_{i}\)</span>, indicating that no transformation is needed.</p>
+<p>The utility of this method is that the value of <span class="math notranslate nohighlight">\(\lambda\)</span> that makes the data most probable can be found using maximum likelihood. This means that rather than searching through lots of possible transformations, we can just run the Box-Cox method and then evaluate whether a transform seems necessary. Of note, however, is that</p>
+<ul class="simple">
+<li><p>Box-Cox is only defined for <span class="math notranslate nohighlight">\(y_{i} &gt; 0\)</span>. If your data has negative or 0 values, it will need to first be offset by adding a constant to make all values greater than 0.</p></li>
+<li><p>The value of <span class="math notranslate nohighlight">\(\lambda\)</span> returned can be anything, which can make the transformed data hard to interpret. If the returned value is close to a more intepretable transformation, you may wish to choose that instead. For instance, if <span class="math notranslate nohighlight">\(\hat{\lambda} = 0.46\)</span>, you may just wish to use <span class="math notranslate nohighlight">\(\hat{\lambda} = 0.5\)</span>, which is then equivalent to a square-root transformation.</p></li>
+<li><p>Box-Cox is sensitive to outliers, so if you get very large estimated values of <span class="math notranslate nohighlight">\(\lambda\)</span> (such as <span class="math notranslate nohighlight">\(\hat{\lambda} = 5\)</span>), then this is likely the reason. Extreme transformations are almost never warranted.</p></li>
+</ul>
+<p>As an example, we can use the <code class="docutils literal notranslate"><span class="pre">boxcox()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">MASS</span></code> package on our model of <code class="docutils literal notranslate"><span class="pre">mpg</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">box</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">boxcox</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/4b64a993044cf1d485282ce521b76bb0f2bda16acc456e1d264649a63fa0c57d.png"><img alt="_images/4b64a993044cf1d485282ce521b76bb0f2bda16acc456e1d264649a63fa0c57d.png" src="_images/4b64a993044cf1d485282ce521b76bb0f2bda16acc456e1d264649a63fa0c57d.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The plot shows all the values of <span class="math notranslate nohighlight">\(\lambda\)</span> that were considered along the <span class="math notranslate nohighlight">\(x\)</span>-axis and a plot of the log-likelihood along the <span class="math notranslate nohighlight">\(y\)</span>-axis. We can see that the value that maximises the likelihood is very close to 0, and so we may want to consider a simple log-transformation. If we want to know the precise value of <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> here, we can use</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lik</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">box</span><span class="o">$</span><span class="n">y</span>
+<span class="n">lam</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">box</span><span class="o">$</span><span class="n">x</span><span class="w"> </span>
+<span class="n">best.lam</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lam</span><span class="p">[</span><span class="n">lik</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">lik</span><span class="p">)]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">best.lam</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.02020202
+</pre></div>
+</div>
+</div>
+</div>
+<p>We could include this in the regression model by using the formula <code class="docutils literal notranslate"><span class="pre">I(mpg^best.lam)</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">cy</span></code>, however, this is equivalent to the transformation <span class="math notranslate nohighlight">\(\frac{1}{\text{MPG}^{0.02}}\)</span>, which is not very interpretable. Given that this is very close to <span class="math notranslate nohighlight">\(\hat{\lambda} = 0\)</span>, we would choose the log-transformation instead. We try this below and create the assumptions plots first for the original mdoel</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">log.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png"><img alt="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" src="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>And then for the log-transformed model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">log.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/1d9c8707f644523c9d0e8def427d489c208b1c7fcd09b20d9ecf8803a2c5ffa4.png"><img alt="_images/1d9c8707f644523c9d0e8def427d489c208b1c7fcd09b20d9ecf8803a2c5ffa4.png" src="_images/1d9c8707f644523c9d0e8def427d489c208b1c7fcd09b20d9ecf8803a2c5ffa4.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This does seem to have helped, particularly in terms of linearising the relationships in the data and bringing in some of the heavier tails of the residual distribution. We can see this improvement in fit by examining the effects plot for the transformed model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">log.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png"><img alt="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" src="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Although this seems like a successful application of the Box-Cox method, we always need to take interpretation into account when dealing with transformations. The meaning of the regression coefficients has now changed as they correspond to how much the <em>log</em> of the outcome changes for a unit increase in each predictor. This might be quite hard to understand and could be enough to dissuade you from considering any transformations of the outcome, even if the model fit can be improved.</p>
 </section>
 </section>
 <section id="transforming-the-predictors">
 <h2>Transforming the Predictors<a class="headerlink" href="#transforming-the-predictors" title="Link to this heading">#</a></h2>
-<p>Typically, the reasons for transforming the predictors come down to trying to adjust for multicollinearity or trying to adjust for non-linear relationships.</p>
+<p>As well as the outocme, we can also consider transformations applied to the predictors. Typically, these would be used to either linearise certain relationships in the data, or to model those non-linearities directly. We will see examples of both below.</p>
+<section id="linearising-relationships">
+<h3>Linearising Relationships<a class="headerlink" href="#linearising-relationships" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">log.pred.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">wt</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">log.pred.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png"><img alt="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png" src="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>So this is <em>linear</em> on the log-scale, but <em>non-linear</em> on the original scale. We can see this if we fit the same model, but hide the presence of the log-transform by creating some new variables. Because the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package does not know about the log-transform (because it is not inside the model formula), it will not do any rescaling and we can see how the model is really being fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">log.wt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">)</span>
+<span class="n">log.hp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="p">)</span>
+<span class="n">log.pred.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">log.wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">log.hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">log.pred.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png"><img alt="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png" src="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This makes it clearer that the relationship has been linearised by transforming the predictor onto a new scale.</p>
+</section>
 <section id="polynomial-regression">
 <h3>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h3>
 <p>A polynomial expansion of a predictor is a form of transformation…</p>
-</section>
-<section id="multicollinearity">
-<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h3>
-</section>
-<section id="id1">
-<h3>Linearising Relationships<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ poly(wt, 2) + poly(hp, 2) + cyl, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.7956 -1.8425 -0.3851  1.4348  4.5607 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   19.51609    3.61441   5.400 1.17e-05 ***
+poly(wt, 2)1 -18.70421    3.75554  -4.980 3.54e-05 ***
+poly(wt, 2)2   6.37935    2.36169   2.701  0.01200 *  
+poly(hp, 2)1 -13.63792    4.87670  -2.797  0.00959 ** 
+poly(hp, 2)2   5.67410    2.93010   1.936  0.06375 .  
+cyl            0.09285    0.58083   0.160  0.87422    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.174 on 26 degrees of freedom
+Multiple R-squared:  0.8908,	Adjusted R-squared:  0.8698 
+F-statistic: 42.43 on 5 and 26 DF,  p-value: 1.077e-11
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png"><img alt="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" src="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This provides a good example of why the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package is so useful, because it is smart enough to know that the polynomial terms should be combined in order to display the fit for both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>, so we have 3 plots for the 3 variables, rather than 5 plots for the 5 parameters. It is notable that added-variable plots are not this smart, as shown below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>We will see ways of deciding between these model when we discuss model comparison and the ANOVA next week.</p>
 </section>
 </section>
 <section id="standardised-regression">
@@ -495,13 +645,11 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-outcome">Transforming the Outcome</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#box-cox-transformations">Box-Cox Transformations</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Linearising Relationships</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardised-regression">Standardised Regression</a></li>

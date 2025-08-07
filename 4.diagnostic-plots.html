@@ -370,29 +370,28 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-plot">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-plot">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals-plot">Q-Q Residuals Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals-plot">Q-Q Residuals Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
             </nav>
         </div>
@@ -451,8 +450,9 @@
 <a class="reference internal image-reference" href="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png"><img alt="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" src="_images/96ff29ddb426e349a83cf67bfcda3fbdcb11598244d60e091a290652892c84e3.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
+</section>
 <section id="residual-vs-fitted-plot">
-<h3>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h3>
+<h2>Residual vs Fitted Plot<a class="headerlink" href="#residual-vs-fitted-plot" title="Link to this heading">#</a></h2>
 <p>The first plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Residuals vs Fitted plot, which you can generate on its own by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -466,12 +466,12 @@
 </div>
 <p>This plots the fitted values along the <span class="math notranslate nohighlight">\(x\)</span>-axis with the raw residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis. The three largest absolute values of the residuals are automatically labelled, which is a behaviour you can change by setting the argument <code class="docutils literal notranslate"><span class="pre">id.n</span></code> in the call to <code class="docutils literal notranslate"><span class="pre">plot()</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">id.n=0</span></code> will turn the labelling <em>off</em>, <code class="docutils literal notranslate"><span class="pre">id.n=5</span></code> will label the 5 largest points and so on). Remember, this labelling is not based on any threshold, it is a relative measure and does not automatically denote outliers.</p>
 <section id="interpreting-the-plot">
-<h4>Interpreting the Plot<a class="headerlink" href="#interpreting-the-plot" title="Link to this heading">#</a></h4>
+<h3>Interpreting the Plot<a class="headerlink" href="#interpreting-the-plot" title="Link to this heading">#</a></h3>
 <p>In terms of interpreting this plot, remember that the <span class="math notranslate nohighlight">\(y\)</span>-axis shows the <em>raw</em> residuals. So this plot is not as useful for detecting outliers. Similarly, the influence of leverage has not been removed and so assessing homoscedasticity is also not sensible here. What <em>is</em> useful here is assessing whether the assumption of a <em>linear relationship</em> appears valid. If the relationship is linear, then we expect a roughly equal scattering of residuals around the regression line, with most points falling on or near the line. In terms of the residuals, this is indicated by values close to 0, as a residual of 0 indicates a perfect fit. In this plot, this is indicated by a <span class="math notranslate nohighlight">\(y\)</span>-axis value of 0. If the data fits the regression line, then across the various predicted values we expect most points to sit around 0. This should look like a random scattering of points around the vertical 0 point.</p>
 <p>To help discern any subtle patterns here, <code class="docutils literal notranslate"><span class="pre">R</span></code> using a method known as <a class="reference external" href="https://en.wikipedia.org/wiki/Local_regression">LOESS smoothing</a> to draw a wiggly line through the main pattern in the residuals. The closer this is to a flat line, the more confident we feel about the linearity assumption. In the example above, there is some evidence of a depature from linearity, as the residuals dip down around the higher fitted values. Remember that the fitted values are a combination of all the predictor variables and so we would need to investigate each individually to find out where this pattern may be coming from.</p>
 </section>
 <section id="simulated-example">
-<h4>Simulated Example<a class="headerlink" href="#simulated-example" title="Link to this heading">#</a></h4>
+<h3>Simulated Example<a class="headerlink" href="#simulated-example" title="Link to this heading">#</a></h3>
 <p>To get a sense of what this plot would look like with <em>extreme</em> depatures from linearity, the plot below shows this same diagnostic applied to simulated data with a true linear relationship (<em>top left</em>) and then three other datasets with true non-linear relationships. This lack of fit should be very clear. Although you are unlikely to see anything this extreme in a real dataset, this should give you a clear idea about what to look for in this plot.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -481,7 +481,7 @@
 </section>
 </section>
 <section id="q-q-residuals-plot">
-<h3>Q-Q Residuals Plot<a class="headerlink" href="#q-q-residuals-plot" title="Link to this heading">#</a></h3>
+<h2>Q-Q Residuals Plot<a class="headerlink" href="#q-q-residuals-plot" title="Link to this heading">#</a></h2>
 <p>The second plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Q-Q Residuals plot, which you can generate on its own by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,12 +495,12 @@
 </div>
 <p>Here we see the standardised residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis and values from a theoretical normal distribution on the <span class="math notranslate nohighlight">\(x\)</span>-axis. These values are paired together by splitting both the data and the theoretical distribtion into <em>quantiles</em> (hence the name <em>quantile-quantile</em> or <em>Q-Q</em> plot). A quantile is just a way of splitting data into chunks. This is typically done by ordering the data, calculating the cumulative probability of each observation and then matching it with the value from a normal distributon with the same cumulative probability. As with the previous plot, <code class="docutils literal notranslate"><span class="pre">R</span></code> automatically labels the 3 largest absolute values of the standardised residuals. Again, this is not based on any threshold and does not necessarily indicate outliers.</p>
 <section id="id2">
-<h4>Interpreting the Plot<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<h3>Interpreting the Plot<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>Interpreting the Q-Q Residuals plot is very simple. The idea is that if the data matches the theoretical distribution, the values will lie along the diagnal line in the plot. If the values deviate from this line, this is indicative a deviation from the theoretical distribution.</p>
 <p>An important point here is the use of the <em>standardised</em> residuals. Remember that the logic of examining the whole distribution of errors is that they were assumed i.i.d. Unfortunately, we know this is not true of the residuals. So, the shape of the residual distribution is still normal, but the variance differs due to leverage. Because of this, the logic of collapsing the residuals together to assess the full distribution somewhat falls apart. This is why it is important to assess the distribution of the <em>standardised</em> residuals and not the <em>raw</em> residulas, because the standardised residuals have had the effect of leverage removed and thus should be much closer to i.i.d.</p>
 </section>
 <section id="id3">
-<h4>Simulated Example<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<h3>Simulated Example<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>To get a sense of what this plot would look like under different circumstances, the plots below show data drawn from a true normal distribution (<em>top left</em>) as well as several other non-normal distributions.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -516,7 +516,7 @@
 </section>
 </section>
 <section id="scale-location-plot">
-<h3>Scale-Location Plot<a class="headerlink" href="#scale-location-plot" title="Link to this heading">#</a></h3>
+<h2>Scale-Location Plot<a class="headerlink" href="#scale-location-plot" title="Link to this heading">#</a></h2>
 <p>The third plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Scale-Location plot, which you can generate on its own by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -530,11 +530,11 @@
 </div>
 <p>This shows the fitted values along the <span class="math notranslate nohighlight">\(x\)</span>-axis with the square-root of the absolute value of the residuals on the <span class="math notranslate nohighlight">\(y\)</span>-axis. Again, the 3 largest residuals are highlighted. The main aim of this plot is to assess <em>homoscedasticity</em>, but it requires a little explanation around why the <span class="math notranslate nohighlight">\(y\)</span>-axis used <span class="math notranslate nohighlight">\(\sqrt{|r_{i}|}\)</span>. To begin with, we use the standardised residuals because these have been corrected for leverage and thus will not mislead us about heteroscedasticity. Taking the absolute value of the residuals then allows us to focus on their magnitude, rather than their sign. We care about the <em>variance</em> here and so it does not matter whether a residual has a large positive value or a large negative value, it contributes to the variance equally. We therefore just focus on the magnitude of the residuals along the <span class="math notranslate nohighlight">\(y\)</span>-axis from the bottom of the plot. However, an issue with using the absolute value is that the visual scale of the <span class="math notranslate nohighlight">\(y\)</span>-axis can be distorted by extreme values, squashing all other values to the bottom of the plot. To prevent this, the square-root is used to reduce skew and make the vertical spread of points easier to see.</p>
 <section id="id4">
-<h4>Interpreting the Plot<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<h3>Interpreting the Plot<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>To interpret the Scale-Location plot, we simply look to see whether the vertical pattern of points is roughly the same throughout the range of fitted values. If it is, this indicates that the degree to which the raw data differs from the model is roughly the same across the whole dataset. To make this easier to see, <code class="docutils literal notranslate"><span class="pre">R</span></code> again uses a LOESS smoother to draw the general pattern in these data. The close this line is to <em>flat</em>, then more confident we are that no violations of homoscedasticity have occurred. However, if there is some clear pattern here that deviates from a flat line, this could indicate a problem.</p>
 </section>
 <section id="id5">
-<h4>Simulated Example<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<h3>Simulated Example<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>To get a better sense of what to look for in this plot, the examples below show true homoscedastic data (<em>top-left</em>) along with 3 examples of heteroscedasticity.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -544,7 +544,7 @@
 </section>
 </section>
 <section id="residuals-vs-leverage-plot">
-<h3>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h3>
+<h2>Residuals vs Leverage Plot<a class="headerlink" href="#residuals-vs-leverage-plot" title="Link to this heading">#</a></h2>
 <p>The final plot produced by <code class="docutils literal notranslate"><span class="pre">R</span></code> is the Residuals vs Leverage plot, which can be generated on its own using<a class="footnote-reference brackets" href="#hidden-foot" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -558,17 +558,21 @@
 </div>
 <p>This shows the leverage values along the <span class="math notranslate nohighlight">\(x\)</span>-axis and the studentised residuals<a class="footnote-reference brackets" href="#label-foot" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> along the <span class="math notranslate nohighlight">\(y\)</span>-axis, with isocontour lines denoting which combinations of leverage and residual values lead to Cook’s Distances of 0.5 and 1.</p>
 <section id="id8">
-<h4>Interpreting the Plot<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<h3>Interpreting the Plot<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p>The aim of this plot is to highlight outliers in both predictor space, outcome space or both. Any point that sits far along the <span class="math notranslate nohighlight">\(x\)</span>-axis has high leverage and thus might be an outlier in predictor space. Similarly, any point that sits far along the <span class="math notranslate nohighlight">\(y\)</span>-axis (in either direction) has a large studentised residuals and so might be an outlier in outcome space. Points that have large values along <em>both</em> axes will sit in the top-right or bottom-right corners of the plot. These regions correspond to large values of Cook’s Distance, as indicated by the curved boundaries in the corners of the plot. Any data points that sit within these boundaries may require some careful investigation.</p>
 </section>
 <section id="id9">
-<h4>Simulated Example<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<h3>Simulated Example<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <p>The examples below show 4 different scenarios that can be highlighted by this plot. The <em>top-left</em> shows data with no outliers (using a cutoff of 3 standard deviations) and no high-leverage values. The <em>top-right</em> shows data with outliers but no high leverage. The <em>bottom-left</em> shows data with high leverage and no outliers. The <em>bottom-right</em> shows data with both high leverage and outliers, leading to values of <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span>.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/8f3d2f8641aafd72eb0407b07fa6dc8c6fe992a768d1e9cf93266cc6d8d7c53d.png"><img alt="_images/8f3d2f8641aafd72eb0407b07fa6dc8c6fe992a768d1e9cf93266cc6d8d7c53d.png" src="_images/8f3d2f8641aafd72eb0407b07fa6dc8c6fe992a768d1e9cf93266cc6d8d7c53d.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
+</section>
+</section>
+<section id="effects-plots">
+<h2>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h2>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="par-foot" role="note">
@@ -584,8 +588,6 @@
 <p>Notice that the <span class="math notranslate nohighlight">\(y\)</span>-axis is actually mislabelled in this plot as <em>Standardised residuals</em> rather than <em>Studentised residuals</em>.</p>
 </aside>
 </aside>
-</section>
-</section>
 </section>
 </section>
 
@@ -654,29 +656,28 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-plot">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-for-lm">Diagnostic Plots for <code class="docutils literal notranslate"><span class="pre">lm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-vs-fitted-plot">Residual vs Fitted Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-plot">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals-plot">Q-Q Residuals Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals-plot">Q-Q Residuals Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location-plot">Scale-Location Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage-plot">Residuals vs Leverage Plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Interpreting the Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
   </nav></div>
 
