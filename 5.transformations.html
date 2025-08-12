@@ -375,7 +375,12 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tukey-s-ladder-of-powers">Tukey’s Ladder of Powers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-tidwell">Box-Tidwell</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-transforms-further">Visualising Transforms Further</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
 </ul>
 </li>
@@ -479,6 +484,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+
+lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png"><img alt="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" src="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
@@ -487,44 +498,97 @@
 </section>
 <section id="transforming-the-predictors">
 <h2>Transforming the Predictors<a class="headerlink" href="#transforming-the-predictors" title="Link to this heading">#</a></h2>
-<p>As well as the outocme, we can also consider transformations applied to the predictors. Typically, these would be used to either linearise certain relationships in the data, or to model those non-linearities directly. We will see examples of both below.</p>
+<p>As well as the outocme, we can also consider transformations applied to the predictors. Typically, these would be used to either linearise certain relationships in the data, or to model those non-linearities directly. In other words, we can either try and <em>remove</em> any curved relationships so that a straight-line will work, or we can alter the regression model so that it <em>includes</em> curved relationships in its predictions. We will see examples of both below.</p>
 <section id="linearising-relationships">
 <h3>Linearising Relationships<a class="headerlink" href="#linearising-relationships" title="Link to this heading">#</a></h3>
+<section id="tukey-s-ladder-of-powers">
+<h4>Tukey’s Ladder of Powers<a class="headerlink" href="#tukey-s-ladder-of-powers" title="Link to this heading">#</a></h4>
+<p>… We can use the same logic as Tukey’s ladder of powers, but just applied to individual predictors. Indeed, this can actually be <em>more</em> useful, given that different predictors may have different curvature to their relationships.</p>
+</section>
+<section id="box-tidwell">
+<h4>Box-Tidwell<a class="headerlink" href="#box-tidwell" title="Link to this heading">#</a></h4>
+<p>… Similar considerations to Box-Cox must be made here as well, as the predictors may be hard to interpret once transformed using <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span>. As an alternative, you may wish to choose a clearer transformation that is <em>close</em> to the value of <span class="math notranslate nohighlight">\(\hat{\lambda}\)</span> that has been returned. For example</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">log.pred.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">wt</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">log.pred.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="n">box.t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">boxTidwell</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">box.t</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png"><img alt="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png" src="_images/47245879cc86267a9278cc6cf3a4b824d2f627defe2bebe5747b71758611e211.png" style="width: 420px; height: 420px;" /></a>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   MLE of lambda Score Statistic (z) Pr(&gt;|z|)   
+wt      -0.81692              2.7228 0.006473 **
+hp       0.28954              2.3741 0.017592 * 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+iterations =  17 
+</pre></div>
 </div>
 </div>
-<p>So this is <em>linear</em> on the log-scale, but <em>non-linear</em> on the original scale. We can see this if we fit the same model, but hide the presence of the log-transform by creating some new variables. Because the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package does not know about the log-transform (because it is not inside the model formula), it will not do any rescaling and we can see how the model is really being fit.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">log.wt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">)</span>
-<span class="n">log.hp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="p">)</span>
-<span class="n">log.pred.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">log.wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">log.hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">log.pred.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lam</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">box.t</span><span class="o">$</span><span class="n">result</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">box.t</span><span class="o">$</span><span class="n">result</span><span class="p">[</span><span class="m">2</span><span class="p">])</span>
+<span class="n">wt.transf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="o">^</span><span class="n">lam</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">hp.transf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="o">^</span><span class="n">lam</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">box.t.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.transf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp.transf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">box.t.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png"><img alt="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png" src="_images/a1b229b282b042313bf39bd378d1790401dbad11252c66e7a2bd44e8ad2ac679.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/f23657b0f2af822b2dfe03ba51bf5fa45c989546af7ec904f00dc26fa3c0ed58.png"><img alt="_images/f23657b0f2af822b2dfe03ba51bf5fa45c989546af7ec904f00dc26fa3c0ed58.png" src="_images/f23657b0f2af822b2dfe03ba51bf5fa45c989546af7ec904f00dc26fa3c0ed58.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>This makes it clearer that the relationship has been linearised by transforming the predictor onto a new scale.</p>
+<p>So this had done the job, but what exactly does <span class="math notranslate nohighlight">\(\frac{1}{\text{weight}^{0.82}}\)</span> or <span class="math notranslate nohighlight">\(\text{horsepower}^{0.29}\)</span> mean? Instead, we can see that <span class="math notranslate nohighlight">\(\hat{\lambda}_{1}\)</span> is quite close to <span class="math notranslate nohighlight">\(-1\)</span>, which would give us <span class="math notranslate nohighlight">\(\frac{1}{\text{weight}}\)</span>. Similarly, <span class="math notranslate nohighlight">\(\hat{\lambda}_{2}\)</span> is quite close to <span class="math notranslate nohighlight">\(0.33\)</span>, which would give us <span class="math notranslate nohighlight">\(\text{weight}^{\frac{1}{3}} = \sqrt[3]{\text{weight}}\)</span>. So now we are using the reciprocol of <code class="docutils literal notranslate"><span class="pre">wt</span></code> and the cube-root of <code class="docutils literal notranslate"><span class="pre">hp</span></code>. We can try these and see what happens</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.transf</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
+<span class="n">hp.transf</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="o">^</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">)</span>
+<span class="n">transf.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.transf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp.transf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">transf.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/73db7b40f1b9dbb98c73c113353964009ccb5392b4dd664fd8f559fb5f4b83e7.png"><img alt="_images/73db7b40f1b9dbb98c73c113353964009ccb5392b4dd664fd8f559fb5f4b83e7.png" src="_images/73db7b40f1b9dbb98c73c113353964009ccb5392b4dd664fd8f559fb5f4b83e7.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>So the fit is very similar, but we have used transformations that are easier to interpret. Nevertheless, it is notable that using the reciprocal flips the largest and smallest values of <code class="docutils literal notranslate"><span class="pre">wt</span></code> and thus the relationship is now reversed. As always, the effect of the transformation on interpretation needs to be taken seriously and could be a reason to choose <em>not</em> to do this.</p>
+</section>
+<section id="visualising-transforms-further">
+<h4>Visualising Transforms Further<a class="headerlink" href="#visualising-transforms-further" title="Link to this heading">#</a></h4>
+<p>One of the more useful aspects of the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package is that if the transformation is embedded in the model equation, it will be reverse when the effect is plotted and you can see the shape that is being <em>removed</em> from the data, on the original scale.  So, in these examples, think of the plot as showing the curve that is being <em>removed</em> in order to linearise the relationship and make a straight-line suitable. In the example below, we stick to the transforms derived from the Box-Tidwell method, but implement them within the model equation (using the <code class="docutils literal notranslate"><span class="pre">I()</span></code> notation) so that the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package is aware of them. When we do this and plot the data, we can effectively see the shape of the relationship implied by the transformation. So these relationships are <em>linear</em> on the transformed scale and <em>non-linear</em> on their original scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">transf.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="n">wt</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">hp</span><span class="o">^</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">transf.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/af870b9bb599c80de26ed35c9358f7dd0e3858f6948041e1c900f10a6a83dd23.png"><img alt="_images/af870b9bb599c80de26ed35c9358f7dd0e3858f6948041e1c900f10a6a83dd23.png" src="_images/af870b9bb599c80de26ed35c9358f7dd0e3858f6948041e1c900f10a6a83dd23.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
 </section>
 <section id="polynomial-regression">
 <h3>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h3>
-<p>A polynomial expansion of a predictor is a form of transformation…</p>
+<p>Although we can see how predictor transforms are able to help meet the assumptions of the regression model, doing so comes with a cost in terms of interpretation. Although we can make a straight-line work by turning <span class="math notranslate nohighlight">\(\text{weight} \rightarrow \frac{1}{\text{weight}}\)</span>, it might not be very clear what this <em>means</em>. Unfortunately, because we have transformed the data, all our inference and interpretation must not be conducted on this transformed scale. Thus, we can end up in a situation where the model fits very well, but we cannot explain any of the results.</p>
+<p>An alternative, and often preferable approach, is not to change the predictors to suit the model. Instead, we change the model to suit the predictors. So, rather than trying to <em>remove</em> curvature from the data, we could instead <em>include</em> curvature in the model. This means that we do not change the predictors, instead we change the model by introducting a <em>function</em> of the predictors. The simplest way of doing this is to use a <em>polynomial</em> function of each predictor we want to model using a curved relationship.</p>
+<p>A polynomial of degree <span class="math notranslate nohighlight">\(d\)</span> is a function of a single predictor of the following form</p>
+<div class="math notranslate nohighlight">
+\[
+\text{poly}_{d}\left(x_{i}\right) = \beta_{0}x_{i}^{0} + \beta_{1}x_{i}^{1} + \beta_{2}x_{i}^{2} + \cdots + \beta_{d}x_{i}^{d} = \sum_{p=0}^{d} \beta_{p}x_{i}^{p}.
+\]</div>
+<p>Effectively, we just raise <span class="math notranslate nohighlight">\(x_{i}\)</span> to as many powers as we like and then plug them into the regression equation. What does this do? It fits a <em>curve</em> to the data, where the number of <em>bends</em> in the curve is controlled by the degree <span class="math notranslate nohighlight">\(d\)</span>. A polynomial of <span class="math notranslate nohighlight">\(d=0\)</span> is a constant. A polynomial of <span class="math notranslate nohighlight">\(d=1\)</span> is linear and fits a straight-line with <span class="math notranslate nohighlight">\(d-1 = 0\)</span> bends. A polynomial of <span class="math notranslate nohighlight">\(d=2\)</span> (known as a <em>quadratic</em> polynomial) fits a curved line with <span class="math notranslate nohighlight">\(d-1 = 1\)</span> bend. A polynomial of <span class="math notranslate nohighlight">\(d=3\)</span> (known as a <em>cubic</em> polynomial) fits a curved line with <span class="math notranslate nohighlight">\(d-1=2\)</span> bends, and so on.</p>
+<p>We can include polynomials in <code class="docutils literal notranslate"><span class="pre">R</span></code> using the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function. Looking at the plots of both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>, they both look like there is a single bend in the relationship, which would imply a <em>quadratic</em> realationship using <span class="math notranslate nohighlight">\(d=2\)</span>. We can try this in <code class="docutils literal notranslate"><span class="pre">R</span></code> using.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">summary</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -552,21 +616,57 @@ Multiple R-squared:  0.8908,	Adjusted R-squared:  0.8698
 F-statistic: 42.43 on 5 and 26 DF,  p-value: 1.077e-11
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png"><img alt="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" src="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>This provides a good example of why the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package is so useful, because it is smart enough to know that the polynomial terms should be combined in order to display the fit for both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>, so we have 3 plots for the 3 variables, rather than 5 plots for the 5 parameters. It is notable that added-variable plots are not this smart, as shown below</p>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function adds extra terms to the regression model in order to capture the assumed shape of the curve. Here, we can think of these as the linear and qudratic <em>components</em> of the curve<a class="footnote-reference brackets" href="#poly-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. We can also use the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package to again see the shape that has, this time, actually been fit to the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png"><img alt="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" src="_images/0f582522a6408de775a86c4887e670ab8fa08a3543c2b332c62812a45bbe0a9a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>We will see ways of deciding between these model when we discuss model comparison and the ANOVA next week.</p>
+<p>To make it clearer what we are doing, we could also try a higher-degree for <code class="docutils literal notranslate"><span class="pre">wt</span></code>, if we believed that 3 bends would best capture this relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ poly(wt, 3) + poly(hp, 2) + cyl, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-2.624 -1.450 -0.274  1.062  5.042 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   21.7394     3.9911   5.447 1.18e-05 ***
+poly(wt, 3)1 -16.6136     4.0721  -4.080 0.000403 ***
+poly(wt, 3)2   5.6993     2.3983   2.376 0.025458 *  
+poly(wt, 3)3  -3.1619     2.5224  -1.254 0.221617    
+poly(hp, 2)1 -12.7539     4.8753  -2.616 0.014870 *  
+poly(hp, 2)2   5.3497     2.9100   1.838 0.077913 .  
+cyl           -0.2665     0.6421  -0.415 0.681683    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.151 on 25 degrees of freedom
+Multiple R-squared:  0.8973,	Adjusted R-squared:  0.8726 
+F-statistic:  36.4 on 6 and 25 DF,  p-value: 3.54e-11
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/83fbe063598663b27e7a3869c7c98dc49910a8c1ce19be40210abfa3b4cc0e76.png"><img alt="_images/83fbe063598663b27e7a3869c7c98dc49910a8c1ce19be40210abfa3b4cc0e76.png" src="_images/83fbe063598663b27e7a3869c7c98dc49910a8c1ce19be40210abfa3b4cc0e76.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>There is now an extra wiggle in the fitted relationship between <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code>, governed by the additional model term. However, we can see that this component is not significant and thus may not be adding anything useful to the model. This would appear to be supported by the visualisation from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package. In general, we would not recommend fitting shapes with <span class="math notranslate nohighlight">\(d &gt; 4\)</span>, simply to keep the models simpler, keep interpretation more straight-forward and to reduce the risk of the shape being governed more by the noise in the data.</p>
 </section>
 </section>
 <section id="standardised-regression">
@@ -575,6 +675,13 @@ F-statistic: 42.43 on 5 and 26 DF,  p-value: 1.077e-11
 <section id="what-if-nothing-works">
 <h2>What if Nothing Works?<a class="headerlink" href="#what-if-nothing-works" title="Link to this heading">#</a></h2>
 <p>These include models for outliers (<em>robust regression</em>), heteroscedasticity (<em>generalised least squares</em>), multicollinearity (<em>ridge regression</em>) and non-normality (<em>non-parametric resampling</em>).</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="poly-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This is only because the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function constructs what are known as <em>orthogonal</em> polynomials. This will not be the same as fitting a model using <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">I(wt^2)</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">I(hp^2)</span> <span class="pre">+</span> <span class="pre">cyl</span></code>.</p>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -648,7 +755,12 @@ F-statistic: 42.43 on 5 and 26 DF,  p-value: 1.077e-11
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-the-predictors">Transforming the Predictors</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearising-relationships">Linearising Relationships</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tukey-s-ladder-of-powers">Tukey’s Ladder of Powers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-tidwell">Box-Tidwell</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-transforms-further">Visualising Transforms Further</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a></li>
 </ul>
 </li>
