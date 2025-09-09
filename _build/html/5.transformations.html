@@ -855,36 +855,49 @@ F-statistic: 51.96 on 3 and 29 DF,  p-value: 8.794e-12
 <a class="reference internal image-reference" href="_images/61f149735fa9a433329b1430bf82d1c038d47d9e55f6e09adf3c985e53b602c4.png"><img alt="_images/61f149735fa9a433329b1430bf82d1c038d47d9e55f6e09adf3c985e53b602c4.png" src="_images/61f149735fa9a433329b1430bf82d1c038d47d9e55f6e09adf3c985e53b602c4.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>This indicates a value close to <span class="math notranslate nohighlight">\(\lambda=1\)</span>, suggesting that no transformation provides close to the best fit. If we examine the effects plots</p>
+<p>This looks close to a value of <span class="math notranslate nohighlight">\(\lambda=\frac{1}{2}\)</span>, indicating a <em>square-root</em> transformation. We can try this.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">cyl.mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cyl.mod.sqrt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="c1"># 2x2 grid with tighter margins</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">cyl.mod.sqrt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/27456c3b251490f5026953821245955413d810db31dcd69bae89ff33fb9b668c.png"><img alt="_images/27456c3b251490f5026953821245955413d810db31dcd69bae89ff33fb9b668c.png" src="_images/27456c3b251490f5026953821245955413d810db31dcd69bae89ff33fb9b668c.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/546cc96fdce730a20d7ee901ce6b928bd9b7718e5c1df896b7e004b42103c72f.png"><img alt="_images/546cc96fdce730a20d7ee901ce6b928bd9b7718e5c1df896b7e004b42103c72f.png" src="_images/546cc96fdce730a20d7ee901ce6b928bd9b7718e5c1df896b7e004b42103c72f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>which does not seem to have done very much. If we examine the effects plots</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">cyl.mod.sqrt</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/34d7c8bb8efe1d0cf020250f3bd361c0d1c430e05443af919308b0d16df83b65.png"><img alt="_images/34d7c8bb8efe1d0cf020250f3bd361c0d1c430e05443af919308b0d16df83b65.png" src="_images/34d7c8bb8efe1d0cf020250f3bd361c0d1c430e05443af919308b0d16df83b65.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>we can see some potentially major non-linearities. We could look at Box-Tidwell options here (after excluding outliers)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.t</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">cyl</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">resid.t</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rstudent</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="n">not.outliers</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">resid.t</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2</span>
-<span class="n">box.t</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">boxTidwell</span><span class="p">(</span><span class="n">cyl</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="o">=</span><span class="n">not.outliers</span><span class="p">)</span>
+<span class="n">box.t</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">boxTidwell</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="o">=</span><span class="n">not.outliers</span><span class="p">,</span><span class="w"> </span><span class="n">max.iter</span><span class="o">=</span><span class="m">50</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">box.t</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   MLE of lambda Score Statistic (z) Pr(&gt;|z|)  
-hp       0.14006             -2.3196  0.02036 *
-wt       0.16115             -1.0595  0.28936  
+hp     0.0027772             -2.5747  0.01003 *
+wt    -0.0544542             -1.3485  0.17749  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-iterations =  21 
+iterations =  34 
 </pre></div>
 </div>
 </div>
@@ -892,7 +905,7 @@ iterations =  21
 <p>As both of these values are quite close to 0, it suggests that the log of both variables could be an improvement</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cyl.mod.log</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cyl</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cyl.mod.log</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="c1"># 2x2 grid with tighter margins</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">cyl.mod.log</span><span class="p">)</span>
 <span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">cyl.mod.log</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
@@ -900,14 +913,14 @@ iterations =  21
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/7bf1c455bb0405238a8cfef3151be5d87d18efc15b53c4cdde01aa9bbb48daaf.png"><img alt="_images/7bf1c455bb0405238a8cfef3151be5d87d18efc15b53c4cdde01aa9bbb48daaf.png" src="_images/7bf1c455bb0405238a8cfef3151be5d87d18efc15b53c4cdde01aa9bbb48daaf.png" style="width: 420px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/6ec360171e63dfba30ebcf820b34235910c4360eab38bc9f63a43f6f7b296a5f.png"><img alt="_images/6ec360171e63dfba30ebcf820b34235910c4360eab38bc9f63a43f6f7b296a5f.png" src="_images/6ec360171e63dfba30ebcf820b34235910c4360eab38bc9f63a43f6f7b296a5f.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/519d0f09f5740013db7e3f9a6d2b539d7412c47d0107aa0b0714d9512e8fe5cf.png"><img alt="_images/519d0f09f5740013db7e3f9a6d2b539d7412c47d0107aa0b0714d9512e8fe5cf.png" src="_images/519d0f09f5740013db7e3f9a6d2b539d7412c47d0107aa0b0714d9512e8fe5cf.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/ac1e257f5c5c69db313373671d9b5f72493beaff69b93fc002dcae642c1ed7e2.png"><img alt="_images/ac1e257f5c5c69db313373671d9b5f72493beaff69b93fc002dcae642c1ed7e2.png" src="_images/ac1e257f5c5c69db313373671d9b5f72493beaff69b93fc002dcae642c1ed7e2.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>This has perhaps helped a little? We could instead try some polynomials</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cyl.mod.poly</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cyl</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cyl.mod.poly</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="c1"># 2x2 grid with tighter margins</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">cyl.mod.poly</span><span class="p">)</span>
 <span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">cyl.mod.poly</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
@@ -915,8 +928,8 @@ iterations =  21
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/b9917d2fe8ab3b29964ced71fd2c6742037371f013418341c6e7155a0ee6dd6e.png"><img alt="_images/b9917d2fe8ab3b29964ced71fd2c6742037371f013418341c6e7155a0ee6dd6e.png" src="_images/b9917d2fe8ab3b29964ced71fd2c6742037371f013418341c6e7155a0ee6dd6e.png" style="width: 420px; height: 420px;" /></a>
-<a class="reference internal image-reference" href="_images/e7848c2ef6478e8fed64229cb5e5968dae32f2a4c9c65b5a2bdcc848c3b6120c.png"><img alt="_images/e7848c2ef6478e8fed64229cb5e5968dae32f2a4c9c65b5a2bdcc848c3b6120c.png" src="_images/e7848c2ef6478e8fed64229cb5e5968dae32f2a4c9c65b5a2bdcc848c3b6120c.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/0788668f261976648c27c7f09275db7d43f2fe47c7df003b3f18bbf34abbecc5.png"><img alt="_images/0788668f261976648c27c7f09275db7d43f2fe47c7df003b3f18bbf34abbecc5.png" src="_images/0788668f261976648c27c7f09275db7d43f2fe47c7df003b3f18bbf34abbecc5.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/c7b1e57d2fa51396596f29fadf2f43e5080b4f7bff05630546f671074d8499d6.png"><img alt="_images/c7b1e57d2fa51396596f29fadf2f43e5080b4f7bff05630546f671074d8499d6.png" src="_images/c7b1e57d2fa51396596f29fadf2f43e5080b4f7bff05630546f671074d8499d6.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>This is likely the best we can do with our current set of tools. However, even with this in place, both the Residuals vs Fitted and the Scale-Location plots do not look great. The QQ-normal plot also suggest heavier tails at the lower-end of the distribution.</p>
