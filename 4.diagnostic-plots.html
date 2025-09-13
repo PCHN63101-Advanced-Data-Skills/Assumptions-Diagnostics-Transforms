@@ -391,7 +391,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added Variable and Effects Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-Variable Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -571,8 +575,75 @@
 </div>
 </section>
 </section>
+<section id="added-variable-and-effects-plots">
+<h2>Added Variable and Effects Plots<a class="headerlink" href="#added-variable-and-effects-plots" title="Link to this heading">#</a></h2>
+<p>A final very important way to interpret the suitability of any regression model is to actually visualise the model fit. Nothing will give you a better sense of what you are trying to interpret than actually seeing the shape that is being used to capture the relationships in the data. In general, there are two ways we can do this: <em>added-variable</em> plots, or <em>effects</em> plots.</p>
+<section id="added-variable-plots">
+<h3>Added-Variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
 <section id="effects-plots">
-<h2>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h2>
+<h3>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h3>
+<p>As an alternative to added-variable plots, we can instead create <em>effects</em> plots. Here, rather than removing the influence of other effects in the model, we simply fix them at some constant value. For instance, in plotting the effects of <span class="math notranslate nohighlight">\(x_{i1}\)</span> in the following model</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
+\]</div>
+<p>we can calculate predicted values by setting <span class="math notranslate nohighlight">\(x_{i2}\)</span> and <span class="math notranslate nohighlight">\(x_{i3}\)</span> to their means</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}^{(x_1)}_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}\bar{x}_{2} + \beta_{3}\bar{x}_{3}.
+\]</div>
+<p>In this way, we do not remove the other variables, we just keep them fixed so that only the variable of interest changes. The advantage of doing this is that we can examine the effect without the need to residualise the data, which can provide a more inuitive display of the model. For instance, we can make these types of plots using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package in <code class="docutils literal notranslate"><span class="pre">R</span></code>. For instance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png"><img alt="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png" src="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
+<p>These plots can also be advanced further by taking the effects predictions and adding back in the original residuals from the model. This allows us to see how close the model fit is to the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package then takes this further and draws a smooth curve through the pattern of residuals. This allows us to see whether there are any non-linear patterns that are not being captured by the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="c1"># suppress warnings from LOESS</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png"><img alt="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" src="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots<a class="footnote-reference brackets" href="#smooth-foot" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="c1"># turning warnings back on to be safe</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="par-foot" role="note">
@@ -587,7 +658,12 @@
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">3</a><span class="fn-bracket">]</span></span>
 <p>Notice that the <span class="math notranslate nohighlight">\(y\)</span>-axis is actually mislabelled in this plot as <em>Standardised residuals</em> rather than <em>Studentised residuals</em>.</p>
 </aside>
+<aside class="footnote brackets" id="smooth-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">4</a><span class="fn-bracket">]</span></span>
+<p>If you ever want to turn the smoothing curve <em>off</em>, you can use <code class="docutils literal notranslate"><span class="pre">plot(allEffects(mod,residuals=TRUE),</span> <span class="pre">partial.residuals=list(smooth=FALSE))</span></code>.</p>
 </aside>
+</aside>
+</section>
 </section>
 </section>
 
@@ -677,7 +753,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added Variable and Effects Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-Variable Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
