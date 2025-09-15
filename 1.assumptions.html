@@ -394,14 +394,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.resolution</span><span class="o">=</span><span class="m">120</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section class="tex2jax_ignore mathjax_ignore" id="the-linear-model-assumptions">
+  <section class="tex2jax_ignore mathjax_ignore" id="the-linear-model-assumptions">
 <h1>The Linear Model Assumptions<a class="headerlink" href="#the-linear-model-assumptions" title="Link to this heading">#</a></h1>
 <p>In the previous weeks, we outlined the modelling framework behind both simple and multiple regression. In doing so, we made a number of assumptions that allowed this framework to be tractable and useable. However, we never acually checked whether any of these assumptions held when using our example data. In this section, we will discuss the nature of checking modelling assumptions, as well as discussing each of the assumptions we made. In the rest of this lesson, we will discuss standard ways of checking these assumptions, as well as tactics that can be employed when those assumptions appear to be violated.</p>
 <div class="tip admonition">
@@ -552,7 +545,24 @@ y_{i} \sim \mathcal{N}\left(\beta_{0} + \beta_{1}x_{i},\sigma^{2}\right).
 </section>
 <section id="the-variance-is-constant">
 <h3>(5) The Variance is Constant<a class="headerlink" href="#the-variance-is-constant" title="Link to this heading">#</a></h3>
-<p>As a final assumption, we turn to the <em>variance</em> of the assumed distribution. Much like the assumption of a straight line concerns the correct form of the <em>mean function</em>, we also need to consider whether the <em>variance function</em> has a suitable form for our data. As mentioned in previous lessons, both simple and multiple regression have a very simply variance functions, where we assume that the spread of data around the regression line is <em>the same</em>, irrespective of the values of the predictors. This is captured by a <em>constant</em> variance term <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Like other elements of the model, this is a <em>simplifying assumption</em>. We do not expect any real-world data to actually have <em>identical</em> spread around the regression line. If it is similar-enough across the range of the predictors, then we can continue with the assumption that the population variance is constant. However, if there is any clear pattern, such as variance <em>increasing</em> or <em>decreasing</em> as the values of the predictors change, then this assumption may not be tenable. The condition of having constant variance is known as <em>homoscedasticity</em>, with unequal variance known as <em>heteroscedasticity</em><a class="footnote-reference brackets" href="#scedasis-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. The problem with <em>heteroscedasticity</em> is that calculating a single variance terms from data where the variance changes will introduce bias in the form of <em>over-estimation</em> for some data points, and <em>under-estimation</em> for other data points. This also has a direct consequence for the accuracy of estimating the other parameters in the model, as well as calculating correct standard errors. So much like assumptions around correlation, we need the variance to be correct in order to guarantee accurate inference.</p>
+<p>As a final assumption, we turn to the <em>variance</em> of the assumed distribution. Much like the assumption of a straight line concerns the correct form of the <em>mean function</em>, we also need to consider whether the <em>variance function</em> has a suitable form for our data. As mentioned in previous lessons, both simple and multiple regression have a very simply variance functions, where we assume that the spread of data around the regression line is <em>the same</em>, irrespective of the values of the predictors. This is captured by a <em>constant</em> variance term <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Like other elements of the model, this is a <em>simplifying assumption</em>. We do not expect any real-world data to actually have <em>identical</em> spread around the regression line. If it is similar-enough across the range of the predictors, then we can continue with the assumption that the population variance is constant. However, if there is any clear pattern, such as variance <em>increasing</em> or <em>decreasing</em> as the values of the predictors change, then this assumption may not be tenable. The condition of having constant variance is known as <em>homoscedasticity</em> (sometimes spelled <em>homoskedasticity</em>), with unequal variance known as <em>heteroscedasticity</em> (again, sometimes spelled <em>heteroskedasticity</em>)<a class="footnote-reference brackets" href="#scedasis-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. The problem with <em>heteroscedasticity</em> is that calculating a single variance terms from data where the variance changes will introduce bias in the form of <em>over-estimation</em> for some data points, and <em>under-estimation</em> for other data points. This also has a direct consequence for the accuracy of estimating the other parameters in the model, as well as calculating correct standard errors. So much like assumptions around correlation, we need the variance to be correct in order to guarantee accurate inference.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored the nature of checking model assumptions, as well as discussing the regression assumptions themselves. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>Why visual checks of assumptions are preferred over inferential tests of assumptions.</p></li>
+<li><p>Why researchers need to start being more open and honest about checking assumptions.</p></li>
+<li><p>The 5 core assumptions of a regression model:</p>
+<ol class="arabic simple">
+<li><p>The outcome is a continuous random variable.</p></li>
+<li><p>The marginal distribution of the outcome (or the distribution of the errors) is normal.</p></li>
+<li><p>The data/errors are uncorrelated.</p></li>
+<li><p>The relationship is a straight line.</p></li>
+<li><p>The variance is constant (i.e. <em>homoscedasticity</em>).</p></li>
+</ol>
+</li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="prime-foot" role="note">

@@ -615,7 +615,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png"><img alt="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png" src="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/be601d002e4e93aefa569887ce648e396cca3573b72d232565d6963cb72ea1cc.png"><img alt="_images/be601d002e4e93aefa569887ce648e396cca3573b72d232565d6963cb72ea1cc.png" src="_images/be601d002e4e93aefa569887ce648e396cca3573b72d232565d6963cb72ea1cc.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>The functions from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package return the values of the outcome, evaluated at certain values of each predictor. For instance</p>
@@ -662,6 +662,22 @@ cyl
 </div>
 <p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots<a class="footnote-reference brackets" href="#smooth-foot" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
 <p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored all the core diagnostic visualisations used to assess a multiple regression model. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>The 4 main visualisations produced when plotting a model fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function.</p></li>
+<li><p>How to interpret each of these visualisations in terms of:</p>
+<ul>
+<li><p>Which assumption the visualisation is depicting.</p></li>
+<li><p>What it should look like if there are no problems.</p></li>
+<li><p>What it would look like if there were problems.</p></li>
+</ul>
+</li>
+<li><p>The idea of using added-variable plots to visualise the model fit.</p></li>
+<li><p>The idea of using effects plots as an alternative to visualising the model fit.</p></li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="par-foot" role="note">

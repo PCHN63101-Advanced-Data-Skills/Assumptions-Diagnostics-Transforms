@@ -833,6 +833,18 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 </div>
 </div>
 <p>So there is now no immediate cause for concern. The VIF for <code class="docutils literal notranslate"><span class="pre">cyl</span></code> is still getting close to 5, which is something we may need to bear in mind. This is likely due to the fact that engines that produce more horsepower often have more cylinders, which will also have an impact on the weight of the car. So this dependence is somewhat unavoidable, but could cause us to question whether <code class="docutils literal notranslate"><span class="pre">cyl</span></code> is adding anything useful to the model.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored several of the diagnostic measures we can use to capture elements of the regression assumptions. Some of these are typically used to create visualisations, whereas others can be interpreted directly. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>Leverage as a measure between <span class="math notranslate nohighlight">\(0 \leq h_{i} \leq 1\)</span> that indicates how <em>influential</em> each data point is to the model fit, with <span class="math notranslate nohighlight">\(h_{i} &gt; 2\frac{p}{n}\)</span> a marker of <em>high leverage</em>.</p></li>
+<li><p>The residuals as a useful proxy for the model errors, particularly for assessing distributional assumptions, detecting outliers and looking for evidence of non-linearity.</p></li>
+<li><p>The theoretical complexity of errors vs residuals, given that the variance of the <em>residuals</em> depends upon leverage, which is not true of the <em>errors</em>.</p></li>
+<li><p>The concept of both <em>standardised</em> and <em>studentised</em> residuals as methods for removing the effects of leverage to render the residuals closer to i.i.d.</p></li>
+<li><p>Cook’s Distance as a measure that combines the concept of leverage and outliers, with values of <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span> indicating concern.</p></li>
+<li><p>The VIF as a measure that indicates how much the standard errors will increase when including each predictor in the model, with VIF &gt; 5 as an indicator of concerning multicollinearity.</p></li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="hatmat-foot" role="note">
