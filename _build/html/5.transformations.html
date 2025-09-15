@@ -555,6 +555,12 @@ F-statistic: 67.13 on 3 and 28 DF,  p-value: 6.647e-13
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+
+lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png"><img alt="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" src="_images/e341c2c5f9030270d5f3c6d3737d2b03534a2e5300284499563c366f4007517a.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
@@ -941,6 +947,20 @@ iterations =  34
 </ol>
 <p>For our current purposes, we are sticking with the multiple regression framework, meaning that we either choose option 1 or option 2. Although option 1 is perfectly legitimate, it can feel unsatisfying. However, we need to accept that no model will ever be perfect and that to strive for this is a fools’ errand. We also need to realise that this is precisely what goes on in the literature all the time. The only difference is that it is often obfuscated by either not mentioning the assumptions, waving them to one side by stating that the assumptions were “adequately met”, or calling upon something like the central limit theorem<a class="footnote-reference brackets" href="#clt-foot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. If we wish to be honest, we need to simply state that some potential issues remain with the model assumptions and thus inference will be treated cautiously. In cases where <span class="math notranslate nohighlight">\(p\)</span>-values are very small, we probably do not need to worry. However, if we get <span class="math notranslate nohighlight">\(p = 0.048\)</span> or <span class="math notranslate nohighlight">\(p = 0.056\)</span>, then much more cautious interpretation is needed. In addition, it is worth remembering that many of these assumptions only really matter for the calculation of <span class="math notranslate nohighlight">\(p\)</span>-values, so we can happily continue interpreting the regression coefficients, even in the absence of a condition such as normality.</p>
 <p>In terms of option 2, there are various ways that the regression model can be adjusted in cases of outliers (<em>robust regression</em>), heteroscedasticity (<em>generalised least squares</em>), multicollinearity (<em>ridge regression</em>) and non-normality (<em>non-parametric resampling</em>). None of these methods are a panacea, and our ability to combine them in cases where multiple assumptions are not met can be very limited. However, they can be used to help in certain situations. We will examine all of these in more detail in our next synchronous session.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored variable transformations as a means of improving the model fit, the model assumptions and the interpretability of the model. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>The concept of changing the outcome variable using some form of monotonic transformation.</p></li>
+<li><p>The Box-Cox method as an automated way of finding the transformation that leads to the best-fitting model by raising the outcome to some exponent <span class="math notranslate nohighlight">\(\lambda\)</span>.</p></li>
+<li><p>The idea that Box-Cox can lead to transformations that are difficult to interpret, meaning often we would choose the most interpretable transformation that is <em>closest</em> to the estimated value of <span class="math notranslate nohighlight">\(\lambda\)</span>.</p></li>
+<li><p>The concept of transforming the predictors in a similar fashion, usually as a means of <em>linearising</em> the relationships in the data.</p></li>
+<li><p>The method of Box-Tidwell, that finds the best linearising transforming by raising predictor <span class="math notranslate nohighlight">\(j\)</span> to the power <span class="math notranslate nohighlight">\(\lambda_{j}\)</span>.</p></li>
+<li><p>Polynomial regression as an alternative method that <em>adds</em> non-linear modelling to the regression framework, rather than <em>removing</em> non-linearities.</p></li>
+<li><p>Standardised regression as a method of improving the interpretation of regression coefficients by placing them all on the standard deviation scale.</p></li>
+<li><p>The idea that despite all these options, sometimes they will not work. In those cases, we either accept that the model fit will be limited, or look to other methods that lift some of the regression assumptions.</p></li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="poly-foot" role="note">
