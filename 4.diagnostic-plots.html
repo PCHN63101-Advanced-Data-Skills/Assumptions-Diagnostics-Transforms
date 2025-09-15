@@ -391,7 +391,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added Variable and Effects Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added-Variable and Effects Plots</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-Variable Plots</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
@@ -576,13 +576,15 @@
 </section>
 </section>
 <section id="added-variable-and-effects-plots">
-<h2>Added Variable and Effects Plots<a class="headerlink" href="#added-variable-and-effects-plots" title="Link to this heading">#</a></h2>
+<h2>Added-Variable and Effects Plots<a class="headerlink" href="#added-variable-and-effects-plots" title="Link to this heading">#</a></h2>
 <p>A final very important way to interpret the suitability of any regression model is to actually visualise the model fit. Nothing will give you a better sense of what you are trying to interpret than actually seeing the shape that is being used to capture the relationships in the data. In general, there are two ways we can do this: <em>added-variable</em> plots, or <em>effects</em> plots.</p>
 <section id="added-variable-plots">
 <h3>Added-Variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h3>
+<p>We discussed added-variable plots earlier in the unit when we introduced <a class="reference external" href="https://pchn63101-advanced-data-skills.github.io/Simple-Multiple-Regression/5.multiple-regression.html">Multiple Regression</a>. As a reminder, these allow us to plot the effects associated with each variable from a multiple regression model by regressing-out the effects of all other variables on both the <em>outcome</em> and the <em>predictor</em> of interest. We have shown how this can be done manually in <code class="docutils literal notranslate"><span class="pre">R</span></code>, but also how the <code class="docutils literal notranslate"><span class="pre">avPlots()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package makes it much easier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -607,23 +609,46 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+<span class="n">effs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png"><img alt="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png" src="_images/e6971d4082f48696334d17200f56edebc57d5da554baaece27990e2b9df7af9c.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png"><img alt="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png" src="_images/e694b5c4e21160580d93e3076d96c040f88cd90bb6c33f5b77a7df72daca379e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
-<p>These plots can also be advanced further by taking the effects predictions and adding back in the original residuals from the model. This allows us to see how close the model fit is to the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package then takes this further and draws a smooth curve through the pattern of residuals. This allows us to see whether there are any non-linear patterns that are not being captured by the model</p>
+<p>The functions from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package return the values of the outcome, evaluated at certain values of each predictor. For instance</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="c1"># suppress warnings from LOESS</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> model: mpg ~ wt + hp + cyl
+
+ wt effect
+wt
+     1.5      2.5      3.5      4.4      5.4 
+25.52911 22.36214 19.19516 16.34489 13.17791 
+
+ hp effect
+hp
+      52      120      190      260      340 
+21.79861 20.57202 19.30935 18.04668 16.60363 
+
+ cyl effect
+cyl
+       4        5        6        7        8 
+22.15041 21.20879 20.26718 19.32556 18.38394 
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice that these can be both <em>measured</em> and <em>unmeasured</em> values of each variable. The <code class="docutils literal notranslate"><span class="pre">effs</span></code> structure also contains many other numeric details about each predictor, which may be useful to know (e.g. try looking at all the fields under <code class="docutils literal notranslate"><span class="pre">effs$wt$...</span></code>).</p>
+<p>In terms of plotting these effects, notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
+<p>These plots can also be advanced further by taking the effects predictions and adding back in the original residuals from the model. This allows us to see how close the model fit is to the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package then takes this further and draws a smooth curve through the pattern of residuals. This allows us to see whether there are any non-linear patterns that are not being captured by the model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
@@ -636,13 +661,6 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 </div>
 </div>
 <p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots<a class="footnote-reference brackets" href="#smooth-foot" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="c1"># turning warnings back on to be safe</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
@@ -753,7 +771,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Simulated Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added Variable and Effects Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-and-effects-plots">Added-Variable and Effects Plots</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-Variable Plots</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
