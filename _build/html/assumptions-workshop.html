@@ -470,7 +470,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png"><img alt="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" src="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" style="width: 420px; height: 420px;" /></a>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>corrplot 0.95 loaded
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png"><img alt="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png" src="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <div class="alert alert-block alert-info"> 
@@ -478,7 +481,30 @@
 </div><p>Using the options specified in the original code above, there are several useful visual indicators here to alert us to problems. Firstly, the size of the circle is indicative of the magnitude of the correlation, so bigger circles are more of a warning than smaller circles. The <em>transparency</em> of the circles is also indicative of the magnitude, so this is a useful visual way of drawing our attention to larger correlations. Finally, the colour of the circles is indicative of the <em>direction</em> of the correlation, so that red shows <em>negative</em> and blue shows <em>positive</em>.</p>
 <div class="alert alert-block alert-info"> 
 <b>ACTIVITY ...</b> At the stage of trying to think about which <i>predictor variables</i> would be of most interest (when <code>mpg</code> is the outcome), which row/column should we be focussing on? Once we have some predictor variables, which rows/columns should we look at to decide whether multicollinearity might be a problem?
-</div></section>
+</div><p>We can also see these relationships in terms of the actual data using a <em>pairs plot</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pairs</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png"><img alt="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png" src="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>On its own, this will plot <em>everything</em> in the data frame, which can be difficult to see. We can be more specific by providing a formula, just like <code class="docutils literal notranslate"><span class="pre">lm()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pairs</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png"><img alt="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png" src="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>So now we can eye ball the relationships between the outcome and predictors, as well as the relationships <em>between</em> the predictors. Remember, these are not corrected for each other and so may not represent the result we would get from a multiple regression. This is more akin to multiple <em>simple</em> regression models.</p>
+</section>
 <section id="vif-barplot">
 <h4>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h4>
 <p>As part of the accompanying lesson, we discussed the VIF and how to produce VIF values. However, it can be useful to visualise these as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used in the lesson to simulate multicollinearity.</p>
@@ -498,6 +524,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png"><img alt="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png" src="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
@@ -514,7 +543,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/48b22062a3abfc256c9e7aa0633ec6738b22fa8d9561690eab3a196f91fba65f.png"><img alt="_images/48b22062a3abfc256c9e7aa0633ec6738b22fa8d9561690eab3a196f91fba65f.png" src="_images/48b22062a3abfc256c9e7aa0633ec6738b22fa8d9561690eab3a196f91fba65f.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png"><img alt="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" src="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. In addition, heuristics of 2 and -2 are shown vertically for outliers, with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
@@ -539,7 +568,7 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </section>
 <section id="manual-effects-plots">
 <h4>Manual Effects Plots<a class="headerlink" href="#manual-effects-plots" title="Link to this heading">#</a></h4>
-<p>… It can be helpful to see how we could calculate these manually.</p>
+<p>In the accompanying lesson, we discussed the use of effects plots as a useful alternative to added variable plots. Although the mechanics of effects was plots explained, it can be helpful to see how we could calculate these manually. Remember, rather than <em>removing</em> the influence of other variables, effects plots work by <em>fixing</em> the other variables to a constant value so that only the variable of interest changes. We can illustrate this using the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>. To begin with, we create a new dataset containing our predictors of interest. Here our focus is on the <code class="docutils literal notranslate"><span class="pre">wt</span></code> variable, so we keep this variable the raw as the raw data and fix <code class="docutils literal notranslate"><span class="pre">hp</span></code> and <code class="docutils literal notranslate"><span class="pre">cyl</span></code> to their <em>mean</em> value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">)</span>
@@ -548,7 +577,7 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 <span class="w">                      </span><span class="s">&quot;cyl&quot;</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">cyl</span><span class="p">),</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c1"># mean of cyl</span>
 <span class="w">                      </span><span class="p">)</span>
 
-<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">wt.data</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">wt.data</span><span class="p">))</span><span class="w"> </span><span class="c1"># print the first 6 obersvations</span>
 </pre></div>
 </div>
 </div>
@@ -564,7 +593,7 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 </div>
 </div>
-<p>So, now we have a <em>new</em> data set of predictors, where the value of <code class="docutils literal notranslate"><span class="pre">hp</span></code> and <code class="docutils literal notranslate"><span class="pre">cyl</span></code> is <em>constant</em> and only the value of <code class="docutils literal notranslate"><span class="pre">wt</span></code> varies. We can then pass this to the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function, which will use the parameter estimates from the model and apply the regression equation to each row of values in the new data set. So, we evaluate the regression equation with only <code class="docutils literal notranslate"><span class="pre">wt</span></code> varying and all other predictors set to their mean.</p>
+<p>We can now pass this new data frame to the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function, which will use the parameter estimates from the model and apply the regression equation to each row of values in the new data set. This will create a set of <em>predictions</em> from the model. Because the only element that varies is <code class="docutils literal notranslate"><span class="pre">wt</span></code>, these predictions will correspond to the regression slope for <code class="docutils literal notranslate"><span class="pre">wt</span></code>, holding everything else constant. We can see that when we plot the values returned by <code class="docutils literal notranslate"><span class="pre">predict()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.effect</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">object</span><span class="o">=</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="o">=</span><span class="n">wt.data</span><span class="p">)</span><span class="w"> </span><span class="c1"># b0 + b1*wt + b2*hp + b3*cyl</span>
@@ -574,6 +603,24 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png"><img alt="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png" src="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Can you get the same values for <code>wt.effect</code> without using <code>predict</code>? <b>HINT</b> If you first extract the estimated regression parameters to a variable called <code>beta</code>, you can do this in a single line of code.
+</div><p>As we can see, this is the same as the effect plot for <code class="docutils literal notranslate"><span class="pre">wt</span></code>. Here we switch the confidence bands off to make the comparison clearer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">confidence.level</span><span class="o">=</span><span class="m">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png"><img alt="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png" src="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <div class="alert alert-block alert-info"> 
@@ -591,15 +638,32 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 <a class="reference internal image-reference" href="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png"><img alt="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png" src="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>which agrees with what we get from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p>
+<p>which also agrees with what we get from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, which we can see below. Again, we remove the confidence bands and the smoothed line through the points to make the comparison clearer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">confidence.level</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png"><img alt="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png" src="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 </section>
 <section id="polynomial-regression">
 <h2>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h2>
+<p>In thes accompanying lesson, we introduced polynomial regression as a solution when a straight-line did not appear to fit the data well. This is one of the most powerful options available to you to allow much more complex relationships between variables to be captured within a regression framework. In the lesson, we made use of the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function, but it is worth spending a little more time understanding <em>why</em> this was used.</p>
 <section id="including-different-powers-directly">
 <h3>Including Different Powers Directly<a class="headerlink" href="#including-different-powers-directly" title="Link to this heading">#</a></h3>
-<p>…To include transformations directly in an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula, we need to use the <code class="docutils literal notranslate"><span class="pre">I()</span></code> symbol, which tells <code class="docutils literal notranslate"><span class="pre">R</span></code> to treat whatever is inside the brackets literally, rather than interpreting it in terms of the formula syntax. For example, <code class="docutils literal notranslate"><span class="pre">*</span></code> usually means <em>multiply</em>, but inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula it means something else (as we will see later in the ANOVA lesson). If we want <code class="docutils literal notranslate"><span class="pre">*</span></code> to still mean <em>multiply</em> within a formula, we have to use <code class="docutils literal notranslate"><span class="pre">I()</span></code> to make it clear what we mean. Similarly, if we want to raise a variable to a certain power, we would normally use</p>
+<p>To illustrate why we use the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function, we will first start with a basic polynomial model of <code class="docutils literal notranslate"><span class="pre">wt</span></code>. For the sake of argument, we will say that through our diagnostic investigations we have decided that a polynomial of degree 2 would be a good idea (also known as a <em>quadratic</em> polynomial). The theoretical model for this would be</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} = \beta_{0} + \beta_{1}x_{i} + \beta_{2}x^{2}_{i} + \epsilon_{i}.
+\]</div>
+<p>So, it looks like we can just enter <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt^2</span></code> into the model formula and be done. However, there are two issues with this. The first is a purely implementation <code class="docutils literal notranslate"><span class="pre">R</span></code>-specific issue, and the second is much more general.</p>
+<p>In terms of the first issue, to include transformations directly in an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula, we need to use the <code class="docutils literal notranslate"><span class="pre">I()</span></code> function, which tells <code class="docutils literal notranslate"><span class="pre">R</span></code> to treat whatever is inside the brackets literally. This is needed because many common symbols have special meanings inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula. So this function can be taken to mean <em>Inhibit</em> the formula interpretation. For example, <code class="docutils literal notranslate"><span class="pre">*</span></code> usually means <em>multiply</em>, but inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula it means something else (as we will see later in the ANOVA lesson). If we want <code class="docutils literal notranslate"><span class="pre">*</span></code> to still mean <em>multiply</em> within a formula, we have to use <code class="docutils literal notranslate"><span class="pre">I()</span></code>. This can be thought of as <em>inhibit interpreting this bit as a formula</em>. Similarly, if we want to raise a variable to a certain power, we would normally use</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
@@ -646,7 +710,7 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 </div>
 </div>
 </div>
-<p>Instead, we need to wrap this inside <code class="docutils literal notranslate"><span class="pre">I()</span></code> to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> that we mean “treat this symbol as its usual meaning, not the special formula meaning”. For example</p>
+<p>Instead, we need to wrap this inside <code class="docutils literal notranslate"><span class="pre">I()</span></code> to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> that we mean <em>treat this symbol as its usual meaning, not the special formula meaning</em>. For example</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -677,7 +741,7 @@ F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
 </div>
 </div>
 </div>
-<p>Great, this now does what we want. However, let us have a look at the VIF values</p>
+<p>This solves our first problem. In terms of the second problem, let us have a look at the VIF values</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">vif.values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
@@ -691,12 +755,105 @@ F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
 <a class="reference internal image-reference" href="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png"><img alt="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png" src="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>So, it seems there is a bit of a problem with this approach.</p>
+<p>Ok, so now we can see the other issue. Including both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt^2</span></code> causes a massive multicollinearity problem.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Before reading on, can you think what might be causing this result?
+<b>ACTIVITY ...</b> Before reading on, can you think what might be causing this result? Could you use some of the plots from earlier to investigate this further?
 </div></section>
 <section id="orthogonal-polynomials">
 <h3>Orthogonal Polynomials<a class="headerlink" href="#orthogonal-polynomials" title="Link to this heading">#</a></h3>
+<p>Hopefully from the above it is clear that the problem is that when you raise a varible to any power it will remain <em>strongly correlated</em> with the original variable. This will then causes multicollinearity issues. The solution is that we need to use <em>orthogonal polynomials</em>, which is what the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function creates for us. In this context, <em>orthogonal</em> is taken to mean <em>uncorrelated</em>. As an example, we can rerun the model above using <code class="docutils literal notranslate"><span class="pre">poly()</span></code> and then check the VIF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ poly(wt, degree = 2), data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.483 -1.998 -0.773  1.462  6.238 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            20.0906     0.4686  42.877  &lt; 2e-16 ***
+poly(wt, degree = 2)1 -29.1157     2.6506 -10.985 7.52e-12 ***
+poly(wt, degree = 2)2   8.6358     2.6506   3.258  0.00286 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.651 on 29 degrees of freedom
+Multiple R-squared:  0.8191,	Adjusted R-squared:  0.8066 
+F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unfortunately, the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from <code class="docutils literal notranslate"><span class="pre">car</span></code> gets a bit confused when we have <code class="docutils literal notranslate"><span class="pre">poly()</span></code> in the model formula, so we extract the predictors and add them manually to get the VIF values. This is usually unnecessary, so it should only be needed for this demonstration</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.poly</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="n">poly.mod.alt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">vif.values</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">poly.mod.alt</span><span class="p">)</span>
+
+<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">30</span><span class="p">))</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png"><img alt="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" src="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>As we can see, these predictors are <em>perfectly uncorrelated</em>. The VIF is 1 for each, meaning the variance is <em>not inflated at all</em> with these two predictors in the model. This is the essence of two variable being <em>orthogonal</em>. We can also see this by calculating their correlation as well</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cor</span><span class="p">(</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">5.51418448662549e-19</div></div>
+</div>
+<p>which is basically <em>exactly 0</em>, as far as the computer is concerned.</p>
+<p>How is this done? In a way, it does not really matter, but if you are curious then the method is very similar to what we do when we create <em>added variable plots</em>. In effect, we just need to <em>remove</em> the relationship between the variable by taking the residuals of several regression models. An example is given below. For each term, we basically remove the effect of all <em>lower degree terms</em>. So the linear term has the constant effect removed, and the quadratic term has the constant and linear effects removed. The output from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is the identical in terms of fit, <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values when compared to the model using <code class="docutils literal notranslate"><span class="pre">poly()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="w">   </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">    </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span><span class="w"> </span><span class="c1"># wt   with constant effect removed</span>
+<span class="n">wt.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.1</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span><span class="w"> </span><span class="c1"># wt^2 with constant + linear effect removed</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt.1 + wt.2, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.483 -1.998 -0.773  1.462  6.238 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  20.0906     0.4686  42.877  &lt; 2e-16 ***
+wt.1         -5.3445     0.4865 -10.985 7.52e-12 ***
+wt.2          1.1711     0.3594   3.258  0.00286 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.651 on 29 degrees of freedom
+Multiple R-squared:  0.8191,	Adjusted R-squared:  0.8066 
+F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are just a couple of points to be aware of here. Firstly, <code class="docutils literal notranslate"><span class="pre">poly()</span></code> uses a different scaling to the result you get from regressing variables on each other, so the parameter estimates and standard errors will be different. Because of this, it is very difficult to interpret these effects in any precise numeric fashion. However, the way to think of them is as the <em>unique linear effect</em> and the <em>unique quadratic effect</em>. The tests of these effects can be taken as indications of whether the <em>quadratic component</em> is needed and whether the <em>linear component</em> is needed to provide a good model fit.</p>
 </section>
 </section>
 <section id="alternative-models-when-assumptions-are-violated">
