@@ -853,7 +853,25 @@ F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
 </div>
 </div>
 </div>
-<p>There are just a couple of points to be aware of here. Firstly, <code class="docutils literal notranslate"><span class="pre">poly()</span></code> uses a different scaling to the result you get from regressing variables on each other, so the parameter estimates and standard errors will be different. Because of this, it is very difficult to interpret these effects in any precise numeric fashion. However, the way to think of them is as the <em>unique linear effect</em> and the <em>unique quadratic effect</em>. The tests of these effects can be taken as indications of whether the <em>quadratic component</em> is needed and whether the <em>linear component</em> is needed to provide a good model fit.</p>
+<p>There are just some points to be aware of here. <code class="docutils literal notranslate"><span class="pre">poly()</span></code> uses a different scaling to the result you get from regressing variables on each other, so the parameter estimates and standard errors will be different. Because of this, it is difficult to interpret these effects in any precise numeric fashion. However, the way to think of them is as the <em>unique linear effect</em> and the <em>unique quadratic effect</em>. The tests of these effects can be taken as indications of whether the <em>quadratic component</em> is needed and whether the <em>linear component</em> is needed to provide a good model fit.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Can you follow the pattern above to create manual orthogonal polynomials for a <i>cubic</i> model of <code>wt</code> (i.e. a degree of 3)? Compare these to the results of using <code>poly(wt,degree=3)</code>. What does the test on the cubic component imply?
+</div><p>A final detail to recognise is that using orthogonal or raw polynomials will not affect the model fit. Remember, multicollinearity is an issue for the <em>standard errors</em> and thus only matters in terms of <em>inference</em>. The model fit is the same irrespective of which approach we use. We can see this illustrated below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">poly.mod.ort</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w">   </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">poly.mod.raw</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&#39;Raw Polynomials&#39;</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod.ort</span><span class="p">),</span><span class="w">   </span><span class="n">main</span><span class="o">=</span><span class="s">&#39;Orthogonal Polynomials&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png"><img alt="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png" src="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png"><img alt="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png" src="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 <section id="alternative-models-when-assumptions-are-violated">
