@@ -371,23 +371,28 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots">Diagnostic Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-plots">Standard Plots</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plots">Additional Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-variable Plots</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-different-powers-directly">Including Different Powers Directly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-polynomials">Orthogonal Polynomials</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformations">Transformations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-models-when-assumptions-are-violated">Alternative Models When Assumptions are Violated</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression-for-outliers">Robust Regression for Outliers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-for-heteroscedasticity">Generalised Least-squares for Heteroscedasticity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-for-multicollinearity">Ridge-regression for Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-for-heteroscedasticity">Generalised Least-squares for Heteroscedasticity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gls-for-simple-regression">GLS for Simple Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gls-for-multiple-regression">GLS for Multiple Regression</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-resampling-for-non-normality">Non-parametric Resampling for Non-normality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-permutations">Manual Permutations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multicollinearity">What About Multicollinearity?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multiple-violations">What About Multiple Violations?</a></li>
 </ul>
 </li>
 </ul>
@@ -405,14 +410,9 @@
 <h1>Workshop: Assumptions, Diagnostics and Transformations<a class="headerlink" href="#workshop-assumptions-diagnostics-and-transformations" title="Link to this heading">#</a></h1>
 <section id="diagnostic-plots">
 <h2>Diagnostic Plots<a class="headerlink" href="#diagnostic-plots" title="Link to this heading">#</a></h2>
-<section id="standard-plots">
-<h3>Standard Plots<a class="headerlink" href="#standard-plots" title="Link to this heading">#</a></h3>
-</section>
-<section id="additional-plots">
-<h3>Additional Plots<a class="headerlink" href="#additional-plots" title="Link to this heading">#</a></h3>
-<p>As well as the standard plots produced by calling <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code>, there are some additional plots that can be useful to see various assumptions or data features more clearly. Here, we will have a brief rundown of some of the more useful.</p>
+<p>Generally speaking, the standard plots created by <code class="docutils literal notranslate"><span class="pre">R</span></code> when calling <code class="docutils literal notranslate"><span class="pre">plot(mod)</span></code> are all that you need to assess a linear model. In the accompanying lesson, we saw the standard 4 plots created with this method. However, there are some additional plots that can be useful to see various assumptions or data features more clearly. Here, we will have a brief rundown of some of the more useful.</p>
 <section id="correlation-plots">
-<h4>Correlation Plots<a class="headerlink" href="#correlation-plots" title="Link to this heading">#</a></h4>
+<h3>Correlation Plots<a class="headerlink" href="#correlation-plots" title="Link to this heading">#</a></h3>
 <p>Although previously we indicated that assessing correlation between predictors is best served by the VIF, it can be useful at times to investigate correlation as part of the initial descriptive exploration of the data, prior to fitting any model. For that purpose, a correlation plot can be useful. In the example below, we use the <code class="docutils literal notranslate"><span class="pre">corrplot</span></code> package to visualise the entire <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -426,48 +426,84 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png"><img alt="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" src="_images/c769764d68c86f276ec05426b80dda214f69c6d7580605c7c532129be4c5eb45.png" style="width: 420px; height: 420px;" /></a>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>corrplot 0.95 loaded
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png"><img alt="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png" src="_images/b5457a4092d8af588dde39704b4c52c117221713e075759edef2be6bb6b703e2.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Have a look at all the options available by typing <code>?corrplot</code> and skimming through the documentation. Have a go at changing some of these.
+</div><p>Using the options specified in the original code above, there are several useful visual indicators here to alert us to problems. Firstly, the size of the circle is indicative of the magnitude of the correlation, so bigger circles are more of a warning than smaller circles. The <em>transparency</em> of the circles is also indicative of the magnitude, so this is a useful visual way of drawing our attention to larger correlations. Finally, the colour of the circles is indicative of the <em>direction</em> of the correlation, so that red shows <em>negative</em> and blue shows <em>positive</em>.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> At the stage of trying to think about which <i>predictor variables</i> would be of most interest (when <code>mpg</code> is the outcome), which row/column should we be focussing on? Once we have some predictor variables, which rows/columns should we look at to decide whether multicollinearity might be a problem?
+</div><p>We can also see these relationships in terms of the actual data using a <em>pairs plot</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pairs</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png"><img alt="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png" src="_images/1b961f60588afcfeb4ee4d62ceb4f227b50a60f0e2e0e3eb9efeac6b553e419f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>On its own, this will plot <em>everything</em> in the data frame, which can be difficult to see. We can be more specific by providing a formula, just like <code class="docutils literal notranslate"><span class="pre">lm()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pairs</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png"><img alt="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png" src="_images/aaefb06a23fd512d2882103dd1b9e72b80ccdfa45b69bed655d624f5aefb4c0c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>So now we can eye ball the relationships between the outcome and predictors, as well as the relationships <em>between</em> the predictors. Remember, these are not corrected for each other and so may not represent the result we would get from a multiple regression. This is more akin to multiple <em>simple</em> regression models.</p>
 </section>
 <section id="vif-barplot">
-<h4>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h4>
-<p>Although we have already seen how to produce the VIF values, it can be useful to visualise this as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used previously.</p>
+<h3>VIF Barplot<a class="headerlink" href="#vif-barplot" title="Link to this heading">#</a></h3>
+<p>As part of the accompanying lesson, we discussed the VIF and how to produce VIF values. However, it can be useful to visualise these as a bar chart with standard cut-offs of 5 and 10. In the example below, we include the same <code class="docutils literal notranslate"><span class="pre">wt.copy</span></code> variable as used in the lesson to simulate multicollinearity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
 <span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
 <span class="n">wt</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span>
-<span class="n">wt.copy</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">wt.copy</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">wt</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span><span class="w">        </span><span class="c1"># wt + random noise</span>
 <span class="n">mod.multicol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.copy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">vif.values</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">mod.multicol</span><span class="p">)</span>
 
-<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">25</span><span class="p">))</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png"><img alt="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" src="_images/ac9fd7c0c4e2cbb32398993c59d5e5336c5e529e074ad02afef8ed71b83e9504.png" style="width: 420px; height: 420px;" /></a>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png"><img alt="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png" src="_images/66c4d987a19d65c9eb6b0d7856b64e67f40aa6ab37267c559bbec2aa6560be80.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-</section>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Use the code above to draw this chart again after removing <code>wt</code> from the model and then do this again after using <code>wt.copy</code> from the model. Keep the <code>ylim=c(0,25)</code> argument the same so you can directly compare the plots. Can we use VIF to tell us <i>which</i> predictor to remove from the model? What does this imply about the role of the analyst in the process of model building?
+</div></section>
 <section id="influence-plot">
-<h4>Influence Plot<a class="headerlink" href="#influence-plot" title="Link to this heading">#</a></h4>
+<h3>Influence Plot<a class="headerlink" href="#influence-plot" title="Link to this heading">#</a></h3>
 <p>Another useful plot included as part of the <code class="docutils literal notranslate"><span class="pre">car</span></code> package is the <em>influence</em> plot, where studentised residuals, leverage, Cook’s distance and standard thresholds for extreme points are all combined into the same plot. As an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">notable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">notable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">influencePlot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Leverage&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Studentised Residuals&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/1cb8990bc2b1030d6441c1df762503fdeebdd7367760402c22fdb2de2d160af9.png"><img alt="_images/1cb8990bc2b1030d6441c1df762503fdeebdd7367760402c22fdb2de2d160af9.png" src="_images/1cb8990bc2b1030d6441c1df762503fdeebdd7367760402c22fdb2de2d160af9.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png"><img alt="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" src="_images/636f0278f45bbaf2c2d5a0a1887178cc9a9002d1a70a0da570582d5444cce651.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Here we can see leverage plotted against the <em>studentised</em> resdiduals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colourmap, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. This agrees with what we saw earlier, as no points fell within the contour lines of <span class="math notranslate nohighlight">\(D = 0.5\)</span> and <span class="math notranslate nohighlight">\(D = 1\)</span>. In addition, heuristics of 2 and -2 are shown vertically for outliers (though the lower threshold is not visible in the above plot), with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
+<p>Here we can see leverage plotted against the <em>studentised</em> residuals, with the magnitude of Cook’s Distance displayed as bubbles of different sizes around each point. The mapping between these bubbles and Cook’s Distance is shown by the colour bar at the top. Looking at the top value of the colour map, we can see it is below our lower heuristic of <span class="math notranslate nohighlight">\(D &gt; 0.5\)</span>, meaning we have little concern here in terms of Cook’s distance. In addition, heuristics of 2 and -2 are shown vertically for outliers, with heuristics of <span class="math notranslate nohighlight">\(2\frac{p}{n}\)</span> and <span class="math notranslate nohighlight">\(3\frac{p}{n}\)</span> shown horizontally for leverage. Notable points have also been labelled and are returned as a data frame</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">notable</span><span class="p">)</span>
@@ -485,39 +521,54 @@ Maserati Bora       0.6073374 0.46356582 0.0815260489
 </div>
 </div>
 </div>
-<p>How these points are chosen requires a little explanation. The labels are based on the top two points for each of the influence measures. For the studentised residuals, the two largest points are the Toyota Corolla and the Fiat 128. For the leverage values, the two largest points are the Maserati Bora and the Lincoln Continental. For Cook’s Distance, the two largest points are Chrysler Imperial and the Toyota Corolla. So this gives five unique data points (because the Toyota appears <em>twice</em>). The labelling in the plot can then be thought of as the two largest values horizontally, the two largest vertically, and the two largest in terms of their bubble size. Of note is that this will happen irrespective of whether any of the data points are above any threshold of concern on any measure. For instance, none of these data have <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span>, despite the function still labelling the top two values.</p>
+<p>How these points are chosen requires a little explanation. The labels are based on the top two points for each of the influence measures. For the studentised residuals, the two largest points are <code class="docutils literal notranslate"><span class="pre">Toyota</span> <span class="pre">Corolla</span></code> and <code class="docutils literal notranslate"><span class="pre">Fiat</span> <span class="pre">128</span></code>. For the leverage values, the two largest points are <code class="docutils literal notranslate"><span class="pre">Maserati</span> <span class="pre">Bora</span></code> and <code class="docutils literal notranslate"><span class="pre">Lincoln</span> <span class="pre">Continental</span></code>. For Cook’s Distance, the two largest points are <code class="docutils literal notranslate"><span class="pre">Chrysler</span> <span class="pre">Imperial</span></code> and <code class="docutils literal notranslate"><span class="pre">Toyota</span> <span class="pre">Corolla</span></code>. So this gives five unique data points (because <code class="docutils literal notranslate"><span class="pre">Toyota</span> <span class="pre">Corolla</span></code> appears <em>twice</em>). The labelling in the plot can then be thought of as the two largest values horizontally, the two largest vertically, and the two largest in terms of their bubble size. Of note is that this will happen irrespective of whether any of the data points are above any threshold of concern on any measure. For instance, none of these data have <span class="math notranslate nohighlight">\(D_{i} &gt; 0.5\)</span>, despite the function still labelling the top two values.</p>
 </section>
-<section id="added-variable-plots">
-<h4>Added-variable Plots<a class="headerlink" href="#added-variable-plots" title="Link to this heading">#</a></h4>
+<section id="effects-plots">
+<h3>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h3>
+<p>In the accompanying lesson, we discussed the use of effects plots as a useful alternative to added variable plots. Although the mechanics of effects was plots explained, it can be helpful to see how we could calculate these manually. Remember, rather than <em>removing</em> the influence of other variables, effects plots work by <em>fixing</em> the other variables to a constant value so that only the variable of interest changes. We can illustrate this using the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function in <code class="docutils literal notranslate"><span class="pre">R</span></code>. To begin with, we create a new dataset containing our predictors of interest. Here our focus is on the <code class="docutils literal notranslate"><span class="pre">wt</span></code> variable, so we keep this variable the raw as the raw data and fix <code class="docutils literal notranslate"><span class="pre">hp</span></code> and <code class="docutils literal notranslate"><span class="pre">cyl</span></code> to their <em>mean</em> value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">avPlots</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">)</span>
+<span class="n">wt.data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;wt&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w">             </span><span class="c1"># raw wt</span>
+<span class="w">                      </span><span class="s">&quot;hp&quot;</span><span class="w"> </span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="p">),</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="c1"># mean of hp</span>
+<span class="w">                      </span><span class="s">&quot;cyl&quot;</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">cyl</span><span class="p">),</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c1"># mean of cyl</span>
+<span class="w">                      </span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">wt.data</span><span class="p">))</span><span class="w"> </span><span class="c1"># print the first 6 observations</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png"><img alt="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" src="_images/c934a67a7a3c62a0161eb1ed8efc152661d74b342e54351fcd604d35b76d6751.png" style="width: 420px; height: 420px;" /></a>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     wt       hp    cyl
+1 2.620 146.6875 6.1875
+2 2.875 146.6875 6.1875
+3 2.320 146.6875 6.1875
+4 3.215 146.6875 6.1875
+5 3.440 146.6875 6.1875
+6 3.460 146.6875 6.1875
+</pre></div>
 </div>
 </div>
-</section>
-<section id="effects-plots">
-<h4>Effects Plots<a class="headerlink" href="#effects-plots" title="Link to this heading">#</a></h4>
-<p>As an alternative to added-variable plots, we can instead create <em>effects</em> plots. Here, rather than removing the influence of other effects in the model, we simply fix them at some constant value. For instance, in plotting the effects of <span class="math notranslate nohighlight">\(x_{i1}\)</span> in the following model</p>
-<div class="math notranslate nohighlight">
-\[
-y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
-\]</div>
-<p>we can calculate predicted values by setting <span class="math notranslate nohighlight">\(x_{i2}\)</span> and <span class="math notranslate nohighlight">\(x_{i3}\)</span> to their means</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{y}^{(x_1)}_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}\bar{x}_{2} + \beta_{3}\bar{x}_{3}.
-\]</div>
-<p>In this way, we do not remove the other variables, we just keep them fixed so that only the variable of interest changes. The advantage of doing this is that we can examine the effect without the need to residualise the data, which can provide a more inuitive display of the model. For instance, we can make these types of plots using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package in <code class="docutils literal notranslate"><span class="pre">R</span></code>. For instance:</p>
+</div>
+<p>We can now pass this new data frame to the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function, which will use the parameter estimates from the model and apply the regression equation to each row of values in the new data set. This will create a set of <em>predictions</em> from the model. Because the only element that varies is <code class="docutils literal notranslate"><span class="pre">wt</span></code>, these predictions will correspond to the regression slope for <code class="docutils literal notranslate"><span class="pre">wt</span></code>, holding everything else constant. We can see that when we plot the values returned by <code class="docutils literal notranslate"><span class="pre">predict()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.effect</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">object</span><span class="o">=</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="o">=</span><span class="n">wt.data</span><span class="p">)</span><span class="w"> </span><span class="c1"># b0 + b1*wt + b2*hp + b3*cyl</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">wt.effect</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Weight&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MPG&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Weight Effect Plot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png"><img alt="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png" src="_images/b47a61d3ab23b6aa16f129fbb0488c9f49c7ad45e5adceb6c140263ddd7e1ce3.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Can you get the same values for <code>wt.effect</code> without using <code>predict</code>? <b>HINT</b> If you first extract the estimated regression parameters to a variable called <code>beta</code>, you can do this in a single line of code.
+</div><p>As we can see, this is the same as the effect plot for <code class="docutils literal notranslate"><span class="pre">wt</span></code>. Here we switch the confidence bands off to make the comparison clearer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">confidence.level</span><span class="o">=</span><span class="m">0</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -526,57 +577,707 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \beta_{2}x_{i2} + \beta_{3}x_{i3} + e_{i}
 See ?effectsTheme for details.
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png"><img alt="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" src="_images/ac2c727b249e182726ad320ee6f5dc9e1cccdfb710220e974c0af1806764e3d7.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png"><img alt="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png" src="_images/2553be6429429b4156ae69c98b140277ffeb2b86ad23a0b710fcdcfac77b3808.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Notice that this does not seem too dissimilar from the added-variable plots, though the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis scales remain in the original units of the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package also draws a confidence band around the regression slope. This is calculated for each value on the <span class="math notranslate nohighlight">\(x\)</span>-axis by evaluating … Importantly, this highlights the fact that certainty around the value of the regression slope depends upon how much data we have for different values of the predictor. This means that the band is <em>narrower</em> in places where there is both a greater concentration of data and where points are <em>closer</em> to the model prediction.</p>
-<p>These plots can also be advanced further by taking the effects predictions and adding back in the original residuals from the model. This allows us to see how close the model fit is to the data. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package then takes this further and draws a smooth curve through the pattern of residuals. This allows us to see whether there are any non-linear patterns that are not being captured by the model</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> What happens if you use a constant value other than the mean? How does the plot change for a fixed value of 0 or some other value of <code>hp</code> or <code>cyl</code>? How does this change the interpretation?
+</div><p>We can also manually create the plot that includes the residuals by using the following</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="c1"># suppress warnings from LOESS</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.effect.plus.resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wt.effect</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w">  </span><span class="n">wt.effect.plus.resid</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">wt.effect</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png"><img alt="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" src="_images/b5da50c1d7016b27d897b30f6794e1d071122a033b9aa76d8cee9128e9c80b9b.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png"><img alt="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png" src="_images/3ce17dc270d5a327cbe77dd2ca15a5a52bb34d3bec9730d300d5936dd38ee0df.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Here we can start to see why this is useful, as there is some evidence of possible non-linearity in these relationships, particularly with <code class="docutils literal notranslate"><span class="pre">wt</span></code>. In addition, notice that the effects plot has retained the more categorical nature of <code class="docutils literal notranslate"><span class="pre">cyl</span></code>, which was removed when this variable was adjusted for the added-variable plots. If you ever want to turn the smoothing curve <em>off</em>, you can use <code class="docutils literal notranslate"><span class="pre">plot(allEffects(mod,residuals=TRUE),</span> <span class="pre">partial.residuals=list(smooth=FALSE))</span></code>.</p>
+<p>which also agrees with what we get from the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, which we can see below. Again, we remove the confidence bands and the smoothed line through the points to make the comparison clearer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="c1"># turning warnings back on to be safe</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">confidence.level</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">residuals</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png"><img alt="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png" src="_images/f494abbd1aad340e4650c13e584c4702780346f6249e11506b8853f765bf58ee.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="polynomial-regression">
+<h2>Polynomial Regression<a class="headerlink" href="#polynomial-regression" title="Link to this heading">#</a></h2>
+<p>In the accompanying lesson, we introduced polynomial regression as a solution when a straight-line did not appear to fit the data well. This is one of the most powerful options available to you to allow much more complex relationships between variables to be captured within a regression framework. In the lesson, we made use of the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function, but it is worth spending a little more time understanding <em>why</em> this was used.</p>
+<section id="including-different-powers-directly">
+<h3>Including Different Powers Directly<a class="headerlink" href="#including-different-powers-directly" title="Link to this heading">#</a></h3>
+<p>To illustrate why we use the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function, we will first start with a basic polynomial model of <code class="docutils literal notranslate"><span class="pre">wt</span></code>. For the sake of argument, we will say that through our diagnostic investigations we have decided that a polynomial of degree 2 would be a good idea (also known as a <em>quadratic</em> polynomial). The theoretical model for this would be</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} = \beta_{0} + \beta_{1}x_{i} + \beta_{2}x^{2}_{i} + \epsilon_{i}.
+\]</div>
+<p>So, it looks like we can just enter <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt^2</span></code> into the model formula and be done. However, there are two issues with this. The first is a purely implementation <code class="docutils literal notranslate"><span class="pre">R</span></code>-specific issue, and the second is much more general.</p>
+<p>In terms of the first issue, to include transformations directly in an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula, we need to use the <code class="docutils literal notranslate"><span class="pre">I()</span></code> function, which tells <code class="docutils literal notranslate"><span class="pre">R</span></code> to treat whatever is inside the brackets literally. This is needed because many common symbols have special meanings inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula. So this function can be taken to mean <em>Inhibit</em> the formula interpretation. For example, <code class="docutils literal notranslate"><span class="pre">*</span></code> usually means <em>multiply</em>, but inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula it means something else (as we will see later in the ANOVA lesson). If we want <code class="docutils literal notranslate"><span class="pre">*</span></code> to still mean <em>multiply</em> within a formula, we have to use <code class="docutils literal notranslate"><span class="pre">I()</span></code>. This can be thought of as <em>inhibit interpreting this bit as a formula</em>. Similarly, if we want to raise a variable to a certain power, we would normally use</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [1]  6.864400  8.265625  5.382400 10.336225 11.833600 11.971600 12.744900
+ [8] 10.176100  9.922500 11.833600 11.833600 16.564900 13.912900 14.288400
+[15] 27.562500 29.419776 28.569025  4.840000  2.608225  3.367225  6.076225
+[22] 12.390400 11.799225 14.745600 14.784025  3.744225  4.579600  2.289169
+[29] 10.048900  7.672900 12.744900  7.728400
 </pre></div>
 </div>
 </div>
 </div>
-<p>Effects plots will become increasingly relevant when we discuss visualising results from ANOVA and ANCOVA models, particularly when those models contain more complex interaction terms. These types of plots can also be defined for more complex linear models, such as generalised linear models and mixed-effects models. These plots and this package will therefore become an invaluable tool for understanding the effects from our models, as we progress on this course.</p>
+<p>However, the <code class="docutils literal notranslate"><span class="pre">^</span></code> symbol means something else inside an <code class="docutils literal notranslate"><span class="pre">R</span></code> formula. If we try it, notice it does not do what we expect</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + wt^2, data = mtcars)
+
+Coefficients:
+(Intercept)           wt  
+     37.285       -5.344  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Instead, we need to wrap this inside <code class="docutils literal notranslate"><span class="pre">I()</span></code> to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> that we mean <em>treat this symbol as its usual meaning, not the special formula meaning</em>. For example</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + I(wt^2), data = mtcars)
+
+Coefficients:
+(Intercept)           wt      I(wt^2)  
+     49.931      -13.380        1.171  
+</pre></div>
+</div>
+</div>
+</div>
+<p>This solves our first problem. In terms of the second problem, let us have a look at the VIF values</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">vif.values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">30</span><span class="p">))</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png"><img alt="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png" src="_images/9ab62ab7367c975fb910f157b61c610a50c3d7c0695c099a55b1d037c7eca6c5.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>So now we can see the other issue more clearly. Including both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">wt^2</span></code> causes a massive multicollinearity problem.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Before reading on, can you think what might be causing this result? Could you use some of the plots from earlier to investigate this further?
+</div></section>
+<section id="orthogonal-polynomials">
+<h3>Orthogonal Polynomials<a class="headerlink" href="#orthogonal-polynomials" title="Link to this heading">#</a></h3>
+<p>Hopefully from the above it is clear that the problem is that when you raise a variable to any power it will remain <em>strongly correlated</em> with the original variable. This will then causes multicollinearity issues. The solution is that we need to use <em>orthogonal polynomials</em>, which is what the <code class="docutils literal notranslate"><span class="pre">poly()</span></code> function creates for us. In this context, <em>orthogonal</em> is taken to mean <em>uncorrelated</em>. As an example, we can rerun the model above using <code class="docutils literal notranslate"><span class="pre">poly()</span></code> and then check the VIF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">poly.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ poly(wt, degree = 2), data = mtcars)
+
+Coefficients:
+          (Intercept)  poly(wt, degree = 2)1  poly(wt, degree = 2)2  
+               20.091                -29.116                  8.636  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unfortunately, the <code class="docutils literal notranslate"><span class="pre">vif()</span></code> function from <code class="docutils literal notranslate"><span class="pre">car</span></code> gets a bit confused when we have <code class="docutils literal notranslate"><span class="pre">poly()</span></code> in the model formula, so we extract the predictors and add them manually to get the VIF values. This is usually unnecessary, so it should only be needed for this demonstration</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.poly</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="n">poly.mod.alt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">vif.values</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vif</span><span class="p">(</span><span class="n">poly.mod.alt</span><span class="p">)</span>
+
+<span class="nf">barplot</span><span class="p">(</span><span class="n">vif.values</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Variance Inflation Factor (VIF)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">30</span><span class="p">))</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png"><img alt="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" src="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>As we can see, these predictors are <em>perfectly uncorrelated</em>. The VIF is 1 for each, meaning the variance is <em>not inflated at all</em> with these two predictors in the model. This is the essence of two variable being <em>orthogonal</em>. We can also see this by calculating their correlation as well</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cor</span><span class="p">(</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">5.51418448662549e-19</div></div>
+</div>
+<p>which is basically <em>exactly 0</em>, as far as the computer is concerned.</p>
+<p>How is this done? In a way, it does not really matter, but if you are curious then the method is very similar to what we do when we create <em>added variable plots</em>. In effect, we just need to <em>remove</em> the relationship between the variable by taking the residuals of several regression models. An example is given below. For each term, we basically remove the effect of all <em>lower degree terms</em>. So the linear term has the constant effect removed, and the quadratic term has the constant and linear effects removed. The output from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is the identical in terms of fit, <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values when compared to the model using <code class="docutils literal notranslate"><span class="pre">poly()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="w">   </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">    </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span><span class="w"> </span><span class="c1"># wt   with constant effect removed</span>
+<span class="n">wt.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.1</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span><span class="w"> </span><span class="c1"># wt^2 with constant + linear effect removed</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt.2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt.1 + wt.2, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.483 -1.998 -0.773  1.462  6.238 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  20.0906     0.4686  42.877  &lt; 2e-16 ***
+wt.1         -5.3445     0.4865 -10.985 7.52e-12 ***
+wt.2          1.1711     0.3594   3.258  0.00286 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.651 on 29 degrees of freedom
+Multiple R-squared:  0.8191,	Adjusted R-squared:  0.8066 
+F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>This process is known as <em>orthogonalisation</em>. By removing the effects of one variable from another, we are manually assigning which of the variables gets to own the overlap in explanatory variance. For instance, by removing the effect of <code class="docutils literal notranslate"><span class="pre">wt</span></code> from <code class="docutils literal notranslate"><span class="pre">wt^2</span></code>, we are taking the overlap between these terms and giving it to <code class="docutils literal notranslate"><span class="pre">wt</span></code>. If you think of a Venn diagrams between these variables, it is like giving <code class="docutils literal notranslate"><span class="pre">wt</span></code> both its unique part of the circle <em>and</em> the overlap with <code class="docutils literal notranslate"><span class="pre">wt^2</span></code>. So <code class="docutils literal notranslate"><span class="pre">wt</span></code> now explains the whole circle and <code class="docutils literal notranslate"><span class="pre">wt^2</span></code> represents the remaining crescent moon of unique variance.</p>
+<div class="alert alert-block alert-warning"> 
+<b>IMPORTANT</b> Orthogonalisation can be performed on any variables to remove correlation between them. This is justifiable for something like polynomials, because the terms are taken as a <i>whole</i> to compute a single wiggly line. As such, the total amount of variance explained by all the polynomial terms does not change, just how it is assigned. Doing this with other variables that are to be taken separately is almost always <i>unjustifiable</i> as it will directly affect their interpretation. It is a very strong transformation to simply give overlapping variance from one variable to another. Furthermore, we no longer have any easy way of interpreting what the regression results mean. No one measures an orthogonalised variable in reality, so its meaning is essentially nothing. This is especially true because different methods of orthogonalisation will produce different uncorrelated variables with different coefficients. The orthogonalisation approach is therefore arbitrary. Though the total variance explained by the model remains the same, the individual variables become meaningless. So, even though this has solved the numeric problem of multicollinearity, in doing so orthogonalisation destroys the whole point of the regression model.
+</div><p>There are a few more points to be aware of here. <code class="docutils literal notranslate"><span class="pre">poly()</span></code> uses a different scaling to the result you get from manually orthogonalising the polynomial terms, so the parameter estimates and standard errors will be different. Because of this, it is difficult to interpret these effects in any precise numeric fashion. However, the way to think of them is as the <em>unique linear effect</em> and the <em>unique quadratic effect</em>. The tests of these effects can be taken as indications of whether the <em>quadratic component</em> is needed and whether the <em>linear component</em> is needed to provide a good model fit. In addition, we tend to think of the polynomial terms as a <em>whole</em>, because they produce a <em>single</em> curved line. So it is really the total explanatory power of all the polynomial terms together that matters, not what the individual terms mean.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Can you follow the pattern above to create manual orthogonal polynomials for a <i>cubic</i> model of <code>wt</code> (i.e. a degree of 3)? Compare these to the results of using <code>poly(wt,degree=3)</code>. What does the test on the cubic component imply?
+</div><p>A final detail to recognise is that using orthogonal or raw polynomials will not affect the model fit. Remember, multicollinearity is an issue for the <em>standard errors</em> and thus only matters in terms of <em>inference</em>. The model fit is the same irrespective of which approach we use. The total amount of explanatory variance remains the same in both cases. The difference is that raw polynomials cause the regression model to try to “automatically” partition the variance, whereas orthogonal polynomials have had the variance manually partitioned. When correlation is high, there are many options for partitioning the variance, which makes the uncertainty around the estimates very high. This makes the model very unstable. In the case of polynomials, we have manually intervened and told the model how to resolve this problem by pre-partitioning the overlapping variance. We can see this equivalence of model fit illustrated below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">poly.mod.raw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">wt</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">poly.mod.ort</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">poly</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w">   </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">poly.mod.raw</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&#39;Raw Polynomials&#39;</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">poly.mod.ort</span><span class="p">),</span><span class="w">   </span><span class="n">main</span><span class="o">=</span><span class="s">&#39;Orthogonal Polynomials&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png"><img alt="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png" src="_images/6b97214af5d7d0bde9689e696471826e209ec22ea457cb8c49b40f68580bf8f2.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png"><img alt="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png" src="_images/675466e1ef6a0901b1f8ac25e81304de1f3e8069e9066a26de6072a913914220.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
-</section>
-</section>
-<section id="transformations">
-<h2>Transformations<a class="headerlink" href="#transformations" title="Link to this heading">#</a></h2>
 </section>
 <section id="alternative-models-when-assumptions-are-violated">
 <h2>Alternative Models When Assumptions are Violated<a class="headerlink" href="#alternative-models-when-assumptions-are-violated" title="Link to this heading">#</a></h2>
+<p>As a final part in this workshop, we will consider a different solution to assumption violations. Rather than trying to transform our way out of a hole, we instead consider a different <em>model</em> that is able to more flexibly accommodate a particular assumption violation. Note that we are only giving an idea of each method below. Each one could encompass its own lesson and so there is much more to learn about each. The aim here is just to make you <em>aware</em> that these method exist. It is then up to you if you want to dig into them to understand the methods further.</p>
 <section id="robust-regression-for-outliers">
 <h3>Robust Regression for Outliers<a class="headerlink" href="#robust-regression-for-outliers" title="Link to this heading">#</a></h3>
+<p>Our first option is for dealing with <em>outliers</em>. Although we have several methods for detecting outliers, our approaches for dealing with them are quite limited. In general, we can either remove them or leave them in place. Removing them is an extreme measure that is only really justifiable when the data is unambiguously <em>wrong</em>. In place cases, we cannot make sure a strong claim. However, we know that leaving them in place can bias the regression model. So what can we do?</p>
+<p>In cases where we are particularly worried about this, we can use a method known as <em>robust regression</em>. This is something of a catch-all term for a variety of different approach, each with the aim of reducing the influence of outliers on the regression results. However, each method tends to be similar in that the problem is tackled by defining a set of <em>weights</em> that work to reduce the influence of individual data points. A weight is defined for each data point where a weight of 1 will simply include the original data point and a weight &lt; 1 will reduce the magnitude of the data point. These weights are assigned using rules about the magnitudes of the residuals from the model fit, so there is an iterative approach here where the model is fit, weights are computed, the model is refit with the weights, the weights are then recomputed using the next set of residuals and so on. This will be continued until some stopping criteria is reached (usually related to the weights not changing meaningfully after each new iteration). The idea is imply to <em>down-weight</em> the influence of outliers on the model fit.</p>
+<p>As an example, we will use the <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">robustbase</span></code> package. Much more can be learned about this method through its documentation, but we just illustrate the basic method here. We will illustrate the difference from the standard <code class="docutils literal notranslate"><span class="pre">lm()</span></code> results below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">robustbase</span><span class="p">)</span>
+
+<span class="n">robust.mod</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lmrob</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># robust regression</span>
+<span class="n">unrobust.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w">    </span><span class="c1"># OLS regression</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="n">robust.mod</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">unrobust.mod</span><span class="p">)</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lmrob(formula = mpg ~ wt + hp + cyl, data = mtcars)
+ \--&gt; method = &quot;MM&quot;
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4606 -1.3597 -0.2818  1.2963  6.4483 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 37.846504   2.330256  16.241  8.8e-16 ***
+wt          -3.114388   0.709847  -4.387 0.000148 ***
+hp          -0.016532   0.008431  -1.961 0.059913 .  
+cyl         -0.901334   0.473229  -1.905 0.067146 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Robust residual standard error: 2.211 
+Multiple R-squared:  0.8425,	Adjusted R-squared:  0.8257 
+Convergence in 12 IRWLS iterations
+
+Robustness weights: 
+ 4 weights are ~= 1. The remaining 28 ones are summarized as
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.3751  0.8905  0.9546  0.8927  0.9778  0.9955 
+Algorithmic parameters: 
+       tuning.chi                bb        tuning.psi        refine.tol 
+        1.548e+00         5.000e-01         4.685e+00         1.000e-07 
+          rel.tol         scale.tol         solve.tol          zero.tol 
+        1.000e-07         1.000e-10         1.000e-07         1.000e-10 
+      eps.outlier             eps.x warn.limit.reject warn.limit.meanrw 
+        3.125e-03         6.094e-10         5.000e-01         5.000e-01 
+     nResample         max.it       best.r.s       k.fast.s          k.max 
+           500             50              2              1            200 
+   maxit.scale      trace.lev            mts     compute.rd fast.s.large.n 
+           200              0           1000              0           2000 
+                  psi           subsampling                   cov 
+           &quot;bisquare&quot;         &quot;nonsingular&quot;         &quot;.vcov.avar1&quot; 
+compute.outlier.stats 
+                 &quot;SM&quot; 
+seed : int(0) 
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + hp + cyl, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9290 -1.5598 -0.5311  1.1850  5.8986 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 38.75179    1.78686  21.687  &lt; 2e-16 ***
+wt          -3.16697    0.74058  -4.276 0.000199 ***
+hp          -0.01804    0.01188  -1.519 0.140015    
+cyl         -0.94162    0.55092  -1.709 0.098480 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.512 on 28 degrees of freedom
+Multiple R-squared:  0.8431,	Adjusted R-squared:  0.8263 
+F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we can see that both <code class="docutils literal notranslate"><span class="pre">hp</span></code> and <code class="docutils literal notranslate"><span class="pre">cyl</span></code> have changed most dramatically. Focusing on <code class="docutils literal notranslate"><span class="pre">hp</span></code>, the standard error has reduced from <code class="docutils literal notranslate"><span class="pre">0.012</span></code> to <code class="docutils literal notranslate"><span class="pre">0.008</span></code> thanks to down-weighting outliers. We can see some information about the weights in the output from <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code>, where only 4 of the original data points remain un-weighted and the <em>smallest</em> weight is given by <code class="docutils literal notranslate"><span class="pre">0.3751</span></code>, shrinking some data points by around 37% of their original value. These weights can be viewed using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">robust.mod</span><span class="o">$</span><span class="n">rweights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+          0.9606454           0.9917463           0.8707532           0.9883181 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+          0.9486403           0.9387561           0.9747702           0.9768062 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+          0.9999322           0.9955010           0.9344154           0.9629984 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+          0.9707809           0.9912045           0.9954155           0.9991701 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+          0.6563780           0.4264125           0.9233249           0.3750911 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+          0.7892214           0.9472616           0.9072091           0.9674825 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+          0.7924747           0.9994207           0.9999035           0.8650396 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+          0.9933286           0.9725135           0.9806699           0.8970995 
+</pre></div>
+</div>
+</div>
+</div>
+<p>So we can see that most data points are close to their original value, but notably the value for <code class="docutils literal notranslate"><span class="pre">Toyota</span> <span class="pre">Corolla</span></code> shows it has been dramatically down-weighted. So too have <code class="docutils literal notranslate"><span class="pre">Fiat</span> <span class="pre">128</span></code> and <code class="docutils literal notranslate"><span class="pre">Chrysler</span> <span class="pre">Imperial</span></code>.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Have a look back at some of the plots we made earlier. Does the selection of these points as targets for the most down-weighting track with what we already know? Can you order these weights from smallest to biggest so we can more easily identify which points have been shrunk the most?
+</div><p>Much like <code class="docutils literal notranslate"><span class="pre">lm()</span></code> we can create diagnostic plots for the robust regression, though these are different and are explained in more detail in the documentation (look up the method <code class="docutils literal notranslate"><span class="pre">plot.lmrob</span></code>). Because the <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> models exports the same standard methods as <code class="docutils literal notranslate"><span class="pre">lm()</span></code>, we can also create effects plots without any problems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="n">robust.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c2e23befc51b98e26bb696c4038a0b8d95ca5cd3ecd5ecf87bdc8e98251a40ca.png"><img alt="_images/c2e23befc51b98e26bb696c4038a0b8d95ca5cd3ecd5ecf87bdc8e98251a40ca.png" src="_images/c2e23befc51b98e26bb696c4038a0b8d95ca5cd3ecd5ecf87bdc8e98251a40ca.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> The differences in slopes are very subtle in these plots, but have a look at the <i>confidence bands</i> around the slope for <code>hp</code> in the effects plots from the robust model compared to the original OLS model. What is the main difference you can see?
+</div><p>The only main element to be aware of is that the inferential tests on the model parameters are <em>approximations</em> within the context of a robust model. So we cannot treat them with quite the authority we do from <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. Realistically, these should be considered <em>asymptotically correct</em>, meaning they will become more reliable the larger the sample size. Because of this, some implementations of robust regression will <em>refuse</em> to give you a <span class="math notranslate nohighlight">\(p\)</span>-value (e.g. <code class="docutils literal notranslate"><span class="pre">rlm()</span></code> from the <code class="docutils literal notranslate"><span class="pre">MASS</span></code> package). <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> does, but this is a bit controversial, so treat these with <em>extreme caution</em>.</p>
 </section>
 <section id="generalised-least-squares-for-heteroscedasticity">
 <h3>Generalised Least-squares for Heteroscedasticity<a class="headerlink" href="#generalised-least-squares-for-heteroscedasticity" title="Link to this heading">#</a></h3>
+<p>Our second option is for dealing with non-constant variance (heteroscedasticity). For some regression problems, we may find that the variance is actually some function of the predictors (perhaps <em>increasing</em> or <em>decreasing</em> with values of <span class="math notranslate nohighlight">\(x\)</span>). In other problems we will see later, the use of a <em>categorical</em> predictor variable can show problems of heteroscedasticity if the groups have unequal variances. In all these cases, there is little we can do with a traditional regression model unless we can find some variance-stabilising transformation that renders the data homoscedastic. Otherwise, we have to accept that there may be some element of bias in our estimation and inference.</p>
+<p>For cases where this is especially problematic, we can turn to the method of <em>generalised least squares</em> (GLS). This approach is, as the name suggests, a generalisation of the OLS regression model, but one where we can specify a more complex variance function. Recall from multiple regression that the variance function is simple <span class="math notranslate nohighlight">\(\sigma^{2}_{i} = \sigma^{2}\)</span>. In other words, a <em>constant variance</em> for every observation. However, in cases of homoscedasticity, the variance changes depending upon the value of one or more of the predictor variables. In these situations, we can use GLS to estimate a model that takes this into account. In order to do this, and unlike the name implies, the method of Restricted Maximum Likelihood (REML) is used. Within <code class="docutils literal notranslate"><span class="pre">R</span></code>, we can use the <code class="docutils literal notranslate"><span class="pre">gls()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">nlme</span></code> package to fit these types of models.</p>
+<section id="gls-for-simple-regression">
+<h4>GLS for Simple Regression<a class="headerlink" href="#gls-for-simple-regression" title="Link to this heading">#</a></h4>
+<p>For this first example, we will simulate some data as there are no major heteroscedasticity issues in our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> model. For simplicity, we will look at simple regression and then discuss multiple regression below.</p>
+<p>In terms of simulating heteroscedasticity, we will use a <em>power function</em> of the following form</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma_{i} = \sigma|x|^{\delta}.
+\]</div>
+<p>In words, the standard deviation of each observation comes from some base value of variation (<span class="math notranslate nohighlight">\(\sigma\)</span>) multiplied by the absolute value of the predictor (<span class="math notranslate nohighlight">\(|x|\)</span>) raised to some power <span class="math notranslate nohighlight">\(\delta\)</span>. The reason this model is used is because it is the simplest mathematical way of specifying the idea that the <em>spread</em> expands with increasing or decreasing values of <span class="math notranslate nohighlight">\(x\)</span>. If we set <span class="math notranslate nohighlight">\(\delta = 0\)</span>, then this just becomes a constant variance term. If <span class="math notranslate nohighlight">\(\delta &lt; 0\)</span> then the spread of data <em>decreases</em> as <span class="math notranslate nohighlight">\(x\)</span> increases, whereas if <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span> then the spread of data <em>increases</em> as <span class="math notranslate nohighlight">\(x\)</span> increases. The mechanism that controls <em>how</em> this spread changes given the units of <span class="math notranslate nohighlight">\(x\)</span> is the magnitude of <span class="math notranslate nohighlight">\(\delta\)</span>. For any given problem, <span class="math notranslate nohighlight">\(\delta\)</span> can be tuned so that the characteristic funnel shape in the spread of the data becomes whatever we want. The absolute value is simply here to make sure variance is always <em>positive</em> and no imaginary numbers are created (e.g. <code class="docutils literal notranslate"><span class="pre">(-7)^(-1.2)</span></code>). In the simulation below, we arbitrarily set <span class="math notranslate nohighlight">\(\delta = 0.8\)</span>, but it does not really matter what this means. The main point is that this creates a <em>funnel</em> shape in the diagnostic plots that typifies some sort of unmodelled structure in the variance function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+
+<span class="n">n</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">200</span><span class="w">           </span><span class="c1"># 200 simulated values</span>
+<span class="n">x</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="c1"># generate some random predictor values </span>
+<span class="n">beta.0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w">             </span><span class="c1"># population intercept</span>
+<span class="n">beta.1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">             </span><span class="c1"># population slope</span>
+<span class="n">sigma</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.5</span><span class="w">           </span><span class="c1"># population baseline variance</span>
+<span class="n">delta</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.8</span><span class="w">           </span><span class="c1"># population exponent</span>
+
+<span class="c1"># simulate increasing variance with x</span>
+<span class="n">sd.x</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="n">delta</span><span class="w"> </span>
+<span class="n">y</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sd.x</span><span class="p">)</span>
+<span class="n">sim.dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see this if we fit an OLS model to the simulated data and create the diagnostic plots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">uneq.var.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">sim.dat</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">uneq.var.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/7101bf3aa5697f291cb7dd22358ad68825551e1ae32e4429358d84a1a4f3be0e.png"><img alt="_images/7101bf3aa5697f291cb7dd22358ad68825551e1ae32e4429358d84a1a4f3be0e.png" src="_images/7101bf3aa5697f291cb7dd22358ad68825551e1ae32e4429358d84a1a4f3be0e.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Have a go at changing <code>delta</code> in the simulation code. Try values in the range -2 to +2. Can you get a sense of how flexible this simple framework is for understanding lots of situations where the magnitude of the variance relates to the value of the predictor?
+</div><p>In order to fit a model that captures this variance structure, we use the <code class="docutils literal notranslate"><span class="pre">gls()</span></code> function. This has a very similar form to <code class="docutils literal notranslate"><span class="pre">lm()</span></code>, as it takes a formula for the model and a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument. The main difference comes in the specification of a <em>variance function</em>, using the <code class="docutils literal notranslate"><span class="pre">weights</span></code> argument. This takes one of several pre-structured variance functions that come with <code class="docutils literal notranslate"><span class="pre">nlme</span></code> to capture different kinds of heteroscedastic patterns in the data. You can read about all of these by typing <code class="docutils literal notranslate"><span class="pre">?varClasses</span></code> at the prompt.</p>
+<p>For this example, we will use the <code class="docutils literal notranslate"><span class="pre">varPower()</span></code> function, which implements a power function of the variance. To use this, we have to provide the <code class="docutils literal notranslate"><span class="pre">form</span></code> argument, which is simply a one-sided formula that specifies what variable (or variables) we want the variance function to use. This formula can get more complex and a lot more information about this sort of structure will appear when we cover <em>mixed-effects</em> models next semester. For now, we can just see the effect of including <code class="docutils literal notranslate"><span class="pre">varPower(form=~</span> <span class="pre">x)</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">nlme</span><span class="p">)</span>
+<span class="n">gls.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">sim.dat</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varPower</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalized least squares fit by REML
+  Model: y ~ x 
+  Data: sim.dat 
+       AIC      BIC    logLik
+  821.3133 834.4663 -406.6566
+
+Variance function:
+ Structure: Power of variance covariate
+ Formula: ~x 
+ Parameter estimates:
+    power 
+0.7452241 
+
+Coefficients:
+                Value  Std.Error  t-value p-value
+(Intercept) 0.9564833 0.17784040  5.37832       0
+x           1.9754567 0.04695575 42.07060       0
+
+ Correlation: 
+  (Intr)
+x -0.816
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max 
+-2.9736550 -0.6664040 -0.0167884  0.7316562  2.4558752 
+
+Residual standard error: 0.5804808 
+Degrees of freedom: 200 total; 198 residual
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice from the output that that <span class="math notranslate nohighlight">\(\hat{\delta} = 0.7452\)</span>, which is not far off the true value we used of <span class="math notranslate nohighlight">\(\delta = 0.8\)</span>. So we can see an output very similar to <code class="docutils literal notranslate"><span class="pre">lm()</span></code> here, with some additional information about the variance function. To see how effective this has been, we can plot the GLS model. This gives a plot of the fitted values against the <em>standardised residuals</em>. This is important, because the standardised residuals have had the estimated variance <em>removed</em> and thus show the effect of the variance function in a way that the raw residuals do not. We can compare this with the same type of plot from the original model to see how the funnel shape has been effectively removed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">uneq.var.mod</span><span class="p">),</span><span class="w"> </span>
+<span class="w">     </span><span class="nf">rstandard</span><span class="p">(</span><span class="n">uneq.var.mod</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Fitted values&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Standardized residuals&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;OLS Model&quot;</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">grid</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;GLS Model&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c5859106a179eb34c4eb6c7c457136437a2a58be3711d52df55e5b3eebd9f665.png"><img alt="_images/c5859106a179eb34c4eb6c7c457136437a2a58be3711d52df55e5b3eebd9f665.png" src="_images/c5859106a179eb34c4eb6c7c457136437a2a58be3711d52df55e5b3eebd9f665.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/85041c0a26ecf86a8422ea51baaca67702de93516bf38dbeb67e9d0706612d2f.png"><img alt="_images/85041c0a26ecf86a8422ea51baaca67702de93516bf38dbeb67e9d0706612d2f.png" src="_images/85041c0a26ecf86a8422ea51baaca67702de93516bf38dbeb67e9d0706612d2f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
-<section id="ridge-regression-for-multicollinearity">
-<h3>Ridge-regression for Multicollinearity<a class="headerlink" href="#ridge-regression-for-multicollinearity" title="Link to this heading">#</a></h3>
+<section id="gls-for-multiple-regression">
+<h4>GLS for Multiple Regression<a class="headerlink" href="#gls-for-multiple-regression" title="Link to this heading">#</a></h4>
+<p>When we have <em>multiple</em> predictor variables, things get more tricky. Because the funnel shape in the diagnostic plots relates to the <em>fitted values</em>, this does not immediately indicate which of the predictors is contributing to the heteroscedasticity. When this is the case, we would ideally create some new scale-location plots with each predictor on the <span class="math notranslate nohighlight">\(x\)</span>-axis. As an example, let us look at <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> again (though there is no major heteroscedasticity here). Let us start with the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/2c3784b5e3870b19f6a71c2a09d661248e50cc63188e92869f8b715eec7bf7df.png"><img alt="_images/2c3784b5e3870b19f6a71c2a09d661248e50cc63188e92869f8b715eec7bf7df.png" src="_images/2c3784b5e3870b19f6a71c2a09d661248e50cc63188e92869f8b715eec7bf7df.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>If we were concerned here, we would make some scale-location plots per-predictor, like so</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="nf">rstandard</span><span class="p">(</span><span class="n">mod</span><span class="p">)))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="n">t</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">wt</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="p">,</span><span class="n">t</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">hp</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/fa032ca0914769174f3e31b8f940ff1f7ade61d4d14a9fa41bb7e5e68a2ca527.png"><img alt="_images/fa032ca0914769174f3e31b8f940ff1f7ade61d4d14a9fa41bb7e5e68a2ca527.png" src="_images/fa032ca0914769174f3e31b8f940ff1f7ade61d4d14a9fa41bb7e5e68a2ca527.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/8f28949a4b7b46a6d7b3201f6eef19c540db955bd39132abe93942622160c5c7.png"><img alt="_images/8f28949a4b7b46a6d7b3201f6eef19c540db955bd39132abe93942622160c5c7.png" src="_images/8f28949a4b7b46a6d7b3201f6eef19c540db955bd39132abe93942622160c5c7.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>If we see structure here, then this can inform us which predictor needs a variance model. If we do not see structure here, then it is possible that it is the variables <em>in combination</em> that relate to the heteroscedasticity. In which case, we can actually use the fitted values in the variance function.</p>
+<p>As an example, if we saw a pattern in <em>both</em> plots above, we can use the <code class="docutils literal notranslate"><span class="pre">varComb()</span></code> function to combine two separate variance functions, one for each predictor. This would give</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gls.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="o">=</span><span class="nf">varComb</span><span class="p">(</span><span class="nf">varPower</span><span class="p">(</span><span class="n">form</span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                                                          </span><span class="nf">varPower</span><span class="p">(</span><span class="n">form</span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="p">)))</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalized least squares fit by REML
+  Model: mpg ~ wt + hp 
+  Data: mtcars 
+       AIC      BIC   logLik
+  165.9638 174.1676 -76.9819
+
+Combination of variance functions: 
+ Structure: Power of variance covariate
+ Formula: ~wt 
+ Parameter estimates:
+     power 
+-0.1247311 
+ Structure: Power of variance covariate
+ Formula: ~hp 
+ Parameter estimates:
+     power 
+-0.3804218 
+
+Coefficients:
+               Value Std.Error   t-value p-value
+(Intercept) 35.13419 1.6284501 21.575233   0e+00
+wt          -3.43901 0.5266781 -6.529627   0e+00
+hp          -0.02863 0.0071133 -4.024356   4e-04
+
+ Correlation: 
+   (Intr) wt    
+wt -0.726       
+hp -0.142 -0.542
+
+Standardized residuals:
+        Min          Q1         Med          Q3         Max 
+-1.63605902 -0.74060316 -0.09644555  0.47479612  2.40832416 
+
+Residual standard error: 18.35548 
+Degrees of freedom: 32 total; 29 residual
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/7c21d888228662ac085bd9ebf44f7374cc0ba29b3bcec38dff7d80ce9817b387.png"><img alt="_images/7c21d888228662ac085bd9ebf44f7374cc0ba29b3bcec38dff7d80ce9817b387.png" src="_images/7c21d888228662ac085bd9ebf44f7374cc0ba29b3bcec38dff7d80ce9817b387.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Note that what we would <em>not</em> do usually is <code class="docutils literal notranslate"><span class="pre">varPower(form=</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp)</span></code>. Although this will work, the model being used for the variance is <span class="math notranslate nohighlight">\(\sigma_{i} = \sigma|x_{i1} + x_{i2}|^{\delta}\)</span>. So there is only a single <span class="math notranslate nohighlight">\(\delta\)</span> term used to model the sum of the variables (without any regression parameters to convert them on to the same scale). Rarely is this very meaningful.</p>
+<p>As an alternative, if there were no structure for the individual variables, but structure in the overall scale-location plot, we can use the fitted values in the variance function like so</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gls.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="o">=</span><span class="nf">varPower</span><span class="p">(</span><span class="n">form</span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">fitted</span><span class="p">(</span><span class="n">.</span><span class="p">)))</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">gls.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalized least squares fit by REML
+  Model: mpg ~ wt + hp 
+  Data: mtcars 
+       AIC      BIC    logLik
+  165.6521 172.4885 -77.82603
+
+Variance function:
+ Structure: Power of variance covariate
+ Formula: ~fitted(.) 
+ Parameter estimates:
+    power 
+0.1592261 
+
+Coefficients:
+               Value Std.Error   t-value p-value
+(Intercept) 36.71776 1.5905062 23.085583  0.0000
+wt          -3.72780 0.6054503 -6.157069  0.0000
+hp          -0.03149 0.0087321 -3.606184  0.0012
+
+ Correlation: 
+   (Intr) wt    
+wt -0.717       
+hp -0.019 -0.648
+
+Standardized residuals:
+        Min          Q1         Med          Q3         Max 
+-1.54584140 -0.60899176 -0.08507464  0.35367263  2.23006357 
+
+Residual standard error: 1.612278 
+Degrees of freedom: 32 total; 29 residual
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/7a042766fa4f56cbc69827c0626259d87a1a2c7463f690c73757bc5811855f34.png"><img alt="_images/7a042766fa4f56cbc69827c0626259d87a1a2c7463f690c73757bc5811855f34.png" src="_images/7a042766fa4f56cbc69827c0626259d87a1a2c7463f690c73757bc5811855f34.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The result is very similar in both cases because there is no real heteroscedasticity problem here. However, it is hopefully clear how this could be used in practice when you have multiple variables.</p>
+</section>
 </section>
 <section id="non-parametric-resampling-for-non-normality">
 <h3>Non-parametric Resampling for Non-normality<a class="headerlink" href="#non-parametric-resampling-for-non-normality" title="Link to this heading">#</a></h3>
+<p>As our final method, we turn to ways of dealing with depatures from normality. Now, as argued elsewhere, normality is one of those assumptions that often matters less than people think. We have demonstrated previously how variable even true samples from a normal distribution can appear, especially in small samples. We have also made it clear that normality only matters in terms of making sure the <span class="math notranslate nohighlight">\(p\)</span>-values have the assumed null distribution. Under large samples, the central limit theorem indicates that the sampling distributions of the parameters will be normal, even when the population distribution is not. So, in reality, normality only matters when we want to perform inference <em>and</em> when the sample size is small.</p>
+<p>Nevertheless, it does not always feel very comfortable to wave this assumption to one side. This is particularly true when we have outliers that create heavier tails than we would expect from a normal distribution, or if we are using data that we know cannot <em>really</em> come from a normal distribution (such as questionnaire scores). In these cases, we can turn to <em>non-parametric</em> approaches. As the name implies, non-parametric statistics are not concerned with estimating parameters from a probability distribution. As such, they make no assumptions about the distributional form of the data.</p>
+<p>The use of non-parametric statistics with psychology is usually constrained to very old approaches such as the Kruskall-Wallace test or the Friedman ANOVA. These methods have no been a part of modern statistics for a very long time. Instead, since the advent of computers, modern statistics has made use of non-parametric <em>resampling</em> approaches to these problems. These methods involve using the sample as a proxy for the population and then repeatedly <em>resampling</em> from that sample to build the distributions needed for inference. These include methods such as the <em>bootstrap</em>, <em>jackknife</em> and the <em>permutation test</em>. If our interest is calculating a <span class="math notranslate nohighlight">\(p\)</span>-value, the permutation approach is the easiest method to use. If you want confidence intervals, the <em>bootstrap</em> is the method to choose. We will only focus on permutation tests here.</p>
+<p>In brief, the permutation approach proceeds as follows:</p>
+<ul class="simple">
+<li><p>On each iteration, the outcome variable is randomly reordered to break any relationship between the outcome and the predictor variables</p></li>
+<li><p>The model is refit on the reordered (<em>permuted</em>) data and the parameter estimates saved</p></li>
+<li><p>This is repeated thousands of times to create a realisation of the sampling distribution under the null hypothesis of <em>no relationship</em> between the outcome and the predictors</p></li>
+<li><p>Once this distribution had been built, <span class="math notranslate nohighlight">\(p\)</span>-values can be calculated from it</p></li>
+</ul>
+<p>So, in effect, we are using the data to simulate the null distribution and then calculating <span class="math notranslate nohighlight">\(p\)</span>-values from it, rather than deriving it from theory and requiring a certain population distribution for the theory to work. This allows us to use <span class="math notranslate nohighlight">\(p\)</span>-values that make <em>no assumptions</em> about the population distribution.</p>
+<p>To do this in <code class="docutils literal notranslate"><span class="pre">R</span></code>, we can make use of the <code class="docutils literal notranslate"><span class="pre">lmPerm</span></code> package, which contains the <code class="docutils literal notranslate"><span class="pre">lmp()</span></code> function. This is essentially identical to <code class="docutils literal notranslate"><span class="pre">lm()</span></code>, except that the <span class="math notranslate nohighlight">\(p\)</span>-values are calculated using permutations rather than theory. We can see an example below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">lmPerm</span><span class="p">)</span>
+<span class="n">perm.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lmp</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">perm.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Settings:  unique SS : numeric variables centered&quot;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lmp(formula = mpg ~ wt + hp + cyl, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9290 -1.5598 -0.5311  1.1850  5.8986 
+
+Coefficients:
+    Estimate Iter Pr(Prob)    
+wt  -3.16697 5000   &lt;2e-16 ***
+hp  -0.01804  562    0.151    
+cyl -0.94162  809    0.110    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.512 on 28 degrees of freedom
+Multiple R-Squared: 0.8431,	Adjusted R-squared: 0.8263 
+F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11 
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are a few of things to note here. Firstly, to make the permutations easier to calculate, all variables are centered and the intercept is removed. Secondly, no test statistics are reported because there is no assumption that what we are calculating is a random variable with a known null distribution. Similarly, no standard errors are reported because ths standard error is simulated based on the permutations rather than derived from theory.</p>
+</section>
+<section id="manual-permutations">
+<h3>Manual Permutations<a class="headerlink" href="#manual-permutations" title="Link to this heading">#</a></h3>
+<p>Just to make the permutation framework clearer, we provide code below that shows how to do this manually for the parameter associated with <code class="docutils literal notranslate"><span class="pre">hp</span></code>. We first remove the effects of the other predictors from both <code class="docutils literal notranslate"><span class="pre">mpg</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>. Then, across 5,000 permutations, we randomly reshuffle <code class="docutils literal notranslate"><span class="pre">mpg</span></code>, fit the model and save the slope estimate. At the end, we can view the simulated sampling distribution of <code class="docutils literal notranslate"><span class="pre">wt</span></code>, under the null hypothesis of no relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mpg.adj</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+<span class="n">hp.adj</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">hp</span><span class="w">  </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+
+<span class="n">hp.coef</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg.adj</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp.adj</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="c1"># original slope</span>
+
+<span class="n">n.perms</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5000</span>
+<span class="n">hp.dist</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.perms</span><span class="p">)</span><span class="w"> </span><span class="c1"># slope null distribution</span>
+<span class="n">hp.dist</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">hp.coef</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="n">n.perms</span><span class="p">){</span>
+<span class="w">    </span><span class="n">mpg.adj.p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="n">mpg.adj</span><span class="p">)</span><span class="w">         </span><span class="c1"># permute mpg</span>
+<span class="w">    </span><span class="n">mod.p</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg.adj.p</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp.adj</span><span class="p">)</span><span class="w">  </span><span class="c1"># permuted model</span>
+<span class="w">    </span><span class="n">hp.dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod.p</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">          </span><span class="c1"># save slope</span>
+<span class="p">}</span>
+
+<span class="nf">hist</span><span class="p">(</span><span class="n">hp.dist</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Simulated null sampling distribution of hp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/cc55e397a40f28ba67cc071463f9358048cce845c94b4ff22c5a3dcb323829fc.png"><img alt="_images/cc55e397a40f28ba67cc071463f9358048cce845c94b4ff22c5a3dcb323829fc.png" src="_images/cc55e397a40f28ba67cc071463f9358048cce845c94b4ff22c5a3dcb323829fc.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>As the final step, we can find out from this distribution what the probability of achieving the slope value of the un-permuted model is. This gives us our non-parameteric <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nonparam.p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">hp.dist</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">hp.coef</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">nonparam.p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.1324
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is slightly different to value produced by <code class="docutils literal notranslate"><span class="pre">lmp()</span></code>. In part this is because it will change everytime due to the randomness of the resampling. In addition, <code class="docutils literal notranslate"><span class="pre">lmp()</span></code> has a more sophisticated method for deriving the permutation distributions than our brute-force approach above. For this example, <code class="docutils literal notranslate"><span class="pre">lmp()</span></code> is able to calculate the exact number of possible permutations and only run those exhaustively, rather than just running 5000, like we did above. So, in general, we should just trust what <code class="docutils literal notranslate"><span class="pre">lmp()</span></code> is reporting, rather than trying to roll our own permutation algorithm. Nevertheless, hopefully the code above makes this approach clear.</p>
+</section>
+<section id="what-about-multicollinearity">
+<h3>What About Multicollinearity?<a class="headerlink" href="#what-about-multicollinearity" title="Link to this heading">#</a></h3>
+<p>We have now covered several methods that can be used when assumptions appear violated. One assumption we have yet to mention is multicollinearity. Although you will sometimes read that an approach called <em>ridge regression</em> can be used, we will not be recommending this. Ridge regression is a method that <em>biases</em> the parameter estimates as a means of stabilising them under multicollinearity. The aim is for a <em>stable model</em>, rather than one that is an accurate estimate of the population. This has more applications as a predictive model in <em>machine learning</em>, rather than an inferential model. As such, the bias is seen as less of a problem. However, if we are trying to say something accurate about a population, having bias is <em>not</em> a good thing. Neither is the fact that inference becomes very difficult to perform. Indeed, most ridge regression implementations will not provide any tests on the coefficients. So, it is for these reasons that ridge regression is <em>not</em> recommended. Generally, the only solution for multicollinearity is to limit the predictors included in the model. After all, if two predictors are correlated enough to cause problems of multicollinearity, then they are measuring <em>very similar</em> phenomena and a clearer conceptual argument needs to be made around why <em>both</em> are even necessary. It may well be that the problem you are trying to solve is simply ill-posed. In a way, you are trying to answer a question that the data cannot answer. From this perspective, multicollinearity is not a model error that we can fix, it is a <em>model criticism</em>. If you have multicollinearity, it tells you that there is something fundamentally wrong with your view of the problem. This is what needs to be fixed, not the model.</p>
+</section>
+<section id="what-about-multiple-violations">
+<h3>What About Multiple Violations?<a class="headerlink" href="#what-about-multiple-violations" title="Link to this heading">#</a></h3>
+<p>Finally, we need to consider what to do if <em>multiple</em> assumptions appear to be violated. Unfortunately, all the methods above really only tackle a single violation at a time. Sticking with these approaches, all we can do is select the <em>dominant</em> violation to fix and then accept that the rest of the violations remain in place. A good rule-of-thumb is to work through a model by</p>
+<ol class="arabic simple">
+<li><p>Fixing structural issues with the model form first (anything related to the mean or variance function).</p></li>
+<li><p>Only worry about distributional assumptions second (anything related to outliers or the distributional form).</p></li>
+</ol>
+<p>So, what we need to do is address assumption violations in a logical order based on how much they affect the model.
+First, we sort out the mean function. If the relationship is non-linear, we fix that using transformations or a polynomial model. If there is multicollinearity, we must identify it and respecify the model to remove it. This step must come first, because nothing else works properly until the mean is correctly specified.</p>
+<p>Once the mean is sorted, we examine the variance function. If there is heteroscedasticity, we use GLS with an appropriate variance function. GLS is our main tool here, and it takes priority over other fixes.</p>
+<p>After handling structural issues, we consider outliers. If we are using OLS regression, we can switch to a robust method, which automatically down-weights outliers. If we are using GLS, robust methods are not available, so the practical option is careful removal based on diagnostics.</p>
+<p>Finally, we assess the distributional assumptions. If we have not used GLS or robust methods, permutation tests give us valid, distribution-free <span class="math notranslate nohighlight">\(p\)</span>-values. If we have used GLS or a robust model, permutation is harder to apply, so instead we judge how severe the remaining distributional violation is and adjust our confidence in the <span class="math notranslate nohighlight">\(p\)</span>-values accordingly.</p>
 </section>
 </section>
 </section>
@@ -629,23 +1330,28 @@ See ?effectsTheme for details.
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots">Diagnostic Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-plots">Standard Plots</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-plots">Additional Plots</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-variable-plots">Added-variable Plots</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plots">Correlation Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vif-barplot">VIF Barplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-plot">Influence Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-plots">Effects Plots</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regression">Polynomial Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-different-powers-directly">Including Different Powers Directly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-polynomials">Orthogonal Polynomials</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformations">Transformations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-models-when-assumptions-are-violated">Alternative Models When Assumptions are Violated</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression-for-outliers">Robust Regression for Outliers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-for-heteroscedasticity">Generalised Least-squares for Heteroscedasticity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-for-multicollinearity">Ridge-regression for Multicollinearity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalised-least-squares-for-heteroscedasticity">Generalised Least-squares for Heteroscedasticity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gls-for-simple-regression">GLS for Simple Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gls-for-multiple-regression">GLS for Multiple Regression</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-resampling-for-non-normality">Non-parametric Resampling for Non-normality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-permutations">Manual Permutations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multicollinearity">What About Multicollinearity?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multiple-violations">What About Multiple Violations?</a></li>
 </ul>
 </li>
 </ul>
@@ -672,7 +1378,7 @@ By Dr Martyn McFarquhar & Dr George Farmer
 
   <p class="copyright">
     
-      © Copyright 2026.
+      © Copyright 2025-26.
       <br/>
     
   </p>
