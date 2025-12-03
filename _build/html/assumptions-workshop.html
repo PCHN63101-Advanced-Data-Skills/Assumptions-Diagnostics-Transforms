@@ -981,7 +981,9 @@ Degrees of freedom: 200 total; 197 residual
 </div>
 </div>
 <p>Notice that this has <em>not</em> resulted in <span class="math notranslate nohighlight">\(\hat{\delta}_{2} = 0\)</span>, even though there is not heteroscedasticity associated with the second predictor. This is important because GLS can easily <em>over-fit</em> a variance function and adjust the data to remove something that is not there. This will bias the results. As such, we have to use these functions carefully and not just try and model everything. In addition, much like with robust regression, the inferential tests here need to be treated cautiously and only as <em>asymptotically correct</em>.</p>
-</section>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY 9</b> Can you adapt the code above to use GLS with the `mtcars` dataset? 
+</div></section>
 </section>
 <section id="non-parametric-resampling-for-non-normality">
 <h3>Non-parametric Resampling for Non-normality<a class="headerlink" href="#non-parametric-resampling-for-non-normality" title="Link to this heading">#</a></h3>
