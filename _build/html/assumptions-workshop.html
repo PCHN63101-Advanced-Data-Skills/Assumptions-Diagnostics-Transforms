@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -68,7 +65,6 @@
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -84,8 +80,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -93,6 +100,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -100,8 +108,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -119,8 +127,7 @@
       
         
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -150,17 +157,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models III: Assumptions, Diagnostics and Transformations - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -186,14 +197,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,16 +343,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -487,7 +501,7 @@
 </div>
 </div>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Use the code above to draw this chart again after removing <code>wt</code> from the model and then do this again after using <code>wt.copy</code> from the model. Keep the <code>ylim=c(0,25)</code> argument the same so you can directly compare the plots. Can we use VIF to tell us <i>which</i> predictor to remove from the model? What does this imply about the role of the analyst in the process of model building?
+<b>ACTIVITY ...</b> Use the code above to draw this chart again after removing <code>wt</code> from the model and then do this again after removing <code>wt.copy</code> from the model. Keep the <code>ylim=c(0,25)</code> argument the same so you can directly compare the plots. Can we use VIF to tell us <i>which</i> predictor to remove from the model? What does this imply about the role of the analyst in the process of model building?
 </div></section>
 <section id="influence-plot">
 <h3>Influence Plot<a class="headerlink" href="#influence-plot" title="Link to this heading">#</a></h3>
@@ -730,7 +744,7 @@ Coefficients:
 <a class="reference internal image-reference" href="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png"><img alt="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" src="_images/344c2f66940d89ba748051600c3e78e091bb626404dbb27f0634fe3cb7c50bfe.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>As we can see, these predictors are <em>perfectly uncorrelated</em>. The VIF is 1 for each, meaning the variance is <em>not inflated at all</em> with these two predictors in the model. This is the essence of two variable being <em>orthogonal</em>. We can also see this by calculating their correlation as well</p>
+<p>As we can see, these predictors are <em>perfectly uncorrelated</em>. The VIF is 1 for each, meaning the variance is <em>not inflated at all</em> with these two predictors in the model. This is the essence of two variables being <em>orthogonal</em>. We can also see this by calculating their correlation as well</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cor</span><span class="p">(</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="n">wt.poly</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>
@@ -741,7 +755,7 @@ Coefficients:
 <div class="output text_html">5.51418448662549e-19</div></div>
 </div>
 <p>which is basically <em>exactly 0</em>, as far as the computer is concerned.</p>
-<p>How is this done? In a way, it does not really matter, but if you are curious then the method is very similar to what we do when we create <em>added variable plots</em>. In effect, we just need to <em>remove</em> the relationship between the variable by taking the residuals of several regression models. An example is given below. For each term, we basically remove the effect of all <em>lower degree terms</em>. So the linear term has the constant effect removed, and the quadratic term has the constant and linear effects removed. The output from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is the identical in terms of fit, <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values when compared to the model using <code class="docutils literal notranslate"><span class="pre">poly()</span></code>.</p>
+<p>How is this done? In a way, it does not really matter, but if you are curious then the method is very similar to what we do when we create <em>added variable plots</em>. In effect, we just need to <em>remove</em> the relationship between the variables by taking the residuals of several regression models. An example is given below. For each term, we basically remove the effect of all <em>lower degree terms</em>. So the linear term has the constant effect removed, and the quadratic term has the constant and linear effects removed. The output from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is the identical in terms of fit, <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values when compared to the model using <code class="docutils literal notranslate"><span class="pre">poly()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="w">   </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">    </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span><span class="w"> </span><span class="c1"># wt   with constant effect removed</span>
@@ -804,7 +818,7 @@ F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
 <section id="robust-regression-for-outliers">
 <h3>Robust Regression for Outliers<a class="headerlink" href="#robust-regression-for-outliers" title="Link to this heading">#</a></h3>
 <p>Our first option is for dealing with <em>outliers</em>. Although we have several methods for detecting outliers, our approaches for dealing with them are quite limited. In general, we can either remove them or leave them in place. Removing them is an extreme measure that is only really justifiable when the data is unambiguously <em>wrong</em>. In place cases, we cannot make sure a strong claim. However, we know that leaving them in place can bias the regression model. So what can we do?</p>
-<p>In cases where we are particularly worried about this, we can use a method known as <em>robust regression</em>. This is something of a catch-all term for a variety of different approach, each with the aim of reducing the influence of outliers on the regression results. However, each method tends to be similar in that the problem is tackled by defining a set of <em>weights</em> that work to reduce the influence of individual data points. A weight is defined for each data point where a weight of 1 will simply include the original data point and a weight &lt; 1 will reduce the magnitude of the data point. These weights are assigned using rules about the magnitudes of the residuals from the model fit, so there is an iterative approach here where the model is fit, weights are computed, the model is refit with the weights, the weights are then recomputed using the next set of residuals and so on. This will be continued until some stopping criteria is reached (usually related to the weights not changing meaningfully after each new iteration). The idea is imply to <em>down-weight</em> the influence of outliers on the model fit.</p>
+<p>In cases where we are particularly worried about this, we can use a method known as <em>robust regression</em>. This is something of a catch-all term for a variety of different approaches, each with the aim of reducing the influence of outliers on the regression results. However, each method tends to be similar in that the problem is tackled by defining a set of <em>weights</em> that work to reduce the influence of individual data points. A weight is defined for each data point where a weight of 1 will simply include the original data point and a weight &lt; 1 will reduce the magnitude of the data point. These weights are assigned using rules about the magnitudes of the residuals from the model fit, so there is an iterative approach here where the model is fit, weights are computed, the model is refit with the weights, the weights are then recomputed using the next set of residuals and so on. This will be continued until some stopping criteria is reached (usually related to the weights not changing meaningfully after each new iteration). The idea is simply to <em>down-weight</em> the influence of outliers on the model fit.</p>
 <p>As an example, we will use the <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">robustbase</span></code> package. Much more can be learned about this method through its documentation, but we just illustrate the basic method here. We will illustrate the difference from the standard <code class="docutils literal notranslate"><span class="pre">lm()</span></code> results below</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -928,7 +942,7 @@ F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11
 </div>
 <div class="alert alert-block alert-info"> 
 <b>ACTIVITY ...</b> The differences in slopes are very subtle in these plots, but have a look at the <i>confidence bands</i> around the slope for <code>hp</code> in the effects plots from the robust model compared to the original OLS model. What is the main difference you can see?
-</div><p>The only main element to be aware of is that the inferential tests on the model parameters are <em>approximations</em> within the context of a robust model. So we cannot treat them with quite the authority we do from <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. Realistically, these should be considered <em>asymptotically correct</em>, meaning they will become more reliable the larger the sample size. Because of this, some implementations of robust regression will <em>refuse</em> to give you a <span class="math notranslate nohighlight">\(p\)</span>-value (e.g. <code class="docutils literal notranslate"><span class="pre">rlm()</span></code> from the <code class="docutils literal notranslate"><span class="pre">MASS</span></code> package). <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> does, but this is a bit controversial, so treat these with <em>extreme caution</em>.</p>
+</div><p>The main element to be aware of is that the inferential tests on the model parameters are <em>approximations</em> within the context of a robust model. So we cannot treat them with quite the authority we do from <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. Realistically, these should be considered <em>asymptotically correct</em>, meaning they will become more reliable the larger the sample size. Because of this, some implementations of robust regression will <em>refuse</em> to give you a <span class="math notranslate nohighlight">\(p\)</span>-value (e.g. <code class="docutils literal notranslate"><span class="pre">rlm()</span></code> from the <code class="docutils literal notranslate"><span class="pre">MASS</span></code> package). <code class="docutils literal notranslate"><span class="pre">lmrob()</span></code> does, but this is a bit controversial, so treat these with <em>extreme caution</em>.</p>
 </section>
 <section id="generalised-least-squares-for-heteroscedasticity">
 <h3>Generalised Least-squares for Heteroscedasticity<a class="headerlink" href="#generalised-least-squares-for-heteroscedasticity" title="Link to this heading">#</a></h3>
@@ -1173,7 +1187,7 @@ Degrees of freedom: 32 total; 29 residual
 <h3>Non-parametric Resampling for Non-normality<a class="headerlink" href="#non-parametric-resampling-for-non-normality" title="Link to this heading">#</a></h3>
 <p>As our final method, we turn to ways of dealing with depatures from normality. Now, as argued elsewhere, normality is one of those assumptions that often matters less than people think. We have demonstrated previously how variable even true samples from a normal distribution can appear, especially in small samples. We have also made it clear that normality only matters in terms of making sure the <span class="math notranslate nohighlight">\(p\)</span>-values have the assumed null distribution. Under large samples, the central limit theorem indicates that the sampling distributions of the parameters will be normal, even when the population distribution is not. So, in reality, normality only matters when we want to perform inference <em>and</em> when the sample size is small.</p>
 <p>Nevertheless, it does not always feel very comfortable to wave this assumption to one side. This is particularly true when we have outliers that create heavier tails than we would expect from a normal distribution, or if we are using data that we know cannot <em>really</em> come from a normal distribution (such as questionnaire scores). In these cases, we can turn to <em>non-parametric</em> approaches. As the name implies, non-parametric statistics are not concerned with estimating parameters from a probability distribution. As such, they make no assumptions about the distributional form of the data.</p>
-<p>The use of non-parametric statistics with psychology is usually constrained to very old approaches such as the Kruskall-Wallace test or the Friedman ANOVA. These methods have no been a part of modern statistics for a very long time. Instead, since the advent of computers, modern statistics has made use of non-parametric <em>resampling</em> approaches to these problems. These methods involve using the sample as a proxy for the population and then repeatedly <em>resampling</em> from that sample to build the distributions needed for inference. These include methods such as the <em>bootstrap</em>, <em>jackknife</em> and the <em>permutation test</em>. If our interest is calculating a <span class="math notranslate nohighlight">\(p\)</span>-value, the permutation approach is the easiest method to use. If you want confidence intervals, the <em>bootstrap</em> is the method to choose. We will only focus on permutation tests here.</p>
+<p>The use of non-parametric statistics with psychology is usually constrained to very old approaches such as the Kruskall-Wallace test or the Friedman ANOVA. These methods have not been a part of modern statistics for a very long time. Instead, since the advent of computers, modern statistics has made use of non-parametric <em>resampling</em> approaches to these problems. These methods involve using the sample as a proxy for the population and then repeatedly <em>resampling</em> from that sample to build the distributions needed for inference. These include methods such as the <em>bootstrap</em>, <em>jackknife</em> and the <em>permutation test</em>. If our interest is calculating a <span class="math notranslate nohighlight">\(p\)</span>-value, the permutation approach is the easiest method to use. If you want confidence intervals, the <em>bootstrap</em> is the method to choose. We will only focus on permutation tests here.</p>
 <p>In brief, the permutation approach proceeds as follows:</p>
 <ul class="simple">
 <li><p>On each iteration, the outcome variable is randomly reordered to break any relationship between the outcome and the predictor variables</p></li>
@@ -1232,7 +1246,7 @@ F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11
 <span class="n">n.perms</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5000</span>
 <span class="n">hp.dist</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.perms</span><span class="p">)</span><span class="w"> </span><span class="c1"># slope null distribution</span>
 <span class="n">hp.dist</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">hp.coef</span>
-<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="n">n.perms</span><span class="p">){</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="n">n.perms</span><span class="p">){</span>
 <span class="w">    </span><span class="n">mpg.adj.p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="n">mpg.adj</span><span class="p">)</span><span class="w">         </span><span class="c1"># permute mpg</span>
 <span class="w">    </span><span class="n">mod.p</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg.adj.p</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp.adj</span><span class="p">)</span><span class="w">  </span><span class="c1"># permuted model</span>
 <span class="w">    </span><span class="n">hp.dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod.p</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">          </span><span class="c1"># save slope</span>
@@ -1319,8 +1333,7 @@ First, we sort out the mean function. If the relationship is non-linear, we fix 
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -1402,8 +1415,8 @@ By Dr Martyn McFarquhar & Dr George Farmer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
