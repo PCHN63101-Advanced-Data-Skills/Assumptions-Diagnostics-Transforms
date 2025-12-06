@@ -918,9 +918,9 @@ Degrees of freedom: 200 total; 198 residual
 <p>To try and work out how individual predictors are contributing, we can make some custom scale-location plots using each predictor on the <span class="math notranslate nohighlight">\(x\)</span>-axis</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="nf">rstandard</span><span class="p">(</span><span class="n">mod</span><span class="p">)))</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x1.sim</span><span class="p">,</span><span class="n">t</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x1.sim</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x2.sim</span><span class="p">,</span><span class="n">t</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x2.sim</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">std.resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="nf">rstandard</span><span class="p">(</span><span class="n">mod</span><span class="p">)))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x1.sim</span><span class="p">,</span><span class="n">std.resid</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x1.sim</span><span class="p">,</span><span class="n">std.resid</span><span class="w"> </span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x2.sim</span><span class="p">,</span><span class="n">std.resid</span><span class="p">);</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="nf">lowess</span><span class="p">(</span><span class="n">sim.dat</span><span class="o">$</span><span class="n">x2.sim</span><span class="p">,</span><span class="n">std.resid</span><span class="w"> </span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1104,16 +1104,16 @@ First, we sort out the mean function. If the relationship is non-linear, we fix 
 <b>TEST QUESTIONS</b> 
 <p>Use the questions below to check your understanding of all the materials from this week.</p>
 <ol class="arabic simple">
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
+<li><p>What issues can arise using inferential tests of assumptions in both small and large samples?</p></li>
+<li><p>What are the 5 core assuptions of linear regression?</p></li>
+<li><p>What is the distinction between an observation that is an <em>outlier</em> and an observation that has <em>high leverage</em>?</p></li>
+<li><p>Why is assessing homoscedasticity using the <em>raw</em> residuals a bad idea?</p></li>
+<li><p>What is the difference between <em>standardised</em> and <em>studentised</em> residuals?</p></li>
+<li><p>What two diagnostic features does Cook’s distance combine?</p></li>
+<li><p>Which data feature does the VIF help you diagnose?</p></li>
+<li><p>Why are the labelled points in the diagnostic plots from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> not necessarily indicative of any problems?</p></li>
+<li><p>What is the key difference between the Box-Cox and the Box-Tidwell transformation?</p></li>
+<li><p>Conceptually, what is the core difference between transforming the outcome to correct for non-linearity and using a polynomial regression model?</p></li>
 </ol>
 </div></section>
 
