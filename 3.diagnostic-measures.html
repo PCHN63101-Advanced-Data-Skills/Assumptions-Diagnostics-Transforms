@@ -576,7 +576,7 @@ r_{i} = \frac{e_{i}}{\hat{\sigma}\sqrt{1 - h_{i}}},
 </section>
 <section id="studentised-residuals">
 <h3>Studentised Residuals<a class="headerlink" href="#studentised-residuals" title="Link to this heading">#</a></h3>
-<p>An alternative, but potentially more powerful approach, to standardised residuals is to computer <em>studentised</em> residuals. These are based on scaling the residuals into standard deviation units, but they do so differently for each individual datapoint. Rather than using the global variance estimate <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>, studentised residuals use <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}_{-i}\)</span>, which is the variance estimate from a model with datapoint <span class="math notranslate nohighlight">\(i\)</span> removed.</p>
+<p>An alternative, but potentially more powerful approach, to standardised residuals is to compute <em>studentised</em> residuals. These are based on scaling the residuals into standard deviation units, but they do so differently for each individual datapoint. Rather than using the global variance estimate <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>, studentised residuals use <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}_{-i}\)</span>, which is the variance estimate from a model with datapoint <span class="math notranslate nohighlight">\(i\)</span> removed.</p>
 <div class="math notranslate nohighlight">
 \[
 t_{i} = \frac{e_{i}}{\hat{\sigma}_{-i}\sqrt{1 - h_{i}}},
@@ -780,9 +780,6 @@ cyl     0.7824958 0.7534608 0.8324475 1.0000000
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       wt   wt.copy        hp       cyl 
 22.174855 19.921678  3.383464  4.794902 
 </pre></div>
